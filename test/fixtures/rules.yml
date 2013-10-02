@@ -1,0 +1,19 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  account_id: 
+  name: MyString
+  description: MyString
+  require: MyText
+  demand: MyText
+  projection_id: 1
+  stats: MyText
+
+two:
+  account_id: 
+  name: MyString
+  description: MyString
+  require: MyText
+  demand: MyText
+  projection_id: 1
+  stats: MyText

@@ -1,0 +1,101 @@
+  [1m[36m (8.0ms)[0m  [1mCREATE TABLE "schema_migrations" ("version" character varying(255) NOT NULL) [0m
+  [1m[35m (5.0ms)[0m  CREATE UNIQUE INDEX "unique_schema_migrations" ON "schema_migrations" ("version")
+  [1m[36mActiveRecord::SchemaMigration Load (1.0ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+Migrating to CreateAccounts (20131001231900)
+  [1m[35m (0.0ms)[0m  BEGIN
+  [1m[36m (2.0ms)[0m  [1mCREATE TABLE "accounts" ("id" serial primary key, "name" character varying(255), "key" character varying(255), "conf" hstore, "created_at" timestamp, "updated_at" timestamp) [0m
+PG::UndefinedObject: ERROR:  type "hstore" does not exist
+LINE 1: ...arying(255), "key" character varying(255), "conf" hstore, "c...
+                                                             ^
+: CREATE TABLE "accounts" ("id" serial primary key, "name" character varying(255), "key" character varying(255), "conf" hstore, "created_at" timestamp, "updated_at" timestamp) 
+  [1m[35m (0.0ms)[0m  ROLLBACK
+  [1m[36mActiveRecord::SchemaMigration Load (1.0ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+Migrating to CreateAccounts (20131001231900)
+  [1m[35m (0.0ms)[0m  BEGIN
+  [1m[36m (1.0ms)[0m  [1mCREATE TABLE "accounts" ("id" serial primary key, "name" character varying(255), "key" character varying(255), "conf" hstore, "created_at" timestamp, "updated_at" timestamp) [0m
+PG::UndefinedObject: ERROR:  type "hstore" does not exist
+LINE 1: ...arying(255), "key" character varying(255), "conf" hstore, "c...
+                                                             ^
+: CREATE TABLE "accounts" ("id" serial primary key, "name" character varying(255), "key" character varying(255), "conf" hstore, "created_at" timestamp, "updated_at" timestamp) 
+  [1m[35m (0.0ms)[0m  ROLLBACK
+  [1m[36m (7.0ms)[0m  [1mCREATE TABLE "schema_migrations" ("version" character varying(255) NOT NULL) [0m
+  [1m[35m (4.0ms)[0m  CREATE UNIQUE INDEX "unique_schema_migrations" ON "schema_migrations" ("version")
+  [1m[36mActiveRecord::SchemaMigration Load (1.0ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+Migrating to CreateAccounts (20131001231900)
+  [1m[35m (1.0ms)[0m  BEGIN
+  [1m[36m (1.0ms)[0m  [1mCREATE TABLE "accounts" ("id" serial primary key, "name" character varying(255), "key" character varying(255), "conf" hstore, "created_at" timestamp, "updated_at" timestamp) [0m
+PG::UndefinedObject: ERROR:  type "hstore" does not exist
+LINE 1: ...arying(255), "key" character varying(255), "conf" hstore, "c...
+                                                             ^
+: CREATE TABLE "accounts" ("id" serial primary key, "name" character varying(255), "key" character varying(255), "conf" hstore, "created_at" timestamp, "updated_at" timestamp) 
+  [1m[35m (0.0ms)[0m  ROLLBACK
+  [1m[36mActiveRecord::SchemaMigration Load (0.0ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+Migrating to CreateAccounts (20131001231900)
+  [1m[35m (1.0ms)[0m  BEGIN
+  [1m[36m (18.0ms)[0m  [1mCREATE TABLE "accounts" ("id" serial primary key, "name" character varying(255), "key" character varying(255), "conf" text, "created_at" timestamp, "updated_at" timestamp) [0m
+  [1m[35mSQL (2.0ms)[0m  INSERT INTO "schema_migrations" ("version") VALUES ($1)  [["version", "20131001231900"]]
+  [1m[36m (2.0ms)[0m  [1mCOMMIT[0m
+  [1m[35mActiveRecord::SchemaMigration Load (0.0ms)[0m  SELECT "schema_migrations".* FROM "schema_migrations"
+  [1m[36mActiveRecord::SchemaMigration Load (1.0ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+Migrating to CreateScales (20131001234050)
+  [1m[35m (1.0ms)[0m  BEGIN
+  [1m[36m (18.0ms)[0m  [1mCREATE TABLE "scales" ("id" serial primary key, "account_id" integer, "name" character varying(255), "code" character varying(255), "created_at" timestamp, "updated_at" timestamp) [0m
+  [1m[35m (4.0ms)[0m  CREATE INDEX "index_scales_on_account_id" ON "scales" ("account_id")
+  [1m[36mSQL (1.0ms)[0m  [1mINSERT INTO "schema_migrations" ("version") VALUES ($1)[0m  [["version", "20131001234050"]]
+  [1m[35m (2.0ms)[0m  COMMIT
+Migrating to CreateRoles (20131001234328)
+  [1m[36m (1.0ms)[0m  [1mBEGIN[0m
+  [1m[35m (13.0ms)[0m  CREATE TABLE "roles" ("id" serial primary key, "account_id" integer, "name" character varying(255), "code" character varying(255), "lock" text, "created_at" timestamp, "updated_at" timestamp) 
+  [1m[36m (3.0ms)[0m  [1mCREATE INDEX "index_roles_on_account_id" ON "roles" ("account_id")[0m
+  [1m[35mSQL (0.0ms)[0m  INSERT INTO "schema_migrations" ("version") VALUES ($1)  [["version", "20131001234328"]]
+  [1m[36m (1.0ms)[0m  [1mCOMMIT[0m
+Migrating to CreateMenuItems (20131001234543)
+  [1m[35m (1.0ms)[0m  BEGIN
+  [1m[36m (13.0ms)[0m  [1mCREATE TABLE "menu_items" ("id" serial primary key, "account_id" integer, "name" character varying(255), "uri" character varying(255), "args" text, "created_at" timestamp, "updated_at" timestamp) [0m
+  [1m[35m (4.0ms)[0m  CREATE INDEX "index_menu_items_on_account_id" ON "menu_items" ("account_id")
+  [1m[36mSQL (0.0ms)[0m  [1mINSERT INTO "schema_migrations" ("version") VALUES ($1)[0m  [["version", "20131001234543"]]
+  [1m[35m (1.0ms)[0m  COMMIT
+Migrating to CreateUsers (20131001235356)
+  [1m[36m (1.0ms)[0m  [1mBEGIN[0m
+  [1m[35m (0.0ms)[0m  ROLLBACK
+  [1m[36mActiveRecord::SchemaMigration Load (0.0ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+Migrating to CreateUsers (20131001235356)
+  [1m[35m (0.0ms)[0m  BEGIN
+  [1m[36m (15.0ms)[0m  [1mCREATE TABLE "users" ("id" serial primary key, "account_id" integer, "uid" character varying(255), "login" character varying(255), "password" character varying(255), "role_id" integer, "parent_id" integer, "data" text, "created_at" timestamp, "updated_at" timestamp) [0m
+  [1m[35m (4.0ms)[0m  CREATE INDEX "index_users_on_account_id" ON "users" ("account_id")
+  [1m[36m (4.0ms)[0m  [1mCREATE INDEX "index_users_on_role_id" ON "users" ("role_id")[0m
+  [1m[35mSQL (1.0ms)[0m  INSERT INTO "schema_migrations" ("version") VALUES ($1)  [["version", "20131001235356"]]
+  [1m[36m (0.0ms)[0m  [1mCOMMIT[0m
+Migrating to CreateClusters (20131001235822)
+  [1m[35m (1.0ms)[0m  BEGIN
+  [1m[36m (14.0ms)[0m  [1mCREATE TABLE "clusters" ("id" serial primary key, "account_id" integer, "parent_id" integer, "name" character varying(255), "entrance" boolean, "engaged" boolean, "vector" text, "created_at" timestamp, "updated_at" timestamp) [0m
+  [1m[35m (3.0ms)[0m  CREATE INDEX "index_clusters_on_account_id" ON "clusters" ("account_id")
+  [1m[36mSQL (0.0ms)[0m  [1mINSERT INTO "schema_migrations" ("version") VALUES ($1)[0m  [["version", "20131001235822"]]
+  [1m[35m (0.0ms)[0m  COMMIT
+Migrating to CreateRules (20131002000337)
+  [1m[36m (1.0ms)[0m  [1mBEGIN[0m
+  [1m[35m (13.0ms)[0m  CREATE TABLE "rules" ("id" serial primary key, "account_id" integer, "name" character varying(255), "description" character varying(255), "require" text, "demand" text, "projection_id" integer, "stats" text, "created_at" timestamp, "updated_at" timestamp) 
+  [1m[36m (4.0ms)[0m  [1mCREATE INDEX "index_rules_on_account_id" ON "rules" ("account_id")[0m
+  [1m[35mSQL (1.0ms)[0m  INSERT INTO "schema_migrations" ("version") VALUES ($1)  [["version", "20131002000337"]]
+  [1m[36m (0.0ms)[0m  [1mCOMMIT[0m
+Migrating to CreateEvents (20131002000559)
+  [1m[35m (2.0ms)[0m  BEGIN
+  [1m[36m (12.0ms)[0m  [1mCREATE TABLE "events" ("id" serial primary key, "user_id" integer, "scale_id" integer, "value" decimal, "created_at" timestamp, "updated_at" timestamp) [0m
+  [1m[35m (4.0ms)[0m  CREATE INDEX "index_events_on_user_id" ON "events" ("user_id")
+  [1m[36m (4.0ms)[0m  [1mCREATE INDEX "index_events_on_scale_id" ON "events" ("scale_id")[0m
+  [1m[35mSQL (1.0ms)[0m  INSERT INTO "schema_migrations" ("version") VALUES ($1)  [["version", "20131002000559"]]
+  [1m[36m (0.0ms)[0m  [1mCOMMIT[0m
+Migrating to CreateBadges (20131002000922)
+  [1m[35m (2.0ms)[0m  BEGIN
+  [1m[36m (13.0ms)[0m  [1mCREATE TABLE "badges" ("id" serial primary key, "account_id" integer, "name" character varying(255), "icon" character varying(255), "placeholder" character varying(255), "created_at" timestamp, "updated_at" timestamp) [0m
+  [1m[35m (3.0ms)[0m  CREATE INDEX "index_badges_on_account_id" ON "badges" ("account_id")
+  [1m[36mSQL (1.0ms)[0m  [1mINSERT INTO "schema_migrations" ("version") VALUES ($1)[0m  [["version", "20131002000922"]]
+  [1m[35m (0.0ms)[0m  COMMIT
+Migrating to CreateUserScores (20131002001130)
+  [1m[36m (2.0ms)[0m  [1mBEGIN[0m
+  [1m[35m (13.0ms)[0m  CREATE TABLE "user_scores" ("id" serial primary key, "user_id" integer, "scale_id" integer, "value" decimal, "created_at" timestamp, "updated_at" timestamp) 
+  [1m[36m (4.0ms)[0m  [1mCREATE INDEX "index_user_scores_on_user_id" ON "user_scores" ("user_id")[0m
+  [1m[35m (4.0ms)[0m  CREATE INDEX "index_user_scores_on_scale_id" ON "user_scores" ("scale_id")
+  [1m[36mSQL (0.0ms)[0m  [1mINSERT INTO "schema_migrations" ("version") VALUES ($1)[0m  [["version", "20131002001130"]]
+  [1m[35m (1.0ms)[0m  COMMIT
+  [1m[36mActiveRecord::SchemaMigration Load (0.0ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m

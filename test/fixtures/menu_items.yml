@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  account_id: 
+  name: MyString
+  uri: MyString
+
+two:
+  account_id: 
+  name: MyString
+  uri: MyString

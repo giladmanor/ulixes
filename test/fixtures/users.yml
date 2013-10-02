@@ -1,0 +1,17 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  account_id: 
+  uid: MyString
+  login: MyString
+  password: MyString
+  role_id: 
+  parent_id: 
+
+two:
+  account_id: 
+  uid: MyString
+  login: MyString
+  password: MyString
+  role_id: 
+  parent_id: 

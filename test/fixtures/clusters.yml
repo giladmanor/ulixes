@@ -1,0 +1,17 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  account_id: 
+  parent_id: 1
+  name: MyString
+  entrance: false
+  engaged: false
+  vector: MyText
+
+two:
+  account_id: 
+  parent_id: 1
+  name: MyString
+  entrance: false
+  engaged: false
+  vector: MyText
