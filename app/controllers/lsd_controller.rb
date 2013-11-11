@@ -12,8 +12,12 @@ class LsdController < AdminController
     
   end
   
+  def show
+    
+  end
+  
   def set
-    return if params[:id]==:new
+    return unless params[:id].present?
     
     entity = params[:id].nil? ? @entity.new : @entity.find(params[:id]) 
     attr = params.delete_if{|k,v| !entity.respond_to?(k.to_sym)}
@@ -36,9 +40,7 @@ class LsdController < AdminController
     redirect_to :action=>:list,  :info=>"#{@entity} with id #{params[:id]} Permanently deleted",  :entity=>params[:entity]
   end
   
-  def show
-    
-  end
+  
   
   private 
   
