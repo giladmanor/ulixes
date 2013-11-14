@@ -1,8 +1,17 @@
+
 class Role < ActiveRecord::Base
   
-  info :name
   
-  
+  to_info :name, :value
   
   belongs_to :account
+  
+  
+  
+  def value
+    "1"
+  end
+  
+  
+  
 end

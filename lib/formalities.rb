@@ -1,4 +1,4 @@
-module Magic
+module Formalities
 
   def self.included(base)
     base.extend(ClassMethods)
@@ -6,7 +6,7 @@ module Magic
 
   module ClassMethods
 
-    def to_info *options 
+    def formality *options 
       s = options.map{|v| ":#{v}=>self.#{v.to_s}"}
       puts s.join(",")
       
@@ -28,7 +28,7 @@ module Magic
 end
 
 
-ActiveRecord::Base.send(:include, Magic)
+ActiveRecord::Base.send(:include, Formalities)
 
 
 
