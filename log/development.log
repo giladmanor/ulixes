@@ -9995,3 +9995,236 @@ Processing by AdminController#index as HTML
   [1m[36mUser Load (0.0ms)[0m  [1mSELECT "users".* FROM "users" WHERE "users"."id" = $1 LIMIT 1[0m  [["id", 2]]
   Rendered admin/index.html.erb within layouts/admin (0.0ms)
 Completed 200 OK in 17ms (Views: 15.0ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/admin" for 127.0.0.1 at 2013-11-15 03:05:08 +0200
+Processing by AdminController#index as HTML
+========================================
+  [1m[35mUser Load (1.0ms)[0m  SELECT "users".* FROM "users" WHERE "users"."id" = $1 LIMIT 1  [["id", 2]]
+  Rendered admin/index.html.erb within layouts/admin (0.0ms)
+Completed 200 OK in 17ms (Views: 14.0ms | ActiveRecord: 1.0ms)
+
+
+Started GET "/admin" for 127.0.0.1 at 2013-11-15 03:05:22 +0200
+Processing by AdminController#index as HTML
+========================================
+  [1m[36mUser Load (1.0ms)[0m  [1mSELECT "users".* FROM "users" WHERE "users"."id" = $1 LIMIT 1[0m  [["id", 2]]
+  Rendered admin/index.html.erb within layouts/admin (0.0ms)
+Completed 200 OK in 17ms (Views: 14.0ms | ActiveRecord: 1.0ms)
+
+
+Started GET "/admin" for 127.0.0.1 at 2013-11-15 03:06:41 +0200
+Processing by AdminController#index as HTML
+========================================
+  [1m[35mUser Load (0.0ms)[0m  SELECT "users".* FROM "users" WHERE "users"."id" = $1 LIMIT 1  [["id", 2]]
+  Rendered admin/index.html.erb within layouts/admin (0.0ms)
+Completed 200 OK in 17ms (Views: 14.0ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/admin" for 127.0.0.1 at 2013-11-15 03:06:47 +0200
+Processing by AdminController#index as HTML
+========================================
+  [1m[36mUser Load (1.0ms)[0m  [1mSELECT "users".* FROM "users" WHERE "users"."id" = $1 LIMIT 1[0m  [["id", 2]]
+  Rendered admin/index.html.erb within layouts/admin (1.0ms)
+Completed 200 OK in 16ms (Views: 13.0ms | ActiveRecord: 1.0ms)
+
+
+Started GET "/admin" for 127.0.0.1 at 2013-11-15 03:07:09 +0200
+Processing by AdminController#index as HTML
+========================================
+  [1m[35mUser Load (0.0ms)[0m  SELECT "users".* FROM "users" WHERE "users"."id" = $1 LIMIT 1  [["id", 2]]
+  Rendered admin/index.html.erb within layouts/admin (0.0ms)
+Completed 200 OK in 18ms (Views: 15.0ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/admin" for 127.0.0.1 at 2013-11-15 03:07:30 +0200
+Processing by AdminController#index as HTML
+========================================
+  [1m[36mUser Load (1.0ms)[0m  [1mSELECT "users".* FROM "users" WHERE "users"."id" = $1 LIMIT 1[0m  [["id", 2]]
+  Rendered admin/index.html.erb within layouts/admin (0.0ms)
+Completed 500 Internal Server Error in 19ms
+
+ActionView::Template::Error (undefined method `uppercase' for "a":String):
+    72:               </ul>
+    73:             </li>
+    74:             <li class="dropdown user-dropdown">
+    75:               <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user"></i> Logged in as <b><%=@user.login.uppercase%></b> <b class="caret"></b></a>
+    76:               <ul class="dropdown-menu">
+    77:                 <li><a href="#"><i class="fa fa-power-off"></i> Log Out</a></li>
+    78:               </ul>
+  app/views/layouts/admin.html.erb:75:in `_app_views_layouts_admin_html_erb__1172062122_34809340'
+
+
+  Rendered C:/Ruby200-x64/lib/ruby/gems/2.0.0/gems/actionpack-4.0.0/lib/action_dispatch/middleware/templates/rescues/_trace.erb (2.0ms)
+  Rendered C:/Ruby200-x64/lib/ruby/gems/2.0.0/gems/actionpack-4.0.0/lib/action_dispatch/middleware/templates/rescues/_request_and_response.erb (1.0ms)
+  Rendered C:/Ruby200-x64/lib/ruby/gems/2.0.0/gems/actionpack-4.0.0/lib/action_dispatch/middleware/templates/rescues/template_error.erb within rescues/layout (38.0ms)
+
+
+Started GET "/admin" for 127.0.0.1 at 2013-11-15 03:07:32 +0200
+Processing by AdminController#index as HTML
+========================================
+  [1m[35mUser Load (1.0ms)[0m  SELECT "users".* FROM "users" WHERE "users"."id" = $1 LIMIT 1  [["id", 2]]
+  Rendered admin/index.html.erb within layouts/admin (0.0ms)
+Completed 500 Internal Server Error in 18ms
+
+ActionView::Template::Error (undefined method `uppercase' for "a":String):
+    72:               </ul>
+    73:             </li>
+    74:             <li class="dropdown user-dropdown">
+    75:               <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user"></i> Logged in as <b><%=@user.login.uppercase%></b> <b class="caret"></b></a>
+    76:               <ul class="dropdown-menu">
+    77:                 <li><a href="#"><i class="fa fa-power-off"></i> Log Out</a></li>
+    78:               </ul>
+  app/views/layouts/admin.html.erb:75:in `_app_views_layouts_admin_html_erb__1172062122_34809340'
+
+
+  Rendered C:/Ruby200-x64/lib/ruby/gems/2.0.0/gems/actionpack-4.0.0/lib/action_dispatch/middleware/templates/rescues/_trace.erb (1.0ms)
+  Rendered C:/Ruby200-x64/lib/ruby/gems/2.0.0/gems/actionpack-4.0.0/lib/action_dispatch/middleware/templates/rescues/_request_and_response.erb (1.0ms)
+  Rendered C:/Ruby200-x64/lib/ruby/gems/2.0.0/gems/actionpack-4.0.0/lib/action_dispatch/middleware/templates/rescues/template_error.erb within rescues/layout (38.0ms)
+
+
+Started GET "/admin" for 127.0.0.1 at 2013-11-15 03:07:51 +0200
+Processing by AdminController#index as HTML
+========================================
+  [1m[36mUser Load (1.0ms)[0m  [1mSELECT "users".* FROM "users" WHERE "users"."id" = $1 LIMIT 1[0m  [["id", 2]]
+  Rendered admin/index.html.erb within layouts/admin (0.0ms)
+Completed 500 Internal Server Error in 19ms
+
+ActionView::Template::Error (undefined method `uppcase' for "a":String):
+    72:               </ul>
+    73:             </li>
+    74:             <li class="dropdown user-dropdown">
+    75:               <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user"></i> Logged in as <b><%=@user.login.uppcase%></b> <b class="caret"></b></a>
+    76:               <ul class="dropdown-menu">
+    77:                 <li><a href="#"><i class="fa fa-power-off"></i> Log Out</a></li>
+    78:               </ul>
+  app/views/layouts/admin.html.erb:75:in `_app_views_layouts_admin_html_erb__1172062122_34825660'
+
+
+  Rendered C:/Ruby200-x64/lib/ruby/gems/2.0.0/gems/actionpack-4.0.0/lib/action_dispatch/middleware/templates/rescues/_trace.erb (1.0ms)
+  Rendered C:/Ruby200-x64/lib/ruby/gems/2.0.0/gems/actionpack-4.0.0/lib/action_dispatch/middleware/templates/rescues/_request_and_response.erb (1.0ms)
+  Rendered C:/Ruby200-x64/lib/ruby/gems/2.0.0/gems/actionpack-4.0.0/lib/action_dispatch/middleware/templates/rescues/template_error.erb within rescues/layout (38.0ms)
+
+
+Started GET "/admin" for 127.0.0.1 at 2013-11-15 03:08:27 +0200
+Processing by AdminController#index as HTML
+========================================
+  [1m[35mUser Load (0.0ms)[0m  SELECT "users".* FROM "users" WHERE "users"."id" = $1 LIMIT 1  [["id", 2]]
+  Rendered admin/index.html.erb within layouts/admin (0.0ms)
+Completed 500 Internal Server Error in 18ms
+
+ActionView::Template::Error (undefined method `upppercase' for "a":String):
+    72:               </ul>
+    73:             </li>
+    74:             <li class="dropdown user-dropdown">
+    75:               <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user"></i> Logged in as <b><%=@user.login.upppercase%></b> <b class="caret"></b></a>
+    76:               <ul class="dropdown-menu">
+    77:                 <li><a href="#"><i class="fa fa-power-off"></i> Log Out</a></li>
+    78:               </ul>
+  app/views/layouts/admin.html.erb:75:in `_app_views_layouts_admin_html_erb__1172062122_34846040'
+
+
+  Rendered C:/Ruby200-x64/lib/ruby/gems/2.0.0/gems/actionpack-4.0.0/lib/action_dispatch/middleware/templates/rescues/_trace.erb (1.0ms)
+  Rendered C:/Ruby200-x64/lib/ruby/gems/2.0.0/gems/actionpack-4.0.0/lib/action_dispatch/middleware/templates/rescues/_request_and_response.erb (1.0ms)
+  Rendered C:/Ruby200-x64/lib/ruby/gems/2.0.0/gems/actionpack-4.0.0/lib/action_dispatch/middleware/templates/rescues/template_error.erb within rescues/layout (38.0ms)
+
+
+Started GET "/admin" for 127.0.0.1 at 2013-11-15 03:09:15 +0200
+Processing by AdminController#index as HTML
+========================================
+  [1m[36mUser Load (0.0ms)[0m  [1mSELECT "users".* FROM "users" WHERE "users"."id" = $1 LIMIT 1[0m  [["id", 2]]
+  Rendered admin/index.html.erb within layouts/admin (0.0ms)
+Completed 200 OK in 16ms (Views: 13.0ms | ActiveRecord: 0.0ms)
+  [1m[35m (0.0ms)[0m  BEGIN
+  [1m[36mSQL (5.0ms)[0m  [1mINSERT INTO "accounts" ("created_at", "updated_at") VALUES ($1, $2) RETURNING "id"[0m  [["created_at", Fri, 15 Nov 2013 01:24:02 UTC +00:00], ["updated_at", Fri, 15 Nov 2013 01:24:02 UTC +00:00]]
+  [1m[35m (0.0ms)[0m  COMMIT
+  [1m[36m (0.0ms)[0m  [1mBEGIN[0m
+  [1m[35mSQL (6.0ms)[0m  INSERT INTO "roles" ("account_id", "created_at", "updated_at") VALUES ($1, $2, $3) RETURNING "id"  [["account_id", 2], ["created_at", Fri, 15 Nov 2013 01:24:11 UTC +00:00], ["updated_at", Fri, 15 Nov 2013 01:24:11 UTC +00:00]]
+  [1m[36m (1.0ms)[0m  [1mCOMMIT[0m
+  [1m[35mRole Load (1.0ms)[0m  SELECT "roles".* FROM "roles" WHERE "roles"."account_id" = $1  [["account_id", 2]]
+  [1m[36mUser Load (0.0ms)[0m  [1mSELECT "users".* FROM "users"[0m
+  [1m[35m (0.0ms)[0m  BEGIN
+  [1m[36mSQL (1.0ms)[0m  [1mUPDATE "users" SET "role_id" = $1, "updated_at" = $2 WHERE "users"."id" = 2[0m  [["role_id", 1], ["updated_at", Fri, 15 Nov 2013 01:28:29 UTC +00:00]]
+  [1m[35m (0.0ms)[0m  COMMIT
+  [1m[36m (1.0ms)[0m  [1mBEGIN[0m
+  [1m[35mSQL (0.0ms)[0m  UPDATE "roles" SET "lock" = $1, "updated_at" = $2 WHERE "roles"."id" = 1  [["lock", [{:name=>"a", :items=>[{:name=>"aa"}]}]], ["updated_at", Fri, 15 Nov 2013 01:30:35 UTC +00:00]]
+TypeError: can't cast Array to text: UPDATE "roles" SET "lock" = $1, "updated_at" = $2 WHERE "roles"."id" = 1
+  [1m[36m (0.0ms)[0m  [1mROLLBACK[0m
+  [1m[36mRole Load (1.0ms)[0m  [1mSELECT "roles".* FROM "roles"[0m
+  [1m[35mRole Load (1.0ms)[0m  SELECT "roles".* FROM "roles" ORDER BY "roles"."id" ASC LIMIT 1
+  [1m[36m (0.0ms)[0m  [1mBEGIN[0m
+  [1m[35mSQL (9.0ms)[0m  UPDATE "roles" SET "lock" = $1, "updated_at" = $2 WHERE "roles"."id" = 1  [["lock", "---\n- :name: a\n  :items:\n  - :name: aa\n"], ["updated_at", Fri, 15 Nov 2013 01:32:06 UTC +00:00]]
+  [1m[36m (2.0ms)[0m  [1mCOMMIT[0m
+
+
+Started GET "/admin" for 127.0.0.1 at 2013-11-15 03:45:13 +0200
+Processing by AdminController#index as HTML
+========================================
+  [1m[35mUser Load (0.0ms)[0m  SELECT "users".* FROM "users" WHERE "users"."id" = $1 LIMIT 1  [["id", 2]]
+  Rendered admin/index.html.erb within layouts/admin (0.0ms)
+  [1m[36mRole Load (2.0ms)[0m  [1mSELECT "roles".* FROM "roles" WHERE "roles"."id" = $1 ORDER BY "roles"."id" ASC LIMIT 1[0m  [["id", 1]]
+Completed 500 Internal Server Error in 89ms
+
+ActionView::Template::Error (undefined method `uri' for {:name=>"aa"}:Hash):
+    44: 					<%
+    45: 					sm[:items].each{|m|
+    46: 						%>
+    47: 						<li><a href="<%=m.uri%>" ><%=m.name%></a></li>
+    48: 						<%
+    49: 						}
+    50: 					%>	
+  app/views/layouts/admin.html.erb:47:in `block (2 levels) in _app_views_layouts_admin_html_erb__1172062122_63123600'
+  app/views/layouts/admin.html.erb:45:in `each'
+  app/views/layouts/admin.html.erb:45:in `block in _app_views_layouts_admin_html_erb__1172062122_63123600'
+  app/views/layouts/admin.html.erb:39:in `each'
+  app/views/layouts/admin.html.erb:39:in `_app_views_layouts_admin_html_erb__1172062122_63123600'
+
+
+  Rendered C:/Ruby200-x64/lib/ruby/gems/2.0.0/gems/actionpack-4.0.0/lib/action_dispatch/middleware/templates/rescues/_trace.erb (1.0ms)
+  Rendered C:/Ruby200-x64/lib/ruby/gems/2.0.0/gems/actionpack-4.0.0/lib/action_dispatch/middleware/templates/rescues/_request_and_response.erb (1.0ms)
+  Rendered C:/Ruby200-x64/lib/ruby/gems/2.0.0/gems/actionpack-4.0.0/lib/action_dispatch/middleware/templates/rescues/template_error.erb within rescues/layout (37.0ms)
+
+
+Started GET "/admin" for 127.0.0.1 at 2013-11-15 03:45:43 +0200
+Processing by AdminController#index as HTML
+========================================
+  [1m[35mUser Load (1.0ms)[0m  SELECT "users".* FROM "users" WHERE "users"."id" = $1 LIMIT 1  [["id", 2]]
+  Rendered admin/index.html.erb within layouts/admin (0.0ms)
+  [1m[36mRole Load (0.0ms)[0m  [1mSELECT "roles".* FROM "roles" WHERE "roles"."id" = $1 ORDER BY "roles"."id" ASC LIMIT 1[0m  [["id", 1]]
+Completed 200 OK in 19ms (Views: 16.0ms | ActiveRecord: 1.0ms)
+
+
+Started GET "/admin" for 127.0.0.1 at 2013-11-15 03:45:49 +0200
+Processing by AdminController#index as HTML
+========================================
+  [1m[35mUser Load (1.0ms)[0m  SELECT "users".* FROM "users" WHERE "users"."id" = $1 LIMIT 1  [["id", 2]]
+  Rendered admin/index.html.erb within layouts/admin (0.0ms)
+  [1m[36mRole Load (0.0ms)[0m  [1mSELECT "roles".* FROM "roles" WHERE "roles"."id" = $1 ORDER BY "roles"."id" ASC LIMIT 1[0m  [["id", 1]]
+Completed 200 OK in 19ms (Views: 16.0ms | ActiveRecord: 1.0ms)
+
+
+Started GET "/admin" for 127.0.0.1 at 2013-11-15 03:45:49 +0200
+Processing by AdminController#index as HTML
+========================================
+  [1m[35mUser Load (0.0ms)[0m  SELECT "users".* FROM "users" WHERE "users"."id" = $1 LIMIT 1  [["id", 2]]
+  Rendered admin/index.html.erb within layouts/admin (1.0ms)
+  [1m[36mRole Load (0.0ms)[0m  [1mSELECT "roles".* FROM "roles" WHERE "roles"."id" = $1 ORDER BY "roles"."id" ASC LIMIT 1[0m  [["id", 1]]
+Completed 200 OK in 17ms (Views: 15.0ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/admin" for 127.0.0.1 at 2013-11-15 03:45:53 +0200
+Processing by AdminController#index as HTML
+========================================
+  [1m[35mUser Load (0.0ms)[0m  SELECT "users".* FROM "users" WHERE "users"."id" = $1 LIMIT 1  [["id", 2]]
+  Rendered admin/index.html.erb within layouts/admin (0.0ms)
+  [1m[36mRole Load (1.0ms)[0m  [1mSELECT "roles".* FROM "roles" WHERE "roles"."id" = $1 ORDER BY "roles"."id" ASC LIMIT 1[0m  [["id", 1]]
+Completed 200 OK in 17ms (Views: 14.0ms | ActiveRecord: 1.0ms)
+
+
+Started GET "/admin" for 127.0.0.1 at 2013-11-15 03:45:53 +0200
+Processing by AdminController#index as HTML
+========================================
+  [1m[35mUser Load (1.0ms)[0m  SELECT "users".* FROM "users" WHERE "users"."id" = $1 LIMIT 1  [["id", 2]]
+  Rendered admin/index.html.erb within layouts/admin (0.0ms)
+  [1m[36mRole Load (1.0ms)[0m  [1mSELECT "roles".* FROM "roles" WHERE "roles"."id" = $1 ORDER BY "roles"."id" ASC LIMIT 1[0m  [["id", 1]]
+Completed 200 OK in 18ms (Views: 14.0ms | ActiveRecord: 2.0ms)

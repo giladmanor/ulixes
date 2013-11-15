@@ -1,12 +1,11 @@
 
 class Role < ActiveRecord::Base
-  
-  
-  to_info :name, :value
-  
+  serialize :lock, Array
   belongs_to :account
   
   
+  
+  to_info :name, :value
   
   def value
     "1"
