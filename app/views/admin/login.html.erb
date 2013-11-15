@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Ulixes</title>
+		
+		<%= javascript_include_tag "application", "data-turbolinks-track" => true %>
+		<%= csrf_meta_tags %>
+
+		<!-- Latest compiled and minified CSS -->
+		<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap.min.css">
+
+		<!-- Optional theme -->
+		<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap-theme.min.css">
+
+		<!-- Latest compiled and minified JavaScript -->
+		<script src="//netdna.bootstrapcdn.com/bootstrap/3.0.2/js/bootstrap.min.js"></script>
+	</head>
+	<body>
+
+		<h1 class="text-right text-muted" style="width: 483px;margin-top: 20%;margin-left: 20%;">Ulixes Admin</h1>
+		<div class="panel panel-default" style="width: 483px;margin-left: 20%;">
+
+			<div class="panel-body">
+
+				<%= form_tag("/admin/login",class:"form-inline", role:"form") do%>
+				
+					
+					<div class="form-group">
+						<label class="sr-only" for="exampleInputEmail2">Email address</label>
+						<input name="login" type="login" class="form-control" id="exampleInputEmail2" placeholder="Enter email">
+					</div>
+					<div class="form-group">
+						<label class="sr-only" for="exampleInputPassword2">Password</label>
+						<input name="password" type="password" class="form-control" id="exampleInputPassword2" placeholder="Password">
+					</div>
+
+					<button type="submit" class="btn btn-default">
+						<span class="glyphicon glyphicon-fire"></span> Sign in
+					</button>
+				<% end %>
+			</div>
+		</div>
+
+	</body>
+</html>

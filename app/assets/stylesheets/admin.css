@@ -101,13 +101,13 @@ table.tablesorter thead tr th:hover {
   .side-nav {
 	margin-left: -225px;
 	left: 225px;
-	width: 225px;
+	width: 205px;
 	position: fixed;
 	top: 50px;
 	height: 100%;
 	border-radius: 0;
-	border: none;
-	background-color: #222222;
+	//border: none;
+	background-color: #F8F8F8;
 	overflow-y: auto;
   }
 
@@ -115,10 +115,10 @@ table.tablesorter thead tr th:hover {
 
   .side-nav>li.dropdown>ul.dropdown-menu {
 	position: relative;
-	min-width: 225px;
+	min-width: 205px;
 	margin: 0;
 	padding: 0;
-	border: none;
+	//border: none;
 	border-radius: 0;
 	background-color: transparent;
 	box-shadow: none;
@@ -133,8 +133,9 @@ table.tablesorter thead tr th:hover {
   .side-nav>li.dropdown>ul.dropdown-menu>li>a:hover,
   .side-nav>li.dropdown>ul.dropdown-menu>li>a.active,
   .side-nav>li.dropdown>ul.dropdown-menu>li>a:focus {
-	color: #fff;
+	//color: #fff;
 	background-color: #080808;
+	
   }
 
   .side-nav>li>a {
