@@ -129,12 +129,16 @@ table.tablesorter thead tr th:hover {
 	color: #999999;
 	padding: 15px 15px 15px 25px;
   }
+  
+  .dropdown-menu>li>a:hover{
+  	color: #000;
+  }
 
   .side-nav>li.dropdown>ul.dropdown-menu>li>a:hover,
   .side-nav>li.dropdown>ul.dropdown-menu>li>a.active,
   .side-nav>li.dropdown>ul.dropdown-menu>li>a:focus {
-	//color: #fff;
-	background-color: #080808;
+	color: #000;
+	//background-color: #080808;
 	
   }
 
@@ -144,6 +148,7 @@ table.tablesorter thead tr th:hover {
 
   .navbar-inverse .navbar-nav>li>a:hover,
   .navbar-inverse .navbar-nav>li>a:focus {
+	color: #000;
 	background-color: #080808;
   }
 
