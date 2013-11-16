@@ -1,15 +1,15 @@
 =ulixes
-Adaptive Clustering Rule Engine
+==== Adaptive Clustering Rule Engine
 
 * Ruby version: 2.x
 * Rails version 4.x
 
-===Gemmed as Such 
+==== Gemmed as Such 
 * postgres
 
 
 
-== Copyright and license
+===== Copyright and license
 
 Copyright 2013 Gilad Manor / Quizic, Inc under the Apache 2.0 license.
 
