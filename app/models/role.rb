@@ -5,11 +5,9 @@ class Role < ActiveRecord::Base
   
   
   
-  to_info :name, :value
+  to_info :name, :code
   
-  def value
-    "1"
-  end
+  
   
   
   

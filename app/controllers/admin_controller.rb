@@ -1,6 +1,6 @@
 class AdminController < ApplicationController
   before_filter :auth_filter, :except=>[:login]
-
+  before_filter :menu_filer
 
   def login
     if auth(params[:login], params[:password])
@@ -11,6 +11,10 @@ class AdminController < ApplicationController
     render "login", :layout=>false
   end
   
+  def logout
+    session[:user_id] = nil
+    render "login", :layout=>false
+  end
   
 
   def index
@@ -29,6 +33,10 @@ class AdminController < ApplicationController
     else
       false
     end
+  end
+  
+  def menu_filer
+    session[:open_menu] = params[:open_menu]
   end
   
   def auth_filter

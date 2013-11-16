@@ -38,13 +38,13 @@
 			
 			@user.role.lock.each{|sm|
 				%>
-				<li class="dropdown <%=session[:open_menu]==sm ? 'active' : ''%>">
+				<li class="dropdown <%=session[:open_menu]==sm[:name] ? 'active open' : ''%>">
 					<a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="<%=sm[:icon]%>"></i> <%=sm[:name]%> <b class="caret"></b></a>
 					<ul class="dropdown-menu ">
 					<%
 					sm[:items].each{|m|
 						%>
-						<li><a href="<%=m[:uri]%>" ><%=m[:name]%></a></li>
+						<li><a href="<%="#{m[:uri]}?open_menu=#{sm[:name]}"%>" ><%=m[:name]%></a></li>
 						<%
 						}
 					%>	
@@ -75,7 +75,7 @@
             <li class="dropdown user-dropdown">
               <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user"></i> Logged in as <b><%=@user.login.upcase%></b> <b class="caret"></b></a>
               <ul class="dropdown-menu">
-                <li><a href="#"><i class="fa fa-power-off"></i> Log Out</a></li>
+                <li><a href="/admin/logout"><i class="fa fa-power-off"></i> Log Out</a></li>
               </ul>
             </li>
           </ul>
