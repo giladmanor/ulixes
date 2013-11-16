@@ -1,0 +1,22 @@
+
+<script type="text/javascript">
+	function confirmAction(q,src){
+		$('#lsd_confirmationBox').show('slow');
+		$('#lsd_confirmBoxQuestion').text(q);
+		$('#lsd_confirmActionBTN').attr('href',src);
+		
+	}
+	function abortAction(){
+		$('#lsd_confirmationBox').hide('slow');
+	}
+	
+</script>
+
+<div id="lsd_confirmationBox" style="text-align: center ;display: none;width: 100%;float: left;padding: 10px" class="lsd_confirmBox">
+	<h3>You are about to <span id="lsd_confirmBoxQuestion"></span></h3>
+	<div>
+		<a onclick="" href="" class="button small green" >Abort</a>
+		<span>&nbsp;&nbsp;&nbsp;&nbsp;</span>
+		<a id="lsd_confirmActionBTN" href="" class="button small red" >Confirm</a>
+	</div>
+</div>

@@ -1,4 +1,4 @@
-
+<%= render "confirmation_box"%>
 <% @entities<<@entity.new%>
 <div class="panel panel-default">
 	<div class="panel-heading">
@@ -11,8 +11,8 @@
 				<tr>
 					<th width="10px"></th>
 					<%
-					(@entity.column_names-["id","account_id","created_at","updated_at"]).each{|k|
-					%><th><%= k.humanize%></th><%
+					@entity.to_info_keys.each{|k|
+					%><th><%= k.to_s.humanize%></th><%
 					}
 					%>
 					<th>Actions</th>
@@ -24,20 +24,17 @@
 				%>
 
 				<tr>
-					<form role="form" id="edit_form_<%= entity.id%>" action="/set/<%= @entity%>/<%= entity.id%>" method="post">
-						<td><span style="color: silver;font-size: 8px"><%= entity.id%></span>&nbsp;</td>
-						<%
-						(@entity.column_names-["id","account_id","created_at","updated_at"]).each{|k|
-						%><td>
-						<div class="form-group">
-							<input class="form-control" type="text" name="<%= k%>" value="<%= entity[k]%>" style="width: 100%">
-						</div></td><%
-						}
-						%>
+					<td><span style="color: silver;font-size: 8px"><%= entity.id%></span>&nbsp;</td>
+					<%
+					@entity.to_info_keys.each{|k|
+					%><td><%= entity[k]%></td><%
+					}
+					%>
 
-						<td width="140px">
-						<input type="submit" value="Save" class="btn btn-default">
-						&nbsp;&nbsp; <a onclick="confirmAction('Delete this <%= @entity%>?','/delete/<%= @entity%>/<%= entity.id%>');return false;" href="#" class="btn btn-danger btn-xs" >Delete</a></td>
+					<td width="140px">
+					<button value="Edit" class="btn btn-default">
+						Edit
+					</button> &nbsp;&nbsp; <a onclick="confirmAction('Delete this <%= @entity%>?','/delete/<%= @entity%>/<%= entity.id%>');return false;" href="#" class="btn btn-danger btn-xs" >Delete</a></td>
 					</form>
 				</tr>
 
@@ -47,4 +44,5 @@
 
 			</tbody>
 		</table>
-	</div></div>
+	</div>
+</div>

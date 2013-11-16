@@ -1,0 +1,29 @@
+<%
+instance = params[:id].present? ? @entity.find(params[:id]) : @entity.new
+
+
+%>
+<div class="panel panel-default">
+	<div class="panel-heading">
+		<%= params[:id].present? ? "Editing" : "Creating"%> <%= @entity.name%>
+	</div>
+	<div class="panel-body">
+		<%= form_tag("/set/#{@entity}",class:"form-horizontal", role:"form") do%>
+		<%
+		(@entity.column_names-["id","account_id","created_at","updated_at"]).each{|k|
+		%>
+		<div class="form-group">
+			<label class="sr-only" for="exampleInputPassword2"><%= k.humanize%></label>
+			<input name="<%= k%>" type="text" class="form-control" id="exampleInputPassword2" placeholder="" value="<%=instance[k]%>">
+		</div>
+
+		<%
+		}
+		%>
+		<button type="submit" class="btn btn-default">
+			<span class="glyphicon glyphicon-fire"></span> Sign in
+		</button>
+		<% end %>
+	</div>
+</div>
+

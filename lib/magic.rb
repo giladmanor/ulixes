@@ -14,10 +14,16 @@ module Magic
         def to_info
           {#{s.join(",")}}
         end
+        
+        def self.to_info_keys 
+          #{options}
+        end
       
       EB
       
     end
+    
+    
 
   end
 

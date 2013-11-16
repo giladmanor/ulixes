@@ -13,7 +13,7 @@ class LsdController < AdminController
   end
   
   def show
-    
+    #do nothing, just show the fricking form
   end
   
   def set
