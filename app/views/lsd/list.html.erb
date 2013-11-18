@@ -32,10 +32,11 @@
 					%>
 
 					<td width="140px">
-					<button value="Edit" class="btn btn-default">
-						Edit
-					</button> &nbsp;&nbsp; <a onclick="confirmAction('Delete this <%= @entity%>?','/delete/<%= @entity%>/<%= entity.id%>');return false;" href="#" class="btn btn-danger btn-xs" >Delete</a></td>
-					</form>
+					<%form_tag"/show/#{@entity}/#{entity.id || ''}",class:"form-horizontal", role:"form") do%>
+						<button value="Edit" class="btn btn-default">Edit</button>
+					<% end %>
+					&nbsp;&nbsp; <a onclick="confirmAction('Delete this <%= @entity%>?','/delete/<%= @entity%>/<%= entity.id%>');return false;" href="#" class="btn btn-danger btn-xs" >Delete</a></td>
+					
 				</tr>
 
 				<%
