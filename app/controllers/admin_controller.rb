@@ -36,7 +36,7 @@ class AdminController < ApplicationController
   end
   
   def menu_filer
-    session[:open_menu] = params[:open_menu]
+    session[:open_menu] = params[:open_menu] if params[:open_menu].present?
   end
   
   def auth_filter

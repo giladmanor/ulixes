@@ -1,6 +1,6 @@
 <%
-instance = params[:id].present? ? @entity.find(params[:id]) : @entity.new
-
+ instance = params[:id].present? ? @entity.find(params[:id]) : @entity.new
+ columns = @entity.column_names-["id","account_id","created_at","updated_at"]
 
 %>
 <div class="panel panel-default">
@@ -8,21 +8,39 @@ instance = params[:id].present? ? @entity.find(params[:id]) : @entity.new
 		<%= params[:id].present? ? "Editing" : "Creating"%> <%= @entity.name%>
 	</div>
 	<div class="panel-body">
-		<%= form_tag("/set/#{@entity}",class:"form-horizontal", role:"form") do%>
+		<%= form_tag("/set/#{@entity}", role:"form") do%>
 		<%
-		(@entity.column_names-["id","account_id","created_at","updated_at"]).each{|k|
+		columns.each{|k|
 		%>
 		<div class="form-group">
-			<label class="sr-only" for="exampleInputPassword2"><%= k.humanize%></label>
-			<input name="<%= k%>" type="text" class="form-control" id="exampleInputPassword2" placeholder="" value="<%=instance[k]%>">
+			<label for="<%= k%>"><%= k.humanize%></label>
+			<%
+			desc = @entity.describe(k) 
+			
+			case desc[:type].to_sym
+			when :string, :integer, :decimal, :float
+			%><input name="<%= k%>" type="text" class="form-control" id="<%= k%>" placeholder="" value="<%= instance[k]%>"><%
+			when :has_many
+			%><input name="<%= k%>" type="text" class="form-control" id="<%= k%>" placeholder="" value="<%= instance[k]%>"><%
+			when :Array
+			%><input name="<%= k%>" type="text" class="form-control" id="<%= k%>" placeholder="" value="<%= instance[k]%>"><%
+			when :decimal
+			%><input name="<%= k%>" type="text" class="form-control" id="<%= k%>" placeholder="" value="<%= instance[k]%>"><%
+			%>
 		</div>
 
 		<%
 		}
 		%>
-		<button type="submit" class="btn btn-default">
-			<span class="glyphicon glyphicon-fire"></span> Sign in
-		</button>
+		<p>
+			<button type="submit" class="btn btn-primary">
+				&nbsp;Save&nbsp;
+			</button>
+			&nbsp;&nbsp;&nbsp;
+			<button class="btn btn-warning">
+				Cancel
+			</button>
+		</p>
 		<% end %>
 	</div>
 </div>

@@ -1,5 +1,5 @@
 *.gem
-*.log
+log/*.log
 *.rbc
 .bundle
 .config
