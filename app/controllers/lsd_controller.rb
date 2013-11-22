@@ -19,7 +19,7 @@ class LsdController < AdminController
   def set
     #return unless params[:id].present?
     
-    entity = params[:id].nil? ? @entity.new : @entity.find(params[:id]) 
+    entity = params[:id].present? ? @entity.find(params[:id]) : @entity.new 
     entity.set(params.except(:id))
     if @entity.attribute_method?('account')
       entity.account = @user.account
