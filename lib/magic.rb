@@ -22,6 +22,7 @@ module Magic
 
     def serialized_columns(field, columns_and_options)
       class_eval <<-EB
+        include Magic::InstanceMethods
         def #{field}_structure
           {#{columns_and_options}}
         end
@@ -34,6 +35,7 @@ module Magic
       #puts s.join(",")
 
       class_eval <<-EB
+        include Magic::InstanceMethods
         def to_info
           {#{s.join(",")}}
         end
@@ -46,7 +48,15 @@ module Magic
   end
 
   module InstanceMethods
-
+    def set(params)
+      params.delete_if{|k,v| !self.respond_to?(k.to_sym)}
+      params.each{|k,v| 
+        if self.serialized_attributes[k]
+          v = eval v.to_s
+        end
+        self.update_attribute(k,v)
+      }
+    end
   end
 end
 

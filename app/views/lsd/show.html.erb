@@ -8,13 +8,16 @@
 		<%= params[:id].present? ? "Editing" : "Creating"%> <%= @entity.name%>
 	</div>
 	<div class="panel-body">
+		
 		<%= form_tag("/set/#{@entity}", role:"form") do%>
+		<input type="hidden" name="id" value="<%= params[:id]%>" />
 		<%
 		columns.each{|k|
 		%>
 		<div class="form-group">
 			<label for="<%= k%>"><%= k.humanize%></label>
 			<%
+			logger.debug @entity.inspect
 			desc = @entity.describe(k) 
 			
 			case desc[:type].to_sym
@@ -22,11 +25,11 @@
 			%><input name="<%= k%>" type="text" class="form-control" id="<%= k%>" placeholder="" value="<%= instance[k]%>"><%
 			when :has_many
 			%><input name="<%= k%>" type="text" class="form-control" id="<%= k%>" placeholder="" value="<%= instance[k]%>"><%
+			when :text
+			%><textarea name="<%= k%>" class="form-control" rows="3"><%= instance[k]%></textarea><%
 			when :Array
-			%><input name="<%= k%>" type="text" class="form-control" id="<%= k%>" placeholder="" value="<%= instance[k]%>"><%
-			when :decimal
-			%><input name="<%= k%>" type="text" class="form-control" id="<%= k%>" placeholder="" value="<%= instance[k]%>"><%
-			%>
+			%><textarea name="<%= k%>" class="form-control" rows="3"><%= instance[k]%></textarea><%
+			end%>
 		</div>
 
 		<%
