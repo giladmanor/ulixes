@@ -1,6 +1,6 @@
 <%
  instance = params[:id].present? ? @entity.find(params[:id]) : @entity.new
- columns = @entity.column_names-["id","account_id","created_at","updated_at"]
+  columns = @entity.column_names-["id","account_id","created_at","updated_at"]
 
 %>
 <div class="panel panel-default">
@@ -8,7 +8,7 @@
 		<%= params[:id].present? ? "Editing" : "Creating"%> <%= @entity.name%>
 	</div>
 	<div class="panel-body">
-		
+
 		<%= form_tag("/set/#{@entity}", role:"form") do%>
 		<input type="hidden" name="id" value="<%= params[:id]%>" />
 		<%
@@ -18,21 +18,29 @@
 			<label for="<%= k%>"><%= k.humanize%></label>
 			<%
 			logger.debug @entity.inspect
-			desc = @entity.describe(k) 
-			
+			desc = @entity.describe(k)
+
 			case desc[:type].to_sym
 			when :string, :integer, :decimal, :float
-			%><input name="<%= k%>" type="text" class="form-control" id="<%= k%>" placeholder="" value="<%= instance[k]%>"><%
+			%>
+			<input name="<%= k%>" type="text" class="form-control" id="<%= k%>" placeholder="" value="<%= instance[k]%>">
+			<%
 			when :belongs_to
 			%><%= select_tag(k, options_for_select(desc[:entity].all.where(:account_id=>@account.id)+[desc[:entity].new])) %><%
 			when :text
-			%><textarea name="<%= k%>" class="form-control" rows="3"><%= instance[k]%></textarea><%
+			%>			<textarea name="<%= k%>" class="form-control" rows="3"><%= instance[k]%></textarea><%
 			when :image
 			%>
-			<input name="upload" type="file" name="upload" ><%
+			<p style="float: right;">
+				<span class="label label-default"><%= instance.image_uri.nil? ? "No Image Yet" : "Current Image:"%></span><img src="<%= instance.image_uri%>"  class="img-responsive img-circle" >
+			</p>
+			<input name="upload" type="file" name="upload" >
+			<p class="help-block">Image will appear only after form submission</p>
+			<%
 			when :Array
-			%><textarea name="<%= k%>" class="form-control" rows="3"><%= instance[k]%></textarea><%
+			%>			<textarea name="<%= k%>" class="form-control" rows="3"><%= instance[k]%></textarea><%
 			end%>
+
 		</div>
 
 		<%
