@@ -23,7 +23,8 @@ module Magic
     
     def acts_as_image field_name, separator_field
       
-      FileUtils.mkdir_p "#{Rails.root}/public/repository/#{self.name}/"
+      rep_dir = "#{Rails.root}/public/repository/#{self.name}/"
+      FileUtils.mkdir_p rep_dir
       
       
       class_eval <<-EB
@@ -31,18 +32,22 @@ module Magic
         def upload_image upload
           file =  "\#{self.id\}.\#{file_suffix(upload.original_filename)\}"
           self.#{field_name} = file
-          path = File.join("#{Rails.root}/public/repository/#{self.name}/", "\#{file\}")
+          path = File.join("#{rep_dir}", "\#{file\}")
           # write the file
           File.open(path, "wb") { |f| f.write(upload.read) }
           self.save
         end
         
-        def get_image_uri
+        def image_uri
           self.#{field_name}
         end
         
         def self.galeries(id)
           #{self.name}.all.where(:account_id=>id).map{|i| i.#{separator_field}}.uniq.sort
+        end
+        
+        def self.galery(id, separator)
+          #{self.name}.all.where(:account_id=>id, :#{separator_field.to_sym}=>separator)
         end
 
       EB

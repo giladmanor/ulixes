@@ -3,66 +3,46 @@
 <div class="panel panel-default">
 	<div class="panel-heading">
 		<%= @entity.name%>
+
+		<%=form_tag("/set/#{@entity}",style:"float: right", role:"form") do%>
+		<button value="Edit" class="btn btn-default" style="float: right;margin-top: -7px">
+			<span class="glyphicon glyphicon-cloud-upload"></span> Upload
+		</button>
+		<input type="file" name="upload" style="float: right;margin-right: -89px;width: 91px;opacity: 0.01">
+		<% end %>
+
 	</div>
 	<div class="panel-body">
 
 		<ul class="nav nav-tabs">
-			<% 
+			<%
 			@entity.galeries(@account.id).each{|g|
-				%><li class="active"><a href="#"><%=g%></a></li><%
+			%>
+			<li class="active">
+				<a href="#"><%= g%></a>
+			</li><%
 			}
 			%>
-			
-			<li>
-				<a href="#">New</a>
-			</li>
-		</ul>
 
+		</ul>
+		<br />
 		<div class="row">
 			<div class="col-sm-6 col-md-3">
-				<a href="#" class="thumbnail"> <img data-src="holder.js/100%x180" alt="..."> </a>
+				<a href="#" class="thumbnail"> <%=form_tag("/show/#{@entity}", role:"form") do%>
+				<button value="Edit" class="btn btn-default" >
+					<span class="glyphicon glyphicon-cloud-upload"></span> Upload
+				</button> <% end %></a>
 			</div>
-			...
+			<%
+			@entity.galery(@account.id, params[:galery]).each{|item|
+			%>
+			<div class="col-sm-6 col-md-3">
+				<a href="#" class="thumbnail"> <img data-src="<%=item.image_url%>" alt="<%=item.label%>"> </a>
+			</div>
+			<%
+			}
+			%>
 		</div>
 
-		<table class="table table-striped">
-
-			<thead>
-				<tr>
-					<th width="10px"></th>
-					<%
-					@entity.to_info_keys.each{|k|
-					%><th><%= k.to_s.humanize%></th><%
-					}
-					%>
-					<th>Actions</th>
-				</tr>
-			</thead>
-			<tbody>
-				<%
-				@entities.each{|entity|
-				%>
-
-				<tr>
-					<td><span style="color: silver;font-size: 8px"><%= entity.id%></span>&nbsp;</td>
-					<%
-					@entity.to_info_keys.each{|k|
-					%><td><%= entity[k]%></td><%
-					}
-					%>
-
-					<td width="140px"><span><%=form_tag("/show/#{@entity}/#{entity.id || ''}",class:"form-horizontal", role:"form") do%>
-						<button value="Edit" class="btn btn-default">
-							<%= entity.id.nil? ? "New" : "Edit"%>
-						</button> <% end %></span><a style="float: right;margin-top: -27px;display: <%= entity.id.nil? ? "none" : "block"%>" onclick="confirmAction('Delete this <%= @entity%>?','<%= entity.id%>');return false;" href="#" class="btn btn-danger btn-xs" >x</a></td>
-
-				</tr>
-
-				<%
-				}
-				%>
-
-			</tbody>
-		</table>
 	</div>
 </div>
