@@ -27,6 +27,9 @@
 			%><%= select_tag(k, options_for_select(desc[:entity].all.where(:account_id=>@account.id)+[desc[:entity].new])) %><%
 			when :text
 			%><textarea name="<%= k%>" class="form-control" rows="3"><%= instance[k]%></textarea><%
+			when :image
+			%>
+			<input name="upload" type="file" name="upload" ><%
 			when :Array
 			%><textarea name="<%= k%>" class="form-control" rows="3"><%= instance[k]%></textarea><%
 			end%>

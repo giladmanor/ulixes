@@ -15,6 +15,8 @@ module Magic
       elsif t = self.serialized_attributes[field_name]
         res[:type] = t.object_class.name
         res[:structure] = self.call("#{field_name}_structure") if self.respond_to?("#{field_name}_structure")
+      elsif self.respond_to?("__acts_as_image") && __acts_as_image==field_name
+        res[:type] = "image"
       else
         res[:type] = self.column_types[field_name].type
       end
@@ -29,6 +31,11 @@ module Magic
       
       class_eval <<-EB
         include Magic::InstanceMethods
+        
+        def self.__acts_as_image
+          "#{field_name}"
+        end
+        
         def upload_image upload
           file =  "\#{self.id\}.\#{file_suffix(upload.original_filename)\}"
           self.#{field_name} = file
