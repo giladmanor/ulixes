@@ -11,8 +11,8 @@
 
 ===== Copyright and license
 
-Copyright 2013 Gilad Manor / Quizic Licensed as CC-NC [http://www.tldrlegal.com/l/CC-NC]
+Copyright 2013 Gilad Manor / Quizic Licensed as CC-NC [http://creativecommons.org/licenses/by-nc/3.0/legalcode]
 
 
-For the Admin GUI:
+For the Admin GUI: http://getbootstrap.com/
 Copyright 2013 Twitter, Inc under the Apache 2.0 license.
