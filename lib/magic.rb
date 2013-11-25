@@ -1,3 +1,4 @@
+require 'fileutils'
 module Magic
   def self.included(base)
     base.extend(ClassMethods)
@@ -19,6 +20,34 @@ module Magic
       end
       res
     end
+    
+    def acts_as_image field_name, separator_field
+      
+      FileUtils.mkdir_p "#{Rails.root}/public/repository/#{self.name}/"
+      
+      
+      class_eval <<-EB
+        include Magic::InstanceMethods
+        def upload_image upload
+          file =  "\#{self.id\}.\#{file_suffix(upload.original_filename)\}"
+          self.#{field_name} = file
+          path = File.join("#{Rails.root}/public/repository/#{self.name}/", "\#{file\}")
+          # write the file
+          File.open(path, "wb") { |f| f.write(upload.read) }
+          self.save
+        end
+        
+        def get_image_uri
+          self.#{field_name}
+        end
+        
+        def self.galeries(id)
+          #{self.name}.all.where(:account_id=>id).map{|i| i.#{separator_field}}.uniq.sort
+        end
+
+      EB
+      
+    end
 
     def serialized_columns(field, columns_and_options)
       class_eval <<-EB
@@ -27,6 +56,15 @@ module Magic
           {#{columns_and_options}}
         end
 
+      EB
+    end
+    
+    def to_label value
+      class_eval <<-EB
+        include Magic::InstanceMethods
+        def to_label
+          #{value}
+        end
       EB
     end
 

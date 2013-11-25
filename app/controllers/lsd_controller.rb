@@ -10,6 +10,14 @@ class LsdController < AdminController
       @entities=@entity.find(:all,:conditions=>cond);
     end
     
+    
+    if @entity.new.respond_to?("upload_image")
+      logger.debug "##grid##"*10
+      render :grid
+    else
+      logger.debug "--list--"*10
+      render :list
+    end 
   end
   
   def show

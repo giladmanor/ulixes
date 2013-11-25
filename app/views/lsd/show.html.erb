@@ -23,8 +23,8 @@
 			case desc[:type].to_sym
 			when :string, :integer, :decimal, :float
 			%><input name="<%= k%>" type="text" class="form-control" id="<%= k%>" placeholder="" value="<%= instance[k]%>"><%
-			when :has_many
-			%><input name="<%= k%>" type="text" class="form-control" id="<%= k%>" placeholder="" value="<%= instance[k]%>"><%
+			when :belongs_to
+			%><%= select_tag(k, options_for_select(desc[:entity].all.where(:account_id=>@account.id)+[desc[:entity].new])) %><%
 			when :text
 			%><textarea name="<%= k%>" class="form-control" rows="3"><%= instance[k]%></textarea><%
 			when :Array

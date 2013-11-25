@@ -8,6 +8,7 @@ Ulixes::Application.routes.draw do
   get 'admin(/:action)' , :controller=>:admin
   
   get 'list(/:entity)', :controller=>:lsd, :action=>:list
+  get 'grid(/:entity)', :controller=>:lsd, :action=>:list 
   post '(/:action(/:entity(/:id)))', :controller=>:lsd
   
   
