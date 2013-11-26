@@ -1,6 +1,7 @@
 *.gem
 *.log
 log/*
+public/repository/*
 *.rbc
 .bundle
 .config
