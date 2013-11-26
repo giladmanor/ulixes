@@ -37,8 +37,8 @@ module Magic
         end
         
         def upload_image upload
-          file =  "\#{self.id\}.\#{file_suffix(upload.original_filename)\}"
-          self.#{field_name} = file
+          file =  "\#{self.id\}.\#{upload.original_filename.split('.').last\}"
+          self.#{field_name} = "/repository/#{self.name}/" + file
           path = File.join("#{rep_dir}", "\#{file\}")
           # write the file
           File.open(path, "wb") { |f| f.write(upload.read) }
@@ -99,13 +99,17 @@ module Magic
 
   module InstanceMethods
     def set(params)
-      params.delete_if{|k,v| !self.respond_to?(k.to_sym)}
       params.each{|k,v| 
-        if self.serialized_attributes[k]
-          v = eval v.to_s
+        if self.respond_to?(k.to_sym)
+          v = eval v.to_s if self.serialized_attributes[k]
+          self.update_attribute(k,v)
         end
-        self.update_attribute(k,v)
       }
+      if params[:upload].present? && self.respond_to?(:upload_image)
+        self.upload_image params[:upload]
+        self.save
+      end
+      
     end
   end
 end

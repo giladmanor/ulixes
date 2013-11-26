@@ -4,7 +4,7 @@
 	<div class="panel-heading">
 		<%= @entity.name%>
 
-		<%=form_tag("/set/#{@entity}",style:"float: right", role:"form") do%>
+		<%=form_tag("/set/#{@entity}",style:"float: right", role:"form", enctype:"multipart/form-data") do%>
 		<button value="Edit" class="btn btn-default" style="float: right;margin-top: -7px">
 			<span class="glyphicon glyphicon-cloud-upload"></span> Upload
 		</button>
@@ -27,17 +27,20 @@
 		</ul>
 		<br />
 		<div class="row">
-			<div class="col-sm-6 col-md-3">
-				<a href="#" class="thumbnail"> <%=form_tag("/show/#{@entity}", role:"form") do%>
+			<div class="col-sm-2 col-md-2">
+				<%=form_tag("/show/#{@entity}", role:"form") do%>
 				<button value="Edit" class="btn btn-default" >
 					<span class="glyphicon glyphicon-cloud-upload"></span> Upload
-				</button> <% end %></a>
+				</button> <% end %>
 			</div>
 			<%
-			@entity.galery(@account.id, params[:galery]).each{|item|
+			galery =  params[:galery] || @entity.galeries(@account.id).first
+			@entity.galery(@account.id, galery).each{|item|
 			%>
 			<div class="col-sm-6 col-md-3">
-				<a href="#" class="thumbnail"> <img data-src="<%=item.image_url%>" alt="<%=item.label%>"> </a>
+				<a class="thumbnail"> <img src="<%= item.image_uri%>" alt="<%= item.name%>"> <%= item.name%>
+				<%=form_tag("/delete/#{@entity}/#{item.id}",style:"float: right", role:"form", enctype:"multipart/form-data") do%>
+				<button class="glyphicon glyphicon-remove" onclick="this.form.submit()"> </button><%end%> </a>
 			</div>
 			<%
 			}

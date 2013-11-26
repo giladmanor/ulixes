@@ -9,7 +9,7 @@
 	</div>
 	<div class="panel-body">
 
-		<%= form_tag("/set/#{@entity}", role:"form") do%>
+		<%= form_tag("/set/#{@entity}", role:"form", enctype:"multipart/form-data") do%>
 		<input type="hidden" name="id" value="<%= params[:id]%>" />
 		<%
 		columns.each{|k|
