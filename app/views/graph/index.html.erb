@@ -143,4 +143,12 @@ function transform(d) {
   return "translate(" + d.x + "," + d.y + ")";
 }
 
+circle.on("click", function(d) {
+    alert(d.name)
+})
+
+path.on("click", function(d) {
+    alert(d.type)
+})
+
 </script>
