@@ -38,13 +38,13 @@
 			
 			@user.role.lock.each{|sm|
 				%>
-				<li class="dropdown <%=session[:open_menu]==sm[:name] ? 'active open' : ''%>">
+				<li id="menu_<%=sm[:name].hash%>" class="dropdown">
 					<a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="<%=sm[:icon]%>"></i> <%=sm[:name]%> <b class="caret"></b></a>
 					<ul class="dropdown-menu ">
 					<%
 					sm[:items].each{|m|
 						%>
-						<li><a href="<%="#{m[:uri]}?open_menu=#{sm[:name]}"%>" ><%=m[:name]%></a></li>
+						<li><a onclick="localStorage.setItem('active_menu', '<%=sm[:name].hash%>')" href="<%="#{m[:uri]}"%>"><%=m[:name]%></a></li>
 						<%
 						}
 					%>	
@@ -56,6 +56,11 @@
 			%>
           	
           </ul>
+
+<script>
+	$('#menu_'+localStorage.getItem('active_menu')).addClass('active open');
+	console.log(localStorage.getItem('active_menu'));
+</script>
 
           <ul class="nav navbar-nav navbar-right navbar-user">
             
