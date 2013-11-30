@@ -1,0 +1,2 @@
+class GraphController < AdminController
+end
