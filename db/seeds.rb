@@ -5,3 +5,6 @@
 #
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
+account = Account.create({name:"Initial Test Account", key:"a"})
+role = Role.create({account: account, name: "tech", code: "tech", lock: [{:name=>"Account", :items=>[{:name=>"Roles", :uri=>"/})list/role"}]}, {:name=>"PBL", :items=>[{:name=>"Badges", :uri=>"/grid/badge"},  {:name=>"Scales", :uri=>"/list/scale"}]},  {:name=>"Graph", :items=>[{:name=>"Rules", :uri=>"/graph/index"}]}]})
+User.create({ account: account, role: role, uid: nil, login: "a", password: "a"})
