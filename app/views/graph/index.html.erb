@@ -1,30 +1,43 @@
-
-
 <div class="btn-group">
-  <button type="button" class="btn btn-default">New Node</button>
-  <button type="button" class="btn btn-default">New Edge</button>
-  <button type="button" class="btn btn-default">New Entry point</button>
+	<button type="button" class="btn btn-default">
+		New Node
+	</button>
+	<button type="button" class="btn btn-default">
+		New Edge
+	</button>
+	<button type="button" class="btn btn-default">
+		New Entry point
+	</button>
 </div>
 
-<div class="graph-goes-here"></div>
+<div style="z-index: 0">
 
+	<div style="z-index: 2;position: fixed;top: 130px;width: 50%;">
+		<div class="panel panel-default" style="opacity: 0.2">
+			<div class="panel-heading">
+				Node
+			</div>
+			<div class="panel-body">
+				<form class="form-horizontal" role="form">
+					<div class="form-group">
+						<label for="inputEmail3" class="col-sm-2 control-label">Label</label>
+						<div class="col-sm-10">
+							<input type="text" class="form-control" id="inputEmail3" placeholder="Give it a name">
+						</div>
+					</div>
 
+					
+				</form>
+			</div>
+		</div>
+	</div>
+
+	<div style="z-index: -100" class="graph-goes-here"></div>
+</div>
 
 <script src="http://d3js.org/d3.v3.min.js"></script>
 <script>
-	
 	graph(nodes, links);
 
 </script>
 
-
-<div class="panel panel-default" style="float: left;margin-top: -500px;">
-  <div class="panel-heading">Entity form</div>
-  <div class="panel-body">
-    <form class="form-horizontal" role="form">
-    	<input type="text" class="form-control" placeholder="Give it a name">
-    	<input type="text" class="form-control" placeholder="condition 1">
-    	<input type="text" class="form-control" placeholder="condition 2">
-    </form>
-  </div>
-</div>

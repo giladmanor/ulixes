@@ -8,6 +8,8 @@ var links = [
   {source: "Nokia", target: "Apple", type: "resolved"},
   {source: "HTC", target: "Apple", type: "suit"},
   {source: "Kodak", target: "Apple", type: "suit"},
+  {source: "Kodak", target: "Kodak", type: "resolved"},
+  {source: "Kodak", target: "Kodak", type: "suit"},
   {source: "Microsoft", target: "Barnes & Noble", type: "suit"}
 ];
 
@@ -38,15 +40,15 @@ var graph = function(nodes, links){
 	    .attr("height", height);
 	
 	// Per-type markers, as they don't inherit styles.
-	svg.append("defs").selectAll("marker")
+	var marker = svg.append("defs").selectAll("marker")
 	    .data(["suit", "licensing", "resolved"])
 	  .enter().append("marker")
 	    .attr("id", function(d) { return d; })
 	    .attr("viewBox", "0 -5 10 10")
-	    .attr("refX", 15)
+	    .attr("refX", 18)
 	    .attr("refY", -1.5)
-	    .attr("markerWidth", 14)
-	    .attr("markerHeight", 14)
+	    .attr("markerWidth", 4)
+	    .attr("markerHeight", 4)
 	    .attr("orient", "auto")
 	  .append("path")
 	    .attr("d", "M0,-5L10,0L0,5");
@@ -93,6 +95,10 @@ var graph = function(nodes, links){
 	});
 	
 	path.on("click", function(d) {
+	    alert(d.type);
+	});
+	
+	marker.on("click", function(d) {
 	    alert(d.type);
 	});
 	
