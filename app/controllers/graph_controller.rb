@@ -3,6 +3,7 @@ class GraphController < AdminController
   end
   
   def list_entry_points
+  end
   
   def get_graph_data
     p = params[:entry_point]
