@@ -24,6 +24,11 @@
 *   jQuery v1.4+
 *   jQuery UI v1.8+
 */
+
+
+
+//TODO: Move this file up to the assets. its currently here because of the loading sequence
+
 (function($) {
 
     $.widget('ui.tagit', {

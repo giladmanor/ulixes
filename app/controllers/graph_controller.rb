@@ -6,7 +6,7 @@ class GraphController < AdminController
     
     @nodes = {}
     @links = [
-      {:source=>"Microsoft", :target=> "Amazon", :type=> "licensing"},
+      {:source=>"Gilad", :target=> "Gilad", :type=> "licensing"},
       {:source=>"Microsoft", :target=> "HTC", :type=> "licensing"},
       {:source=>"Samsung", :target=> "Apple", :type=> "suit"},
       {:source=>"Motorola", :target=> "Apple", :type=> "suit"},

@@ -7,13 +7,13 @@
 
 <div style="z-index: 0">
 	<div style="z-index: 1;position: fixed;">
-		<%= form_tag("",class:"form-inline", role:"form",style:"display:none",id:"newNodeForm") do%>
+		<%= form_tag("",class:"form-inline", role:"form",style:"display:none",id:"newNodeForm",onsubmit:"return false;") do%>
 		<div class="input-group">
 			<span class="input-group-addon "><span class="glyphicon glyphicon-star"></span></span>
 			<input type="text" class="form-control" placeholder="New Entry Point Name">
 		</div>
 		<%end%>
-		<%= form_tag("",class:"form-inline", role:"form",style:"display:none",id:"selectNodeForm") do%>
+		<%= form_tag("",class:"form-inline", role:"form",style:"display:none",id:"selectNodeForm",onsubmit:"return false;") do%>
 		<div class="input-group">
 			<span class="input-group-addon "><span class="glyphicon glyphicon-list"></span></span>
 			<%= select_tag("node", options_for_select(@account.clusters.map{|c| [c.name,c.id]}),class:"form-control") %>
