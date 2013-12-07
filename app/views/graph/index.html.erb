@@ -15,17 +15,17 @@
 	<div style="z-index: 2;position: fixed;top: 130px;width: 50%;">
 		<div class="panel panel-default" style="opacity: 1">
 			<div class="panel-heading">
-				Node
+				Rule
 			</div>
 			<div class="panel-body">
 				<form class="form" role="form">
 					<div class="form-group">
-						<!-- <label for="inputEmail3" class="col-sm-2 control-label">Label</label> -->
-						
+
 					</div>
 					<div class="form-group">
-						
-						<input name="accounts" type="text" class="form-control typeahead" id="inputEmail3" placeholder="Give it a name">
+
+						<input name="rule" type="text" class="form-control " id="conditionInput" placeholder="start typing condition">
+
 					</div>
 
 				</form>
@@ -35,18 +35,107 @@
 
 	<div style="z-index: -100" class="graph-goes-here"></div>
 </div>
-
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js" type="text/javascript" charset="utf-8"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.9.2/jquery-ui.min.js" type="text/javascript" charset="utf-8"></script>
 <script src="http://d3js.org/d3.v3.min.js"></script>
-
+<script src="/tag-it.js"></script>
 <script>
 	graph(nodes, links);
 
-	$('input.typeahead').typeahead({
-		name : 'accounts',
-		prefetch: '/repos.json',  
-		template : ['<p class="repo-language">{{language}}</p>', '<p class="repo-name">{{name}}</p>', '<p class="repo-description">{{description}}</p>'].join(''),
-		engine : Hogan
+	var condition_obj = <%= raw(@condition_obj.to_json)%>
+	
+	var mapKeyArray = function(a){
+		res = [];
+		console.log("XXX",a);
+		$.each( a, function( key, value ) {
+	  		res.push(key);
+		});
+		return res;
+	}
+	
+	var isArrayofArrays = function(a){
+		if($.isArray(a) && $.isArray(a[0])){
+			return true;
+		}
+		return false;
+	}
+	
+	$(document).ready(function() {
+
+		$("#conditionInput").tagit({
+
+			// Options
+			fieldName : "skills",
+			availableTags : mapKeyArray(condition_obj),
+			autocomplete : {
+				delay : 0,
+				minLength : 0
+			},
+			showAutocompleteOnFocus : true,
+			removeConfirmation : false,
+			caseSensitive : true,
+			allowDuplicates : false,
+			allowSpaces : false,
+			readOnly : false,
+			tagLimit : null,
+			singleField : false,
+			singleFieldDelimiter : ',',
+			singleFieldNode : null,
+			tabIndex : null,
+			placeholderText : null,
+
+			// Events
+			beforeTagAdded : function(event, ui) {
+				//console.log(1, $("#conditionInput").tagit("assignedTags"));
+
+			},
+			
+			afterTagAdded : function(event, ui) {
+				var next_item = []
+				var line = $("#conditionInput").tagit("assignedTags")
+				console.log("LINE::::",line);
+				console.log("--------------------------------------");
+				path = condition_obj;
+				for(var item in line){
+					console.log("item<<",line[item]);
+					console.log("path<<",path);
+					path = path[line[item]];
+				}
+				console.log("path::::",path);
+				next_item = path;
+				
+				if(!$.isArray(next_item)){
+					console.log("choose::: ",next_item,"by",line[line.length-1]);
+					next_item = mapKeyArray(path);
+				}
+				
+				console.log("--------------------------------------");
+				
+				$("#conditionInput").tagit({
+					availableTags : next_item
+				})
+
+			},
+			beforeTagRemoved : function(event, ui) {
+				console.log(3, ui.tag);
+			},
+			onTagExists : function(event, ui) {
+				console.log(4, ui.tag);
+			},
+			onTagClicked : function(event, ui) {
+				console.log(5, ui.tag);
+			},
+			onTagLimitExceeded : function(event, ui) {
+				console.log(6, ui.tag);
+			}
+		});
 	});
+	// $('input.typeahead').typeahead({
+	// name : 'rule',
+	// prefetch: '/graph/list_conditions',
+	// template : ['<p class="repo-name">{{name}}</p>', '<p class="repo-description">{{description}}</p>'].join(''),
+	// engine : Hogan
+	// });
 
 </script>
 

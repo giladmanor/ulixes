@@ -9,7 +9,8 @@ Ulixes::Application.routes.draw do
   
   get 'list(/:entity)', :controller=>:lsd, :action=>:list
   get 'grid(/:entity)', :controller=>:lsd, :action=>:list
-  get 'graph(/:entity)', :controller=>:graph, :action=>:index 
+  get 'graph(/:action)', :controller=>:graph
+   
   
   post '(/:action(/:entity(/:id)))', :controller=>:lsd
   
