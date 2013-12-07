@@ -1,7 +1,7 @@
 
 //http://bl.ocks.org/mbostock/1153292
 
-var graph = function(nodes, links){
+var graph = function(nodes, links,linkFormDOM,nodeFormDOM){
 	// Compute the distinct nodes from the links.
 	links.forEach(function(link) {
 	  link.source = nodes[link.source] || (nodes[link.source] = {name: link.source});
@@ -76,11 +76,11 @@ var graph = function(nodes, links){
 	}
 	
 	circle.on("click", function(d) {
-	    alert(d.name);
+	    nodeFormDOM.toggle('fast');
 	});
 	
 	path.on("click", function(d) {
-	    alert(d.type);
+	    linkFormDOM.toggle('fast');
 	});
 	
 	marker.on("click", function(d) {

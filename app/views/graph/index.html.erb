@@ -4,22 +4,24 @@
 	<button type="button" class="btn btn-default" title="Select Other Entry point" onclick="$('#selectNodeForm').toggle('fast');$('#newNodeForm').hide('fast');"><span class="glyphicon glyphicon-list"></span></button>
 
 </div>
-<%= form_tag("",class:"form-inline", role:"form",style:"display:none",id:"newNodeForm") do%>
-<div class="input-group">
-	<span class="input-group-addon "><span class="glyphicon glyphicon-star"></span></span>
-	<input type="text" class="form-control" placeholder="New Entry Point Name">
-</div>
-<%end%>
-<%= form_tag("",class:"form-inline", role:"form",style:"display:none",id:"selectNodeForm") do%>
-	<div class="input-group">
-		<span class="input-group-addon "><span class="glyphicon glyphicon-list"></span></span>
-		<%= select_tag("node", options_for_select(@account.clusters.map{|c| [c.name,c.id]}),class:"form-control") %>
-		
-	</div>	
-<%end%>
-<div style="z-index: 0">
 
-	<div style="z-index: 2;position: fixed;top: 130px;width: 50%; display: none">
+<div style="z-index: 0">
+	<div style="z-index: 1;position: fixed;">
+		<%= form_tag("",class:"form-inline", role:"form",style:"display:none",id:"newNodeForm") do%>
+		<div class="input-group">
+			<span class="input-group-addon "><span class="glyphicon glyphicon-star"></span></span>
+			<input type="text" class="form-control" placeholder="New Entry Point Name">
+		</div>
+		<%end%>
+		<%= form_tag("",class:"form-inline", role:"form",style:"display:none",id:"selectNodeForm") do%>
+		<div class="input-group">
+			<span class="input-group-addon "><span class="glyphicon glyphicon-list"></span></span>
+			<%= select_tag("node", options_for_select(@account.clusters.map{|c| [c.name,c.id]}),class:"form-control") %>
+
+		</div>
+		<%end%>
+	</div>
+	<div id="edgeForm" style="z-index: 2;position: fixed;top: 130px;width: 50%; display: none">
 		<div class="panel panel-default" style="opacity: 1">
 			<div class="panel-heading">
 				Rule
@@ -47,6 +49,36 @@
 		</div>
 	</div>
 
+	<div id="nodeForm" style="z-index: 2;position: fixed;top: 130px;width: 50%; display: none">
+		<div class="panel panel-default" style="opacity: 1">
+			<div class="panel-heading">
+				Node
+			</div>
+			<div class="panel-body">
+				<form class="form" role="form">
+					<div class="form-group">
+						Require that:
+					</div>
+					<div class="form-group">
+
+						<input name="rule" type="text" class="form-control " id="requireInput" placeholder="start typing condition">
+
+					</div>
+					<div class="form-group">
+						Demand that:
+					</div>
+					<div class="form-group">
+
+						<input name="rule" type="text" class="form-control " id="demandInput" placeholder="start typing condition">
+
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+
+
+
 	<div style="z-index: -100" class="graph-goes-here"></div>
 </div>
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js" type="text/javascript" charset="utf-8"></script>
@@ -55,7 +87,7 @@
 <script src="/tag-it.js"></script>
 <script>
 
-graph(<%= raw(@nodes.to_json)%>,<%= raw(@links.to_json)%>);
+graph(<%= raw(@nodes.to_json)%>,<%= raw(@links.to_json)%>,$('#edgeForm'),$('#nodeForm'));
 
 	var require_obj = <%= raw(@require.to_json)%>;
 	var demand_obj =<%= raw(@demand.to_json)%>;
