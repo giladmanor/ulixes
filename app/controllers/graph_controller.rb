@@ -5,33 +5,7 @@ class GraphController < AdminController
     #logger.debug JSON.pretty_generate(@condition_obj)
   end
   
-  def require_statement
-    operands = {"is"=>[],"not"=>[], "grater then"=>[],"lesser then"=>[]}
-    scales = {}
-    @account.scales.each{|s| scales[s.code]=operands}
-    badges =  @account.badges.map{|b| b.name} #terminating Array
-    value_type = {"with Value"=>operands, "with Scale"=>scales}
-    { 
-      "if User Action"=>value_type,
-      "if User Scale"=>scales,
-      "if User has Badge"=>badges,
-      "unless User has Badge"=>badges
-    }
-  end
   
-  def demand_statement
-    operands = {"is"=>[],"not"=>[], "grater then"=>[],"lesser then"=>[]}
-    scales = {}
-    @account.scales.each{|s| scales[s.code]=operands}
-    badges =  @account.badges.map{|b| b.name} #terminating Array
-    value_type = {"with Value"=>operands, "with Scale"=>scales}
-    { 
-      "if User Action"=>value_type,
-      "if User Scale"=>scales,
-      "if User has Badge"=>badges,
-      "unless User has Badge"=>badges
-    }
-  end
 
 
   def list_entry_points
@@ -68,44 +42,42 @@ class GraphController < AdminController
   def set_edge
   end
 
-  def list_conditions
-    res = [
-      {
-        "name"=> "if User Action",
-        "description"=> "Condition by event on a user action",
-        "value"=> "if User Action",
-        "tokens"=> ["if","user","action"]
-      },
-      {
-        "name"=> "if User Scale",
-        "description"=> "Condition by measured user scale",
-        "value"=> "if User Scale",
-        "tokens"=> ["if","user","scale"]
-      },
-      {
-        "name"=> "if User has badge",
-        "description"=> "Case User has a badge",
-        "value"=> "if User has badge",
-        "tokens"=> ["if","has","action"]
-      },
-      {
-        "name"=> "if User does not have badge",
-        "description"=> "Case User has a badge",
-        "value"=> "if User does not have badge",
-        "tokens"=> ["if","no","badge"]
-      }
-    ]
-    logger.debug res.inspect
-    render :json=> res
+  
+  
+  
+  private # private # private # private # private # private # private # private # private # 
+  
+  
+  #TODO: make these structures dynamicly generated out of a plugin list
+  
+  def require_statement
+    operands = {"is"=>[],"not"=>[], "grater then"=>[],"lesser then"=>[]}
+    scales = {}
+    @account.scales.each{|s| scales[s.code]=operands}
+    badges =  @account.badges.map{|b| b.name} #terminating Array
+    value_type = {"with Value"=>operands, "with Scale"=>scales}
+    { 
+      "if User Event"=>value_type,
+      "if User Scale"=>scales,
+      "if User has Badge"=>badges,
+      "unless User has Badge"=>badges
+    }
   end
-
-  def list_rewards
+  
+  def demand_statement
+    operands = {"by (factor)"=>[],"by event value and factored by"=>[], "with event value factored by"=>[]}
+    scales = {}
+    @account.scales.each{|s| scales[s.code]=operands}
+    badges =  @account.badges.map{|b| b.name} #terminating Array
+    value_type = {"with Value"=>operands, "with Scale"=>scales}
+    { 
+      "upset User Scale"=>scales,
+      "grant User with Badge"=>badges,
+      "revoke User of Badge"=>badges
+    }
   end
-
-  def list_scales
-  end
-
-  def list_operators
-  end
+  
+  
+  
 
 end
