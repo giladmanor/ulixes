@@ -1,12 +1,11 @@
 class GraphController < AdminController
   def index
-    @condition_obj = condition_obj
-    
+    @require = require_statement
+    @demand = demand_statement
     #logger.debug JSON.pretty_generate(@condition_obj)
   end
   
-  def condition_obj
-    
+  def require_statement
     operands = {"is"=>[],"not"=>[], "grater then"=>[],"lesser then"=>[]}
     scales = {}
     @account.scales.each{|s| scales[s.code]=operands}
@@ -20,6 +19,20 @@ class GraphController < AdminController
     }
   end
   
+  def demand_statement
+    operands = {"is"=>[],"not"=>[], "grater then"=>[],"lesser then"=>[]}
+    scales = {}
+    @account.scales.each{|s| scales[s.code]=operands}
+    badges =  @account.badges.map{|b| b.name} #terminating Array
+    value_type = {"with Value"=>operands, "with Scale"=>scales}
+    { 
+      "if User Action"=>value_type,
+      "if User Scale"=>scales,
+      "if User has Badge"=>badges,
+      "unless User has Badge"=>badges
+    }
+  end
+
 
   def list_entry_points
   end

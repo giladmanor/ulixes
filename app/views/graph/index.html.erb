@@ -24,7 +24,7 @@
 					</div>
 					<div class="form-group">
 
-						<input name="rule" type="text" class="form-control " id="conditionInput" placeholder="start typing condition">
+						<input name="rule" type="text" class="form-control " id="requireInput" placeholder="start typing condition">
 
 					</div>
 
@@ -42,7 +42,8 @@
 <script>
 	graph(nodes, links);
 
-	var condition_obj = <%= raw(@condition_obj.to_json)%>
+	var require_obj = <%= raw(@require.to_json)%>
+	var demand_obj = <%= raw(@demand.to_json)%>
 	
 	var mapKeyArray = function(a){
 		res = [];
@@ -60,9 +61,38 @@
 		return false;
 	}
 	
+	var getNextList = function(line){
+		var next_item = []
+		console.log("LINE::::",line);
+		console.log("--------------------------------------");
+		path = require_obj;
+		for(var item in line){
+			console.log("item<<",line[item]);
+			console.log("path<<",path);
+			path = path[line[item]];
+		}
+		console.log("path::::",path);
+		next_item = path;
+		
+		if(!$.isArray(next_item)){
+			console.log("choose::: ",next_item,"by",line[line.length-1]);
+			next_item = mapKeyArray(path);
+		}
+		
+		console.log("--------------------------------------");
+		return next_item;
+	}
+	
+	var reline = function(){
+		$("#requireInput").tagit({
+			availableTags : getNextList($("#requireInput").tagit("assignedTags"))
+		})
+	}
+	
+	
 	$(document).ready(function() {
 
-		$("#conditionInput").tagit({
+		$("#requireInput").tagit({
 
 			// Options
 			fieldName : "skills",
@@ -91,33 +121,11 @@
 			},
 			
 			afterTagAdded : function(event, ui) {
-				var next_item = []
-				var line = $("#conditionInput").tagit("assignedTags")
-				console.log("LINE::::",line);
-				console.log("--------------------------------------");
-				path = condition_obj;
-				for(var item in line){
-					console.log("item<<",line[item]);
-					console.log("path<<",path);
-					path = path[line[item]];
-				}
-				console.log("path::::",path);
-				next_item = path;
-				
-				if(!$.isArray(next_item)){
-					console.log("choose::: ",next_item,"by",line[line.length-1]);
-					next_item = mapKeyArray(path);
-				}
-				
-				console.log("--------------------------------------");
-				
-				$("#conditionInput").tagit({
-					availableTags : next_item
-				})
+				reline();
 
 			},
 			beforeTagRemoved : function(event, ui) {
-				console.log(3, ui.tag);
+				reline();
 			},
 			onTagExists : function(event, ui) {
 				console.log(4, ui.tag);
