@@ -1,18 +1,25 @@
-<div class="btn-group">
-	<button type="button" class="btn btn-default">
-		New Node
-	</button>
-	<button type="button" class="btn btn-default">
-		New Edge
-	</button>
-	<button type="button" class="btn btn-default">
-		New Entry point
-	</button>
-</div>
+<div class="btn-group" style="float: left;margin-top: -56px;z-index: 99999;">
 
+	<button type="button" class="btn btn-default" title="New Enttry Point" onclick="$('#newNodeForm').toggle('fast');$('#selectNodeForm').hide('fast')"><span class="glyphicon glyphicon-star"></span></button>
+	<button type="button" class="btn btn-default" title="Select Other Entry point" onclick="$('#selectNodeForm').toggle('fast');$('#newNodeForm').hide('fast');"><span class="glyphicon glyphicon-list"></span></button>
+
+</div>
+<%= form_tag("",class:"form-inline", role:"form",style:"display:none",id:"newNodeForm") do%>
+<div class="input-group">
+	<span class="input-group-addon "><span class="glyphicon glyphicon-star"></span></span>
+	<input type="text" class="form-control" placeholder="New Entry Point Name">
+</div>
+<%end%>
+<%= form_tag("",class:"form-inline", role:"form",style:"display:none",id:"selectNodeForm") do%>
+	<div class="input-group">
+		<span class="input-group-addon "><span class="glyphicon glyphicon-list"></span></span>
+		<%= select_tag("node", options_for_select(@account.clusters.map{|c| [c.name,c.id]}),class:"form-control") %>
+		
+	</div>	
+<%end%>
 <div style="z-index: 0">
 
-	<div style="z-index: 2;position: fixed;top: 130px;width: 50%;">
+	<div style="z-index: 2;position: fixed;top: 130px;width: 50%; display: none">
 		<div class="panel panel-default" style="opacity: 1">
 			<div class="panel-heading">
 				Rule
@@ -47,18 +54,17 @@
 <script src="http://d3js.org/d3.v3.min.js"></script>
 <script src="/tag-it.js"></script>
 <script>
-	graph(nodes, links);
 
-	var require_obj = <%= raw(@require.to_json)%>
-	var demand_obj = <%= raw(@demand.to_json)%>
-	
+graph(<%= raw(@nodes.to_json)%>,<%= raw(@links.to_json)%>);
+
+	var require_obj = <%= raw(@require.to_json)%>;
+	var demand_obj =<%= raw(@demand.to_json)%>;
 	
 	$(document).ready(function() {
-		makeRule($("#requireInput"),require_obj);
-		makeRule($("#demandInput"),demand_obj);
+		makeRule($("#requireInput"), require_obj);
+		makeRule($("#demandInput"), demand_obj);
 	});
-	
-	
+
 	// $('input.typeahead').typeahead({
 	// name : 'rule',
 	// prefetch: '/graph/list_conditions',

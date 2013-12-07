@@ -1,20 +1,5 @@
 
-// http://blog.thomsonreuters.com/index.php/mobile-patent-suits-graphic-of-the-day/
-var links = [
-  {source: "Microsoft", target: "Amazon", type: "licensing"},
-  {source: "Microsoft", target: "HTC", type: "licensing"},
-  {source: "Samsung", target: "Apple", type: "suit"},
-  {source: "Motorola", target: "Apple", type: "suit"},
-  {source: "Nokia", target: "Apple", type: "resolved"},
-  {source: "HTC", target: "Apple", type: "suit"},
-  {source: "Kodak", target: "Apple", type: "suit"},
-  {source: "Kodak", target: "Kodak", type: "resolved"},
-  {source: "Kodak", target: "Kodak", type: "suit"},
-  {source: "Microsoft", target: "Barnes & Noble", type: "suit"}
-];
-
-var nodes = {};
-
+//http://bl.ocks.org/mbostock/1153292
 
 var graph = function(nodes, links){
 	// Compute the distinct nodes from the links.

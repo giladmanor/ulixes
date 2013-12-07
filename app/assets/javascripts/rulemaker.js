@@ -16,7 +16,7 @@ var makeRule = function(domObj, condition_obj) {
 		for (var item in line) {
 			console.log("item<<", line[item]);
 			console.log("path<<", path);
-			path = path[line[item]];
+			path = path[line[item]] || [];
 		}
 		console.log("path::::", path);
 		next_item = path;
