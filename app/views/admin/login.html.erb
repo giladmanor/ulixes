@@ -2,7 +2,7 @@
 <html>
 	<head>
 		<title>Ulixes</title>
-
+		<%= stylesheet_link_tag    "application", media: "all", "data-turbolinks-track" => true %>
 		<%= javascript_include_tag "application", "data-turbolinks-track" => true %>
 		<%= csrf_meta_tags %>
 
@@ -15,23 +15,12 @@
 		<!-- Latest compiled and minified JavaScript -->
 		<script src="//netdna.bootstrapcdn.com/bootstrap/3.0.2/js/bootstrap.min.js"></script>
 	</head>
-	<style>
-		.lll {
-			transition: opacity 1s;
-			opacity: 0.3;
-			filter: alpha(opacity=30); /* For IE8 and earlier */
-		}
-		.lll:hover {
-			transition: opacity 1s;
-			opacity: 1.0;
-			filter: alpha(opacity=100); /* For IE8 and earlier */
-		}
-	</style>
+	
 
 	<body style="background-image: url(/assets/logo_large.png); background-repeat:no-repeat;background-attachment:fixed;background-position:right bottom; ">
 
-		<h1 class="text-right text-muted" style="width: 483px;margin-top: 20%;margin-left: 20%;">Ulixes Admin</h1>
-		<div class="panel panel-default" style="width: 483px;margin-left: 20%;">
+		<h1 class="text-right text-muted lll" style="width: 483px;margin-top: 20%;margin-left: 20%;">Ulixes Admin</h1>
+		<div class="panel panel-default lll" style="width: 483px;margin-left: 20%;">
 
 			<div class="panel-body">
 
@@ -52,31 +41,7 @@
 				<% end %>
 			</div>
 		</div>
-		<dl class="dl-horizontal lll" style="width: 483px;margin-left: 35%;" >
-			<dt>
-				Written by
-			</dt>
-			<dd>
-				Gilad Manor
-			</dd>
-			<dt>
-				twitter
-			</dt>
-			<dd>
-				<a href="https://twitter.com/giladmanor">@giladmanor</a>
-			</dd>
-			<dt>
-				GitHub
-			</dt>
-			<dd>
-				<a href="https://github.com/giladmanor">Lazy-eye developer</a>
-			</dd>
-			<dt>
-				Blog
-			</dt>
-			<dd>
-				<a href="http://giladmanor.com">Hands-on development</a>
-			</dd>
-		</dl>
+		<h2 class="text-right text-muted lll" style="width: 483px;margin-left: 35%;">The Little Engine That Can</h2>
+		
 	</body>
 </html>

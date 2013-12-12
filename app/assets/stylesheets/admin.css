@@ -83,6 +83,17 @@ table.tablesorter thead tr th:hover {
   height: 100%;
 }
 
+.lll {
+	transition: opacity 2s;
+	opacity: 0.3;
+	filter: alpha(opacity=30); /* For IE8 and earlier */
+}
+.lll:hover {
+	transition: opacity 1s;
+	opacity: 1.0;
+	filter: alpha(opacity=100); /* For IE8 and earlier */
+}
+
 /* Edit Below to Customize Widths > 768px */
 @media (min-width:768px) {
 

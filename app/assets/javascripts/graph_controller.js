@@ -1,4 +1,5 @@
 var GraphController = function(options) {
+	
 	this.options = {
 		links : [],
 
@@ -14,15 +15,23 @@ var GraphController = function(options) {
 	};
 	
 	this.openNodeForm = function(node){
-		get(node.id,function(d){
-			nodeFormDOM.toggle('fast');
-		});
+		openForm("node",node);
+		
+		
+		
+		// get(node.id,function(d){
+			// openForm("node",d);
+// 			
+		// });
 	};
 	
 	this.openEdgeForm = function(edge){
-		get(edge.id,function(d){
-			linkFormDOM.toggle('fast');
-		});
+		openForm("edge",edge);
+		
+		
+		// get(edge.id,function(d){
+			// openForm("edge",d);
+		// });
 	};
 	
 	var get = function(entity,id,successFunction) {
@@ -47,4 +56,5 @@ var GraphController = function(options) {
 		});
 	};
 
+	graph(options.nodes,options.links,this.openNodeForm,this.openEdgeForm);
 };

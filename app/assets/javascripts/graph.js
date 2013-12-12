@@ -1,11 +1,11 @@
 
 //http://bl.ocks.org/mbostock/1153292
 
-var graph = function(nodes, links,linkFormDOM,nodeFormDOM){
+var graph = function(nodes, links,openNodeFormFunction,openLinkFormFunction){
 	// Compute the distinct nodes from the links.
 	links.forEach(function(link) {
-	  link.source = nodes[link.source] || (nodes[link.source] = {name: link.source});
-	  link.target = nodes[link.target] || (nodes[link.target] = {name: link.target});
+	  link.source = nodes[link.source] ;//|| (nodes[link.source] = {name: link.source});
+	  link.target = nodes[link.target] ;//|| (nodes[link.target] = {name: link.target});
 	});
 	
 	var width = 960,
@@ -76,11 +76,11 @@ var graph = function(nodes, links,linkFormDOM,nodeFormDOM){
 	}
 	
 	circle.on("click", function(d) {
-	    nodeFormDOM.toggle('fast');
+	    openNodeFormFunction(d);
 	});
 	
 	path.on("click", function(d) {
-	    linkFormDOM.toggle('fast');
+	    openLinkFormFunction(d);
 	});
 	
 	marker.on("click", function(d) {

@@ -1,4 +1,4 @@
-<script language="javascript" type="text/javascript" src="http://ajax.microsoft.com/ajax/jquery.templates/beta1/jquery.tmpl.min.js"></script>
+
 
 <script id="nodeFormTemplate" type="text/x-jquery-tmpl">
 	<div class="panel panel-default" style="opacity: 1">
@@ -89,7 +89,7 @@
 		<%end%>
 	</div>
 
-	<div id="formHolder" style="z-index: 2;position: fixed;top: 130px;width: 50%; display: none">
+	<div id="formHolder" style="z-index: 2;position: fixed;top: 130px;width: 50%">
 		
 	</div>
 
@@ -104,8 +104,10 @@
 
 
 function openForm(type,data){
-	$("#formHolder").html("");
-	$("#"+type+"FormTemplate" ).tmpl(data).appendTo("#formHolder");
+	$("#formHolder").html(type);
+	var name = "#"+type+"FormTemplate";
+	console.log(name, data);
+	
 }
 
 function closeForm(){
@@ -114,21 +116,21 @@ function closeForm(){
 
 
 
-graph(<%= raw(@nodes.to_json)%>,<%= raw(@links.to_json)%>
-	,
-	$('#edgeForm'), $('#nodeForm'));
 
-	var require_obj = 
-<%= raw(@require.to_json)%>
-	;
-	var demand_obj = 
-<%= raw(@demand.to_json)%>
-	;
 
-	$(document).ready(function() {
-		makeRule($("#requireInput"), require_obj);
-		makeRule($("#demandInput"), demand_obj);
-	});
+var controller;
+$(document).ready(function() {
+	controller = new GraphController({links:<%= raw(@links.to_json)%>,nodes:<%= raw(@nodes.to_json)%>});
+})
+	
+	
+	
+	
+		
+		
+		//makeRule($("#requireInput"), require_obj);
+		//makeRule($("#demandInput"), demand_obj);
+	
 
 	// $('input.typeahead').typeahead({
 	// name : 'rule',
