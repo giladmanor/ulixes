@@ -14,11 +14,15 @@ var GraphController = function(options) {
 	};
 	
 	this.openNodeForm = function(node){
-		get(node.id,function(){});
+		get(node.id,function(d){
+			nodeFormDOM.toggle('fast');
+		});
 	};
 	
 	this.openEdgeForm = function(edge){
-		get(edge.id,function(){});
+		get(edge.id,function(d){
+			linkFormDOM.toggle('fast');
+		});
 	};
 	
 	var get = function(entity,id,successFunction) {

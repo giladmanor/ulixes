@@ -64,10 +64,12 @@ class GraphController < AdminController
     @account.scales.each{|s| scales[s.code]=operands}
     badges =  @account.badges.map{|b| b.name} #terminating Array
     value_type = {"with Value"=>operands, "with Scale"=>scales}
+    
     { 
       "upset User Scale"=>scales,
       "grant User with Badge"=>badges,
-      "revoke User of Badge"=>badges
+      "revoke User of Badge"=>badges,
+      "send Notification"=>[]
     }
   end
   
