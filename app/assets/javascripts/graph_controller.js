@@ -15,31 +15,22 @@ var GraphController = function(options) {
 	};
 	
 	this.openNodeForm = function(node){
-		openForm("node",node);
-		
-		
-		
-		// get(node.id,function(d){
-			// openForm("node",d);
-// 			
-		// });
+		get("node",node,function(d){
+			openForm("node",d);
+		});
 	};
 	
 	this.openEdgeForm = function(edge){
-		openForm("edge",edge);
-		
-		
-		// get(edge.id,function(d){
-			// openForm("edge",d);
-		// });
+		get("edge",edge,function(d){
+			openForm("edge",d);
+		});
 	};
 	
-	var get = function(entity,id,successFunction) {
-		var valuesToSubmit = formDOM.serialize();
+	var get = function(entity,data,successFunction) {
 		$.ajax({
-			url : formDOM.attr('action'), //sumbits it to the given url of the form
-			data : valuesToSubmit,
-			dataType : "JSON" // you want a difference between normal and ajax-calls, and json is standard
+			url : "/graph/get_"+entity,
+			data : data
+			//dataType : "JSON" // you want a difference between normal and ajax-calls, and json is standard
 		}).success(function(json) {
 			successFunction(json);
 		});

@@ -7,15 +7,15 @@ class GraphController < AdminController
     ["Gilad","HTC","Microsoft","Samsung","Motorola","Nokia", "Kodak","Apple","Barnes & Noble"].each{|n| @nodes[n.hash]={:id=>n.hash, :name=>n}}
     
     @links = [
-      {:source=>"Gilad".hash, :target=> "Gilad".hash, :type=> "licensing"},
+      
       {:source=>"Microsoft".hash, :target=> "HTC".hash, :type=> "licensing"},
       {:source=>"Samsung".hash, :target=> "Apple".hash, :type=> "suit"},
       {:source=>"Motorola".hash, :target=> "Apple".hash, :type=> "suit"},
       {:source=>"Nokia".hash, :target=> "Apple".hash, :type=> "resolved"},
       {:source=>"HTC".hash, :target=> "Apple".hash, :type=> "suit"},
       {:source=>"Kodak".hash, :target=> "Apple".hash, :type=> "suit"},
-      {:source=>"Kodak".hash, :target=> "Kodak".hash, :type=> "resolved"},
-      {:source=>"Kodak".hash, :target=> "Kodak".hash, :type=> "suit"},
+      {:source=>"Apple".hash, :target=> "Kodak".hash, :type=> "resolved"},
+      
       {:source=>"Microsoft".hash, :target=> "Barnes & Noble".hash, :type=> "suit"}
     ]
     
@@ -26,9 +26,18 @@ class GraphController < AdminController
   end
 
   def get_node
+    @node=params
+    @require = require_statement
+    @demand = demand_statement
+    render :node, :layout=>false
   end
 
   def get_edge
+    @source = params[:source]
+    @target = params[:target]
+    @require = require_statement
+    @demand = demand_statement
+    render :edge, :layout=>false
   end
 
   def set_node

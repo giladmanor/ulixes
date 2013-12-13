@@ -1,0 +1,32 @@
+<div class="panel panel-default" style="opacity: 1">
+	<div class="panel-heading">
+		Node <%=@node[:name]%>
+		<span class="glyphicon glyphicon-remove" style="float: right" onclick="closeForm()"></span>
+	</div>
+	
+	<div class="panel-body">
+
+		<form class="form" role="form">
+			<div class="form-group">
+				Require that:
+			</div>
+			<div class="form-group">
+
+				<input name="rule" type="text" class="form-control " id="requireInput" placeholder="start typing condition">
+
+			</div>
+			<div class="form-group">
+				Demand that:
+			</div>
+			<div class="form-group">
+
+				<input name="rule" type="text" class="form-control " id="demandInput" placeholder="start typing condition">
+
+			</div>
+		</form>
+	</div>
+</div>
+<script>
+	makeRule($("#requireInput"), <%= raw(@require.to_json)%>);
+</script>
+

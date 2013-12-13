@@ -30,10 +30,10 @@ var graph = function(nodes, links,openNodeFormFunction,openLinkFormFunction){
 	  .enter().append("marker")
 	    .attr("id", function(d) { return d; })
 	    .attr("viewBox", "0 -5 10 10")
-	    .attr("refX", 18)
-	    .attr("refY", -1.5)
-	    .attr("markerWidth", 4)
-	    .attr("markerHeight", 4)
+	    .attr("refX", 16)
+	    .attr("refY", -1)
+	    .attr("markerWidth", 1.1)
+	    .attr("markerHeight", 1.1)
 	    .attr("orient", "auto")
 	  .append("path")
 	    .attr("d", "M0,-5L10,0L0,5");
@@ -47,13 +47,13 @@ var graph = function(nodes, links,openNodeFormFunction,openLinkFormFunction){
 	var circle = svg.append("g").selectAll("circle")
 	    .data(force.nodes())
 	  .enter().append("circle")
-	    .attr("r", 14)
+	    .attr("r", 20)
 	    .call(force.drag);
 	
 	var text = svg.append("g").selectAll("text")
 	    .data(force.nodes())
 	  .enter().append("text")
-	    .attr("x", -5)
+	    .attr("x", -10)
 	    .attr("y", ".31em")
 	    .text(function(d) { return d.name; });
 	

@@ -1,66 +1,5 @@
 
 
-<script id="nodeFormTemplate" type="text/x-jquery-tmpl">
-	<div class="panel panel-default" style="opacity: 1">
-		<div class="panel-heading">
-			Node ${name}
-		</div>
-		<div class="panel-body">
-			
-			<form class="form" role="form">
-				<div class="form-group">
-					Require that:
-				</div>
-				<div class="form-group">
-
-					<input name="rule" type="text" class="form-control " id="requireInput" placeholder="start typing condition">
-
-				</div>
-				<div class="form-group">
-					Demand that:
-				</div>
-				<div class="form-group">
-
-					<input name="rule" type="text" class="form-control " id="demandInput" placeholder="start typing condition">
-
-				</div>
-			</form>
-		</div>
-	</div>
-</script>
-
-<script id="edgeFormTemplate" type="text/x-jquery-tmpl">
-	<div class="panel panel-default" style="opacity: 1">
-		<div class="panel-heading">
-			Transition from ${source} to ${target}
-		</div>
-		<div class="panel-body">
-			<form class="form" role="form">
-				<div class="form-group">
-					Require that:
-				</div>
-				<div class="form-group">
-
-					<input name="rule" type="text" class="form-control " id="requireInput" placeholder="start typing condition">
-
-				</div>
-				<div class="form-group">
-					Demand that:
-				</div>
-				<div class="form-group">
-
-					<input name="rule" type="text" class="form-control " id="demandInput" placeholder="start typing condition">
-
-				</div>
-			</form>
-		</div>
-	</div>
-</script>
-
-
-
-
-
 <div class="btn-group" style="float: left;margin-top: -56px;z-index: 99999;">
 
 	<button type="button" class="btn btn-default" title="New Enttry Point" onclick="$('#newNodeForm').toggle('fast');$('#selectNodeForm').hide('fast')">
@@ -108,6 +47,8 @@ function openForm(type,data){
 	var name = "#"+type+"FormTemplate";
 	console.log(name, data);
 	
+	
+	$("#formHolder").html(data);
 }
 
 function closeForm(){
