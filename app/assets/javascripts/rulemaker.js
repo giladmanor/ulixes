@@ -35,10 +35,11 @@ var makeRule = function(domObj, condition_obj) {
 			availableTags : getNextList(domObj.tagit("assignedTags"), condition_obj)
 		});
 	};
+	
 	domObj.tagit({
 
 		// Options
-		fieldName : "skills",
+		//fieldName : "skills",
 		availableTags : mapKeyArray(condition_obj),
 		autocomplete : {
 			delay : 0,

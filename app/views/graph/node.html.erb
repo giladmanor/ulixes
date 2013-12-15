@@ -1,32 +1,68 @@
 <div class="panel panel-default" style="opacity: 1">
 	<div class="panel-heading">
-		Node <%=@node[:name]%>
+		Node <%= @node[:name]%>
 		<span class="glyphicon glyphicon-remove" style="float: right" onclick="closeForm()"></span>
 	</div>
-	
+
 	<div class="panel-body">
+		<table class="table table-hover">
+			<thead>
+				<tr>
+					<th>IF ALL (and):</th>
+					<th style="width: 50px"></th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td>
+					<input id="---1" name="rule" type="text" class="form-control requirment" value="i ,love ,you" >
+					</td>
+					<td><span class="glyphicon glyphicon-ok-circle" onclick="closeForm()"></span><span class="glyphicon glyphicon-remove-circle" onclick="closeForm()"></span></td>
+				</tr>
+				<tr>
+					<td>
+					<input id="---2" name="rule" type="text" class="form-control requirment" value="" placeholder="new rule">
+					</td>
+					<td><span class="glyphicon glyphicon-ok-circle" onclick="closeForm()"></span><span class="glyphicon glyphicon-remove-circle" onclick="closeForm()"></span></td>
+				</tr>
 
-		<form class="form" role="form">
-			<div class="form-group">
-				Require that:
-			</div>
-			<div class="form-group">
+			</tbody>
+		</table>
+		<table class="table table-hover">
+			<thead>
+				<tr>
+					<th>Then:</th>
+					<th style="width: 50px"></th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td>
+					<input id="---3" name="rule" type="text" class="form-control requirment" value="i ,love ,you" >
+					</td>
+					<td><span class="glyphicon glyphicon-ok-circle" onclick="closeForm()"></span><span class="glyphicon glyphicon-remove-circle" onclick="closeForm()"></span></td>
+				</tr>
+				<tr>
+					<td>
+					<input id="---4" name="rule" type="text" class="form-control requirment" value="" placeholder="new rule">
+					</td>
+					<td><span class="glyphicon glyphicon-ok-circle" onclick="closeForm()"></span><span class="glyphicon glyphicon-remove-circle" onclick="closeForm()"></span></td>
+				</tr>
 
-				<input name="rule" type="text" class="form-control " id="requireInput" placeholder="start typing condition">
-
-			</div>
-			<div class="form-group">
-				Demand that:
-			</div>
-			<div class="form-group">
-
-				<input name="rule" type="text" class="form-control " id="demandInput" placeholder="start typing condition">
-
-			</div>
-		</form>
+			</tbody>
+		</table>
 	</div>
 </div>
 <script>
-	makeRule($("#requireInput"), <%= raw(@require.to_json)%>);
+var requirments =<%= raw(@require.to_json)%>;
+
+	$(document).ready(function() {
+		//domO.val(initData);
+		makeRule($("#---1"), requirments);
+		makeRule($("#---2"), requirments);
+		makeRule($("#---3"), requirments);
+		makeRule($("#---4"), requirments);
+	})
+	//makeRule($("#requireInput"), );
 </script>
 
