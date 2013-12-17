@@ -1,4 +1,5 @@
 var GraphController = function(options) {
+	var graph;
 	
 	this.options = {
 		links : [],
@@ -7,7 +8,11 @@ var GraphController = function(options) {
 	this.options = options;
 
 	this.setEntryPoint = function(formDOM) {
-		send(formDOM,function(d){});
+		formDOM.attr('action',"/graph/set_node");
+		send(formDOM,function(d){
+			console.log("this just happend", d);
+			refreshGraph(d);
+		});
 	};
 
 	this.listEntryPoints = function() {
@@ -24,6 +29,12 @@ var GraphController = function(options) {
 		get("edge",edge,function(d){
 			openForm("edge",d);
 		});
+	};
+	
+	
+	////////////////////////////////////////////////////////////
+	var refreshGraph = function(data){
+		graph.update(data.nodes,data.links);
 	};
 	
 	var get = function(entity,data,successFunction) {
@@ -47,5 +58,5 @@ var GraphController = function(options) {
 		});
 	};
 
-	graph(options.nodes,options.links,this.openNodeForm,this.openEdgeForm);
+	graph = new Graph(options.nodes,options.links,this.openNodeForm,this.openEdgeForm);
 };

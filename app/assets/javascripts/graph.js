@@ -1,12 +1,20 @@
 
 //http://bl.ocks.org/mbostock/1153292
 
-var graph = function(nodes, links,openNodeFormFunction,openLinkFormFunction){
+var Graph = function(nodes, links,openNodeFormFunction,openLinkFormFunction){
 	// Compute the distinct nodes from the links.
 	links.forEach(function(link) {
 	  link.source = nodes[link.source] ;//|| (nodes[link.source] = {name: link.source});
 	  link.target = nodes[link.target] ;//|| (nodes[link.target] = {name: link.target});
 	});
+	
+	this.update = function(nodes, links) {
+		links.forEach(function(link) {
+			link.source = nodes[link.source];
+			link.target = nodes[link.target];
+		});
+	}; 
+
 	
 	var width = 960,
 	    height = 600;

@@ -4,57 +4,59 @@
 		<span class="glyphicon glyphicon-remove" style="float: right" onclick="closeForm()"></span>
 	</div>
 
-	<div class="panel-body">
-		<table class="table table-hover">
-			<thead>
-				<tr>
-					<th>IF ALL (and):</th>
-					<th style="width: 50px"></th>
-				</tr>
-			</thead>
-			<tbody>
-				<tr>
-					<td>
-					<input id="---1" name="rule" type="text" class="form-control requirment" value="i ,love ,you" >
-					</td>
-					<td><span class="glyphicon glyphicon-ok-circle" onclick="closeForm()"></span><span class="glyphicon glyphicon-remove-circle" onclick="closeForm()"></span></td>
-				</tr>
-				<tr>
-					<td>
-					<input id="---2" name="rule" type="text" class="form-control requirment" value="" placeholder="new rule">
-					</td>
-					<td><span class="glyphicon glyphicon-ok-circle" onclick="closeForm()"></span><span class="glyphicon glyphicon-remove-circle" onclick="closeForm()"></span></td>
-				</tr>
+	<div class="panel-body" style="overflow: auto;">
+		<div>
+			<table class="table table-hover">
+				<thead>
+					<tr>
+						<th>IF ALL (and):</th>
+						<th style="width: 50px"></th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td>
+						<input id="---1" name="rule" type="text" class="form-control requirment" value="i ,love ,you" >
+						</td>
+						<td><span class="glyphicon glyphicon-ok-circle" onclick="closeForm()"></span><span class="glyphicon glyphicon-remove-circle" onclick="closeForm()"></span></td>
+					</tr>
+					<tr>
+						<td>
+						<input id="---2" name="rule" type="text" class="form-control requirment" value="" placeholder="new rule">
+						</td>
+						<td><span class="glyphicon glyphicon-ok-circle" onclick="closeForm()"></span><span class="glyphicon glyphicon-remove-circle" onclick="closeForm()"></span></td>
+					</tr>
 
-			</tbody>
-		</table>
-		<table class="table table-hover">
-			<thead>
-				<tr>
-					<th>Then:</th>
-					<th style="width: 50px"></th>
-				</tr>
-			</thead>
-			<tbody>
-				<tr>
-					<td>
-					<input id="---3" name="rule" type="text" class="form-control requirment" value="i ,love ,you" >
-					</td>
-					<td><span class="glyphicon glyphicon-ok-circle" onclick="closeForm()"></span><span class="glyphicon glyphicon-remove-circle" onclick="closeForm()"></span></td>
-				</tr>
-				<tr>
-					<td>
-					<input id="---4" name="rule" type="text" class="form-control requirment" value="" placeholder="new rule">
-					</td>
-					<td><span class="glyphicon glyphicon-ok-circle" onclick="closeForm()"></span><span class="glyphicon glyphicon-remove-circle" onclick="closeForm()"></span></td>
-				</tr>
+				</tbody>
+			</table>
+			<table class="table table-hover">
+				<thead>
+					<tr>
+						<th>Then:</th>
+						<th style="width: 50px"></th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td>
+						<input id="---3" name="rule" type="text" class="form-control requirment" value="i ,love ,you" >
+						</td>
+						<td><span class="glyphicon glyphicon-ok-circle" onclick="closeForm()"></span><span class="glyphicon glyphicon-remove-circle" onclick="closeForm()"></span></td>
+					</tr>
+					<tr>
+						<td>
+						<input id="---4" name="rule" type="text" class="form-control requirment" value="" placeholder="new rule">
+						</td>
+						<td><span class="glyphicon glyphicon-ok-circle" onclick="closeForm()"></span><span class="glyphicon glyphicon-remove-circle" onclick="closeForm()"></span></td>
+					</tr>
 
-			</tbody>
-		</table>
+				</tbody>
+			</table>
+		</div>
 	</div>
 </div>
-<script>
-var requirments =<%= raw(@require.to_json)%>;
+<script>var requirments =<%= raw(@require.to_json)%>
+	;
 
 	$(document).ready(function() {
 		//domO.val(initData);

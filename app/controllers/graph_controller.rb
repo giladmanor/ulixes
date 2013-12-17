@@ -41,6 +41,8 @@ class GraphController < AdminController
   end
 
   def set_node
+    @account.nodes << Node.create(name:params[:name]) if params[:name].present? && !@account.nodes.find_by_name(params[:name])
+    render :json=> graph_data(@account.nodes.find_by_name(params[:name]))
   end
 
   def set_edge
@@ -50,6 +52,17 @@ class GraphController < AdminController
   
   
   private # private # private # private # private # private # private # private # private # 
+  
+  def graph_data(entry)
+    nodes = {}
+    @account.nodes.each{|n| nodes[n.id]={:id=>n.id, :name=>n.name}}
+    {
+      :nodes=>nodes,
+      :links=>@account.edges
+    }
+  end
+  
+  
   
   
   #TODO: make these structures dynamicly generated out of a plugin list

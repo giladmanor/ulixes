@@ -13,16 +13,16 @@
 
 <div style="z-index: 0">
 	<div style="z-index: 1;position: fixed;">
-		<%= form_tag("",class:"form-inline", role:"form",style:"display:none",id:"newNodeForm",onsubmit:"return false;") do%>
+		<%= form_tag("",class:"form-inline", role:"form",style:"display:none",id:"newNodeForm",onsubmit:"controller.setEntryPoint($(this));return false;") do%>
 		<div class="input-group">
 			<span class="input-group-addon "><span class="glyphicon glyphicon-star"></span></span>
-			<input type="text" class="form-control" placeholder="New Entry Point Name">
+			<input name="name" type="text" class="form-control" placeholder="New Entry Point Name">
 		</div>
 		<%end%>
 		<%= form_tag("",class:"form-inline", role:"form",style:"display:none",id:"selectNodeForm",onsubmit:"return false;") do%>
 		<div class="input-group">
 			<span class="input-group-addon "><span class="glyphicon glyphicon-list"></span></span>
-			<%= select_tag("node", options_for_select(@account.clusters.map{|c| [c.name,c.id]}),class:"form-control") %>
+			<%= select_tag("node", options_for_select(@account.nodes.map{|c| [c.name,c.id]}),class:"form-control") %>
 
 		</div>
 		<%end%>
@@ -40,14 +40,9 @@
 <script src="http://d3js.org/d3.v3.min.js"></script>
 <script src="/tag-it.js"></script>
 <script>
-
-
 function openForm(type,data){
 	$("#formHolder").html(type);
 	var name = "#"+type+"FormTemplate";
-	console.log(name, data);
-	
-	
 	$("#formHolder").html(data);
 }
 
@@ -55,30 +50,10 @@ function closeForm(){
 	$("#formHolder").html("");
 }
 
-
-
-
-
 var controller;
 $(document).ready(function() {
 	controller = new GraphController({links:<%= raw(@links.to_json)%>,nodes:<%= raw(@nodes.to_json)%>});
 })
-	
-	
-	
-	
-		
-		
-		//makeRule($("#requireInput"), require_obj);
-		//makeRule($("#demandInput"), demand_obj);
-	
-
-	// $('input.typeahead').typeahead({
-	// name : 'rule',
-	// prefetch: '/graph/list_conditions',
-	// template : ['<p class="repo-name">{{name}}</p>', '<p class="repo-description">{{description}}</p>'].join(''),
-	// engine : Hogan
-	// });
 
 </script>
 

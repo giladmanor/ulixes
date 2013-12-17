@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20131002001130) do
+ActiveRecord::Schema.define(version: 20131217211235) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -48,6 +48,14 @@ ActiveRecord::Schema.define(version: 20131002001130) do
 
   add_index "clusters", ["account_id"], name: "index_clusters_on_account_id", using: :btree
 
+  create_table "edges", force: true do |t|
+    t.integer  "source_id"
+    t.integer  "target_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer  "account_id"
+  end
+
   create_table "events", force: true do |t|
     t.integer  "user_id"
     t.integer  "scale_id"
@@ -70,6 +78,13 @@ ActiveRecord::Schema.define(version: 20131002001130) do
 
   add_index "menu_items", ["account_id"], name: "index_menu_items_on_account_id", using: :btree
 
+  create_table "nodes", force: true do |t|
+    t.string   "name"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer  "account_id"
+  end
+
   create_table "roles", force: true do |t|
     t.integer  "account_id"
     t.string   "name"
@@ -87,10 +102,11 @@ ActiveRecord::Schema.define(version: 20131002001130) do
     t.string   "description"
     t.text     "require"
     t.text     "demand"
-    t.integer  "projection_id"
     t.text     "stats"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "node_id"
+    t.integer  "edge_id"
   end
 
   add_index "rules", ["account_id"], name: "index_rules_on_account_id", using: :btree
