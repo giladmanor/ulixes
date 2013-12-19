@@ -8,9 +8,9 @@ var GraphController = function(options) {
 	};
 	this.options = options;
 
-	this.setEntryPoint = function(formDOM) {
-		formDOM.attr('action',"/graph/set_node");
-		send(formDOM,function(d){
+	this.setEntryPoint = function(formDOMO) {
+		formDOMO.attr('action',"/graph/set_node");
+		send(formDOMO,function(d){
 			console.log("this just happend", d);
 			refreshGraph(d);
 		});
@@ -29,6 +29,14 @@ var GraphController = function(options) {
 	this.openEdgeForm = function(edge){
 		get("edge",edge,function(d){
 			openForm("edge",d);
+		});
+	};
+	
+	this.saveRule = function(formDOMO){
+		formDOMO.attr('action',"/graph/set_rule");
+		send(formDOMO,function(d){
+			console.log("this just happend", d);
+			refreshGraph(d);
 		});
 	};
 	

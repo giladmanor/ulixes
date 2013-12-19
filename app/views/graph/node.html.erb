@@ -27,6 +27,9 @@
 		<%
 		(@node.rules + [Rule.new]).each{|rule|
 		%>
+		<%= form_tag("",class:"form", role:"form",onsubmit:"controller.saveRule($(this));return false;") do%>
+		<input name="id" type="hidden" value="<%= rule.id%>">
+		<input name="node_id" type="hidden" value="<%= @node.id%>">
 		<table class="table table-hover">
 			<thead>
 				<tr>
@@ -37,14 +40,14 @@
 			<tbody>
 				<%
 				rule.demand# = rule.demand
-				puts "--->"+ rule.require.inspect
-				rule.require.each{|condition|
+				
+				(rule.require + [""]).each{|condition|
 				%>
 				<tr>
 					<td>
 					<input id="---1" name="rule" type="text" class="form-control requirment" value="<%= condition%>" >
 					</td>
-					<td><span class="glyphicon glyphicon-ok-circle" onclick="closeForm()"></span><span class="glyphicon glyphicon-remove-circle" onclick="closeForm()"></span></td>
+					<td><span class="glyphicon glyphicon-remove-circle" onclick="closeForm()"></span></td>
 				</tr>
 
 				<%
@@ -56,19 +59,19 @@
 		<table class="table table-hover">
 			<thead>
 				<tr>
-					<th>Then:</th>
+					<th>Then do:</th>
 					<th style="width: 50px"></th>
 				</tr>
 			</thead>
 			<tbody>
 				<%
-				rule.demand.each{|result|
+				(rule.demand + [""]).each{|result|
 				%>
 				<tr>
 					<td>
-					<input id="---2" name="rule" type="text" class="form-control requirment" value="<%= result%>" >
+					<input id="---2" name="rule" type="text" class="form-control demand" value="<%= result%>" >
 					</td>
-					<td><span class="glyphicon glyphicon-ok-circle" onclick="closeForm()"></span><span class="glyphicon glyphicon-remove-circle" onclick="closeForm()"></span></td>
+					<td><span class="glyphicon glyphicon-remove-circle" onclick="closeForm()"></span></td>
 				</tr>
 
 				<%
@@ -77,7 +80,12 @@
 
 			</tbody>
 		</table>
-		<%}%>
+		<button type="submit" class="btn btn-default"><span class="glyphicon glyphicon-ok-circle"></span> Save</button>
+		<button type="button" class="btn btn-default" onclick="closeForm();return false;"><span class="glyphicon glyphicon-remove-circle"></span> Cancel</button>
+		
+		<%
+		end
+		}%>
 	</div>
 </div>
 <script>
@@ -87,10 +95,15 @@ var demands =<%= raw(@demand.to_json)%>;
 
 $(document).ready(function() {
 	//domO.val(initData);
-	makeRule($("#---1"), requirments);
-	makeRule($("#---2"), demands);
+	$(".requirment").each(function(){
+		makeRule($(this), requirments);
+	});
+	$(".demand").each(function(){
+		makeRule($(this), demands);
+	});
+	
 
 });
-	//makeRule($("#requireInput"), );
+	
 </script>
 
