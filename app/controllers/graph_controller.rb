@@ -19,6 +19,9 @@ class GraphController < AdminController
       {:source=>"Microsoft".hash, :target=> "Barnes & Noble".hash, :type=> "suit"}
     ]
     
+    g = graph_data(nil)
+    @nodes = g[:nodes]
+    @links = g[:linkes] || []
     
   end
   
@@ -26,7 +29,7 @@ class GraphController < AdminController
   end
 
   def get_node
-    @node=params
+    @node=@account.nodes.find(params[:id])
     @require = require_statement
     @demand = demand_statement
     render :node, :layout=>false
@@ -41,7 +44,18 @@ class GraphController < AdminController
   end
 
   def set_node
-    @account.nodes << Node.create(name:params[:name]) if params[:name].present? && !@account.nodes.find_by_name(params[:name])
+    if params[:id].present?
+      node = @account.nodes.find(params[:id])
+      node.name = params[:name] unless @account.nodes.find_by_name(params[:name])
+      if params[:do_delete]
+        node.destroy
+      else
+        node.save 
+      end
+    else
+      @account.nodes << Node.create(name:params[:name]) if params[:name].present? && !@account.nodes.find_by_name(params[:name])
+    end
+    
     render :json=> graph_data(@account.nodes.find_by_name(params[:name]))
   end
 

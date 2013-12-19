@@ -1,5 +1,6 @@
 var GraphController = function(options) {
 	var graph;
+	var self = this;
 	
 	this.options = {
 		links : [],
@@ -31,10 +32,23 @@ var GraphController = function(options) {
 		});
 	};
 	
+	this.renameOrSubmitLabel = function(chxbDOMO, smDOMO){
+		if(chxbDOMO.is(':checked')){
+			smDOMO.removeClass("btn-default");
+			smDOMO.addClass("btn-danger");
+			smDOMO.text("Delete?");
+		}else{
+			smDOMO.removeClass("btn-danger");
+			smDOMO.addClass("btn-default");
+			smDOMO.text("Rename");
+		}
+	};
 	
 	////////////////////////////////////////////////////////////
 	var refreshGraph = function(data){
-		graph.update(data.nodes,data.links);
+		$('.graph-goes-here').html("");
+		console.log(this);
+		graph = new Graph(data.nodes,data.links,self.openNodeForm,self.openEdgeForm);
 	};
 	
 	var get = function(entity,data,successFunction) {

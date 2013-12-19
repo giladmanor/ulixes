@@ -1,70 +1,96 @@
 <div class="panel panel-default" style="opacity: 1">
 	<div class="panel-heading">
-		Node <%= @node[:name]%>
+		Node
+		<button class="btn btn-default btn-sm" type="button" onclick="$('#renameNodeForm').toggle('fast');">
+			<%= @node[:name]%>
+		</button>
 		<span class="glyphicon glyphicon-remove" style="float: right" onclick="closeForm()"></span>
+		<%= form_tag("",class:"form-inline", role:"form",style:"display:none;margin-left: 37px;margin-top: 6px;",id:"renameNodeForm",onsubmit:"controller.setEntryPoint($(this));return false;") do%>
+			<input name="id" type="hidden" value="<%= @node[:id]%>">
+			<div class="form-group">
+				<input name="name" type="text" class="form-control" placeholder="Rename">
+			</div>
+			&nbsp;
+			<div class="checkbox">
+				<label>
+					<input name="do_delete" type="checkbox" onchange="controller.renameOrSubmitLabel($(this),$('#renameORsubmitBTN'))">
+					OR Delete </label>
+			</div>
+			&nbsp;
+			<button id="renameORsubmitBTN" type="submit" class="btn btn-default" onclick="closeForm()">
+				Rename
+			</button>
+		<%end%>
 	</div>
 
 	<div class="panel-body" style="overflow: auto;">
-		<div>
-			<table class="table table-hover">
-				<thead>
-					<tr>
-						<th>IF ALL (and):</th>
-						<th style="width: 50px"></th>
-					</tr>
-				</thead>
-				<tbody>
-					<tr>
-						<td>
-						<input id="---1" name="rule" type="text" class="form-control requirment" value="i ,love ,you" >
-						</td>
-						<td><span class="glyphicon glyphicon-ok-circle" onclick="closeForm()"></span><span class="glyphicon glyphicon-remove-circle" onclick="closeForm()"></span></td>
-					</tr>
-					<tr>
-						<td>
-						<input id="---2" name="rule" type="text" class="form-control requirment" value="" placeholder="new rule">
-						</td>
-						<td><span class="glyphicon glyphicon-ok-circle" onclick="closeForm()"></span><span class="glyphicon glyphicon-remove-circle" onclick="closeForm()"></span></td>
-					</tr>
+		<%
+		(@node.rules + [Rule.new]).each{|rule|
+		%>
+		<table class="table table-hover">
+			<thead>
+				<tr>
+					<th>IF ALL (and):</th>
+					<th style="width: 50px"></th>
+				</tr>
+			</thead>
+			<tbody>
+				<%
+				rule.demand# = rule.demand
+				puts "--->"+ rule.require.inspect
+				rule.require.each{|condition|
+				%>
+				<tr>
+					<td>
+					<input id="---1" name="rule" type="text" class="form-control requirment" value="<%= condition%>" >
+					</td>
+					<td><span class="glyphicon glyphicon-ok-circle" onclick="closeForm()"></span><span class="glyphicon glyphicon-remove-circle" onclick="closeForm()"></span></td>
+				</tr>
 
-				</tbody>
-			</table>
-			<table class="table table-hover">
-				<thead>
-					<tr>
-						<th>Then:</th>
-						<th style="width: 50px"></th>
-					</tr>
-				</thead>
-				<tbody>
-					<tr>
-						<td>
-						<input id="---3" name="rule" type="text" class="form-control requirment" value="i ,love ,you" >
-						</td>
-						<td><span class="glyphicon glyphicon-ok-circle" onclick="closeForm()"></span><span class="glyphicon glyphicon-remove-circle" onclick="closeForm()"></span></td>
-					</tr>
-					<tr>
-						<td>
-						<input id="---4" name="rule" type="text" class="form-control requirment" value="" placeholder="new rule">
-						</td>
-						<td><span class="glyphicon glyphicon-ok-circle" onclick="closeForm()"></span><span class="glyphicon glyphicon-remove-circle" onclick="closeForm()"></span></td>
-					</tr>
+				<%
+				}
+				%>
 
-				</tbody>
-			</table>
-		</div>
+			</tbody>
+		</table>
+		<table class="table table-hover">
+			<thead>
+				<tr>
+					<th>Then:</th>
+					<th style="width: 50px"></th>
+				</tr>
+			</thead>
+			<tbody>
+				<%
+				rule.demand.each{|result|
+				%>
+				<tr>
+					<td>
+					<input id="---2" name="rule" type="text" class="form-control requirment" value="<%= result%>" >
+					</td>
+					<td><span class="glyphicon glyphicon-ok-circle" onclick="closeForm()"></span><span class="glyphicon glyphicon-remove-circle" onclick="closeForm()"></span></td>
+				</tr>
+
+				<%
+				}
+				%>
+
+			</tbody>
+		</table>
+		<%}%>
 	</div>
 </div>
-<script>var requirments =<%= raw(@require.to_json)%>
-	;
+<script>
 
-	$(document).ready(function() {
-		//domO.val(initData);
-		makeRule($("#---1"), requirments);
-		makeRule($("#---2"), requirments);
-		makeRule($("#---3"), requirments);
-		makeRule($("#---4"), requirments);
-	})
+var requirments =<%= raw(@require.to_json)%>;
+var demands =<%= raw(@demand.to_json)%>;
+
+$(document).ready(function() {
+	//domO.val(initData);
+	makeRule($("#---1"), requirments);
+	makeRule($("#---2"), demands);
+
+});
 	//makeRule($("#requireInput"), );
 </script>
 

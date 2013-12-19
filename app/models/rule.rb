@@ -8,6 +8,6 @@ class Rule < ActiveRecord::Base
   serialize :stats, Array
   to_info :name, :description, :node
   
-  
+
   
 end
