@@ -13,7 +13,15 @@ var GraphController = function(options) {
 		send(formDOMO,function(d){
 			console.log("this just happend", d);
 			refreshGraph(d);
-		});
+		}, "JSON");
+	};
+	
+	this.setEdge = function(formDOMO) {
+		formDOMO.attr('action',"/graph/set_edge");
+		send(formDOMO,function(d){
+			console.log("this just happend", d);
+			refreshGraph(d);
+		}, "JSON");
 	};
 
 	this.listEntryPoints = function() {
@@ -36,8 +44,8 @@ var GraphController = function(options) {
 		formDOMO.attr('action',"/graph/set_rule");
 		send(formDOMO,function(d){
 			console.log("this just happend", d);
-			refreshGraph(d);
-		});
+			openForm("node",d);
+		}, "html");
 	};
 	
 	this.renameOrSubmitLabel = function(chxbDOMO, smDOMO){
@@ -69,12 +77,12 @@ var GraphController = function(options) {
 		});
 	};
 
-	var send = function(formDOM,successFunction) {
+	var send = function(formDOM,successFunction, dataType) {
 		var valuesToSubmit = formDOM.serialize();
 		$.ajax({
 			url : formDOM.attr('action'), //sumbits it to the given url of the form
 			data : valuesToSubmit,
-			dataType : "JSON" // you want a difference between normal and ajax-calls, and json is standard
+			dataType : dataType || "JSON" // you want a difference between normal and ajax-calls, and json is standard
 		}).success(function(json) {
 			successFunction(json);
 		});

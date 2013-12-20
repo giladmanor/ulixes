@@ -21,7 +21,7 @@ class GraphController < AdminController
     
     g = graph_data(nil)
     @nodes = g[:nodes]
-    @links = g[:linkes] || []
+    @links = g[:links] || []
     
   end
   
@@ -60,9 +60,27 @@ class GraphController < AdminController
   end
 
   def set_edge
+    node_a = @account.nodes.find(params[:nodeA])
+    node_b = @account.nodes.find(params[:nodeB])
+    edge = @account.edges.find_by_source_id_and_target_id(node_a.id, node_b.id) || Edge.create(:source_id=>node_a.id, :target_id=>node_b.id, :account_id=>@account.id)
+    gd = graph_data(nil)
+    logger.debug gd.inspect
+    render :json=> gd
   end
 
-  
+  def set_rule
+    rule = params[:id].present? ? @account.rules.find(params[:id]) : Rule.create(:account_id=>@account.id)
+    
+    rule.require = params[:require].reject{|cnd| cnd==""}
+    rule.demand = params[:demand].reject{|dmd| dmd==""}
+    rule.relate_to_graph(params[:node_id],params[:edge_id])
+    unless rule.save
+      logger.debug rule.error
+    end
+    
+    logger.debug params
+    redirect_to :action=>:get_node, :id => params[:node_id]
+  end
   
   
   private # private # private # private # private # private # private # private # private # 
@@ -72,7 +90,7 @@ class GraphController < AdminController
     @account.nodes.each{|n| nodes[n.id]={:id=>n.id, :name=>n.name}}
     {
       :nodes=>nodes,
-      :links=>@account.edges
+      :links=>@account.edges.map{|e| {:source=>e.source_id, :target=>e.target_id, :type=>"suit"}}
     }
   end
   

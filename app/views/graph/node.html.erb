@@ -23,7 +23,7 @@
 		<%end%>
 	</div>
 
-	<div class="panel-body" style="overflow: auto;">
+	<div class="panel-body" style="overflow: auto;height: 500px;">
 		<%
 		(@node.rules + [Rule.new]).each{|rule|
 		%>
@@ -33,7 +33,12 @@
 		<table class="table table-hover">
 			<thead>
 				<tr>
-					<th>IF ALL (and):</th>
+					<th>IF ALL (and):
+					<div class="btn-group" style="float: right;">
+						<button type="submit" class="btn btn-default btn-xs"><span class="glyphicon glyphicon-ok-circle"></span> Save</button>
+						<button type="button" class="btn btn-default btn-xs" onclick="closeForm();return false;"><span class="glyphicon glyphicon-remove-circle"></span> Cancel</button>
+					</div>	
+					</th>
 					<th style="width: 50px"></th>
 				</tr>
 			</thead>
@@ -45,7 +50,7 @@
 				%>
 				<tr>
 					<td>
-					<input id="---1" name="rule" type="text" class="form-control requirment" value="<%= condition%>" >
+					<input id="---1" name="require[]" type="text" class="form-control requirment" value="<%= condition%>" >
 					</td>
 					<td><span class="glyphicon glyphicon-remove-circle" onclick="closeForm()"></span></td>
 				</tr>
@@ -69,7 +74,7 @@
 				%>
 				<tr>
 					<td>
-					<input id="---2" name="rule" type="text" class="form-control demand" value="<%= result%>" >
+					<input id="---2" name="demand[]" type="text" class="form-control demand" value="<%= result%>" >
 					</td>
 					<td><span class="glyphicon glyphicon-remove-circle" onclick="closeForm()"></span></td>
 				</tr>
@@ -80,11 +85,11 @@
 
 			</tbody>
 		</table>
-		<button type="submit" class="btn btn-default"><span class="glyphicon glyphicon-ok-circle"></span> Save</button>
-		<button type="button" class="btn btn-default" onclick="closeForm();return false;"><span class="glyphicon glyphicon-remove-circle"></span> Cancel</button>
+		
 		
 		<%
 		end
+		%><hr><%
 		}%>
 	</div>
 </div>
