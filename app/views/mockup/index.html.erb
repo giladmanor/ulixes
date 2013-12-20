@@ -1,0 +1,28 @@
+<%
+ require "open-uri"
+
+  page_source = params[:page_source] || "http://giladmanor.blogspot.co.il/"
+%>
+
+	<div class="btn-group" style="float: left;margin-top: -7px;z-index: 99999;width: 500px">
+		<button type="button" class="btn btn-default" title="New Enttry Point" onclick="$('#newNodeForm').toggle('fast');$('#selectNodeForm').hide('fast')">
+			<span class="glyphicon glyphicon-star"></span>
+		</button>
+		<button type="button" class="btn btn-default" title="Select Other Entry point" onclick="$('#selectNodeForm').toggle('fast');$('#newNodeForm').hide('fast');">
+			<span class="glyphicon glyphicon-list"></span>
+		</button>		
+		<%= form_tag("/mockup/index",class:"form-inline", role:"form",style:"") do%>
+			<input name="id" type="hidden" value="">
+			<div class="form-group">
+				<input name="page_source" type="text" class="form-control" placeholder="Source" value="<%= page_source%>">
+			</div>
+			&nbsp;
+			<button type="submit" class="btn btn-default" >
+				Change
+			</button>
+		
+		<%end%>
+	</div>
+<div style="float: left;position: absolute">
+	<%= raw(open(page_source).read)%>
+</div>
