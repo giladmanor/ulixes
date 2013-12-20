@@ -2,7 +2,7 @@ class User < ActiveRecord::Base
   acts_as_tree
   belongs_to :account
   belongs_to :role
-  
+  has_many :events
   
   
   
@@ -10,8 +10,8 @@ class User < ActiveRecord::Base
   
   end
   
-  def resolve_action(code,value)
-  
+  def resolve_event(code,value)
+    self.events << Event.create(:code=>code, :value=>value)
   end
   
   

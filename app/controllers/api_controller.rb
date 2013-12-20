@@ -24,7 +24,7 @@ class ApiController < ApplicationController
   end
   
   def set
-    @user.resolve_action params[:code],params[:value]
+    @user.resolve_event params[:code],params[:value]
     params[:with_info].present? ? respond_with(@user.spill) : respond_with(SUCCESS)
   end
   
