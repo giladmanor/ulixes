@@ -106,10 +106,10 @@ class GraphController < AdminController
     badges =  @account.badges.map{|b| b.name} #terminating Array
     value_type = {"with Value"=>operands, "with Scale"=>scales}
     { 
-      "if User Event"=>value_type,
-      "if User Scale"=>scales,
-      "if User has Badge"=>badges,
-      "unless User has Badge"=>badges
+      Rule::IF_USER_EVENT=>value_type,
+      Rule::IF_USER_SCALE=>scales,
+      Rule::IF_USER_HAS_BADGE=>badges,
+      Rule::UNLESS_USER_HAS_BADGE=>badges
     }
   end
   
@@ -121,10 +121,10 @@ class GraphController < AdminController
     value_type = {"with Value"=>operands, "with Scale"=>scales}
     
     { 
-      "upset User Scale"=>scales,
-      "grant User with Badge"=>badges,
-      "revoke User of Badge"=>badges,
-      "send Notification"=>[]
+      Rule::UPSET_USER_SCALE=>scales,
+      Rule::GRANT_USER_BADGE=>badges,
+      Rule::REVOKE_USER_BADGE=>badges,
+      Rule::SEND_NOTIFICATION=>[]
     }
   end
   

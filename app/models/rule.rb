@@ -8,6 +8,19 @@ class Rule < ActiveRecord::Base
   serialize :stats, Array
   to_info :name, :description, :node
   
+  
+  UPSET_USER_SCALE = "upset User Scale"
+  GRANT_USER_BADGE = "grant User with Badge"
+  REVOKE_USER_BADGE = "revoke User of Badge"
+  SEND_NOTIFICATION = "send Notification"
+  
+  IF_USER_EVENT = "if User Event"
+  IF_USER_SCALE = "if User Scale"
+  IF_USER_HAS_BADGE = "if User has Badge"
+  UNLESS_USER_HAS_BADGE = "unless User has Badge"
+  
+  
+  
   def relate_to_graph(node_id, edge_id)
     if self.node.nil? && self.edge.nil?
       node_id.nil? ? self.edge_id = edge_id : self.node_id = node_id 
