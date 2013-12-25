@@ -24,38 +24,6 @@ class Node < ActiveRecord::Base
   end
   
   
-  
-  def code_for_require(require)
-    line = require.split(",")
-    case line.first
-      when "revoke User of Badge"
-        "user.remove_badge(#{account.badges.find_by_name(demand.last)})"
-      when ""
-      
-    end 
-  end
-  
-  
-  
-  
-  def code_for_demand(demand)
-    line = demand.split(",")
-    case line.first
-      when "revoke User of Badge"
-        "user.remove_badge(#{account.badges.find_by_name(demand.last)})"
-      when ""
-      
-    end 
-  end
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
+    
   
 end
