@@ -106,7 +106,7 @@ class GraphController < AdminController
     scales = {}
     @account.scales.each{|s| scales[s.code]=operands}
     badges =  @account.badges.map{|b| b.name} #terminating Array
-    value_type = {"with Value"=>operands, "with Scale"=>scales,"with Code"=>regexp}
+    value_type = {"with Value"=>operands, "with Code"=>regexp}
     { 
       Rule::IF_USER_EVENT=>value_type,
       Rule::IF_USER_SCALE=>scales,
