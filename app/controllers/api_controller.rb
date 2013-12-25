@@ -19,6 +19,14 @@ class ApiController < ApplicationController
     end
   end
   
+  def create
+    if @user.nil? && @account.add_user(params[:user])
+      respond_with(SUCCESS)
+    else
+      respond_with(FAIL)
+    end
+  end
+  
   def get
     respond_with(@user.spill)
   end
