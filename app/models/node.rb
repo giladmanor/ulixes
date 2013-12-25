@@ -1,4 +1,5 @@
 class Node < ActiveRecord::Base
+  belogns_to :account
   has_many :rules
   has_many :edges, :class_name=>"Edge", :foreign_key=>"source_id"
   after_initialize :do_bidding

@@ -9,6 +9,8 @@ class Rule < ActiveRecord::Base
   to_info :name, :description, :node
   
   
+  #----------------------------------------------------------------------------------
+  
   UPSET_USER_SCALE = "upset User Scale"
   GRANT_USER_BADGE = "grant User with Badge"
   REVOKE_USER_BADGE = "revoke User of Badge"
@@ -19,7 +21,7 @@ class Rule < ActiveRecord::Base
   IF_USER_HAS_BADGE = "if User has Badge"
   UNLESS_USER_HAS_BADGE = "unless User has Badge"
   
-  
+  #-----------------------------------------------------------------------------------
   
   def relate_to_graph(node_id, edge_id)
     if self.node.nil? && self.edge.nil?
@@ -37,5 +39,8 @@ class Rule < ActiveRecord::Base
     self.edge_id = edge_id
     self.node_id = self.account.edges.find(edge_id).source_id 
   end  
+  
+  
+  
   
 end

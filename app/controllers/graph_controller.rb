@@ -101,10 +101,12 @@ class GraphController < AdminController
   
   def require_statement
     operands = {"is"=>[],"not"=>[], "grater then"=>[],"lesser then"=>[]}
+    regexp = {"starts with"=>[],"end_with"=>[], "contains"=>[],"equals"=>[],"expression"=>[]}
+    
     scales = {}
     @account.scales.each{|s| scales[s.code]=operands}
     badges =  @account.badges.map{|b| b.name} #terminating Array
-    value_type = {"with Value"=>operands, "with Scale"=>scales}
+    value_type = {"with Value"=>operands, "with Scale"=>scales,"with Code"=>regexp}
     { 
       Rule::IF_USER_EVENT=>value_type,
       Rule::IF_USER_SCALE=>scales,
