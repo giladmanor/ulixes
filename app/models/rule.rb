@@ -31,6 +31,23 @@ class Rule < ActiveRecord::Base
   #----------------------------------------------------------------------------
   # CODE GEN # CODE GEN # CODE GEN # CODE GEN # CODE GEN # CODE GEN # CODE GEN 
   #============================================================================
+  
+  #string it out
+  
+  def to_code
+    "if #{line_up_cond} \n #{line_up_result} \n end"
+  end
+  
+  def line_up_cond
+    self.require.map{|line| Rule.require_to_code(line)}.join(" and ")
+  end
+  
+  def line_up_result
+    self.demand.map{|line| Rule.demand_to_code(line)}.join("\n")
+  end
+  
+  #------------------------------------------------------------------------------
+  
   IF_USER_EVENT = "if User Event"
   IF_USER_SCALE = "if User Scale"
   IF_USER_HAS_BADGE = "if User has Badge"
@@ -61,12 +78,12 @@ class Rule < ActiveRecord::Base
   end
   
   def self.resolve_scale_condition(line)
-    "(user.sum_scale(#{line[1]}) #{OPERANDS[line[2]]} #{line.last}"
+    "(user.sum_scale('#{line[1]}') #{OPERANDS[line[2]]} #{line.last})"
   end
   
   def self.resolve_badge_condition(line)
     pref = line[0]==UNLESS_USER_HAS_BADGE ? "!" : ""
-    "(#{pref}user.has_badge_named?(#{line[1]}))"
+    "(#{pref}user.has_badge_named?('#{line[1]}'))"
   end
   
   #====================================================================
@@ -79,13 +96,13 @@ class Rule < ActiveRecord::Base
     line = demand.split(",")
     case line.first
       when UPSET_USER_SCALE
-        factor = 
         value = line.last
-        "user.upset_scale(#{line[1]},last_event.value,#{factor},#{value})"
+        added_value = value #TODO finish up this
+        "user.upset_scale(account.scales.find_by_name(#{line[1]}),added_value)"
       when GRANT_USER_BADGE
-        "user.add_badge(#{account.badges.find_by_name(demand.last)})"
+        "user.add_badge(self.account.badges.find_by_name('#{line.last}'))"
       when REVOKE_USER_BADGE
-        "user.remove_badge(#{account.badges.find_by_name(demand.last)})"
+        "user.remove_badge(self.account.badges.find_by_name('#{line.last}'))"
       when SEND_NOTIFICATION
         "user.announce()"
     end 
