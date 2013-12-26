@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20131225230456) do
+ActiveRecord::Schema.define(version: 20131226191634) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -131,6 +131,29 @@ ActiveRecord::Schema.define(version: 20131225230456) do
   end
 
   add_index "scales", ["account_id"], name: "index_scales_on_account_id", using: :btree
+
+  create_table "user_badges", force: true do |t|
+    t.integer  "user_id"
+    t.integer  "badge_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "user_badges", ["badge_id"], name: "index_user_badges_on_badge_id", using: :btree
+  add_index "user_badges", ["user_id"], name: "index_user_badges_on_user_id", using: :btree
+
+  create_table "user_notifications", force: true do |t|
+    t.integer  "user_id"
+    t.integer  "notification_id"
+    t.datetime "sent"
+    t.datetime "read"
+    t.text     "data"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "user_notifications", ["notification_id"], name: "index_user_notifications_on_notification_id", using: :btree
+  add_index "user_notifications", ["user_id"], name: "index_user_notifications_on_user_id", using: :btree
 
   create_table "user_scores", force: true do |t|
     t.integer  "user_id"

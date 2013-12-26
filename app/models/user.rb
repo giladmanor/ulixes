@@ -1,20 +1,70 @@
 class User < ActiveRecord::Base
   acts_as_tree
   belongs_to :account
+  belongs_to :node
   belongs_to :role
   has_many :events
+  has_many :user_badges
+  has_many :badges, :through=>:user_badges
+  has_many :user_notifications
+  has_many :user_scores
   
+  to_info :uid, :login,:node_info, :parent_info
   
+  def node_info
+    self.node.name unless self.node.nil?
+  end  
+  
+  def parent_info
+    {:uid=>self.parent.uid, :login=>self.parent.login} unless self.parent.nil?
+  end
   
   def spill
-  
+    self.to_info.merge({
+      :badges=>self.badges.map{|b| b.to_info},
+      :scores=>self.user_scores.map{|s| s.to_info},
+      :notifications=>self.user_notifications{|n| n.to_info}
+    })
   end
   
   def resolve_event(code,value)
     self.events << Event.create(:code=>code, :value=>value)
   end
   
+  ########################################################################
+  
+  def has_badge_named? badge_code
+    self.badges.map{|b| b.name}.include?(badge_code)
+  end
+  
+  def score scale
+    if score = self.user_scores.find_scale_id(scale.id)
+      score.value
+    else
+      0
+    end
+  end
   
   
+  ########################################################################
+  
+  def upset_scale scale, added_value
+    score = self.user_scores.find_by_scale_id(scale.id) || UserScore.new(scale_id:scale.id, user_id:self.id, value:0)
+    score.value += added_value
+    score.save
+  end
+  
+  def add_badge badge
+    self.badges << badge unless self.badges.include?(badge)
+  end
+  
+  def remove_badge badge
+    user_badge = self.user_badges.find_by_badge_id(badge.id)
+    user_badge.destroy unless user_badge.nil?
+  end
+  
+  def announce channel, announcement_code
+    
+  end
   
 end

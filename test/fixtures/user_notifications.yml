@@ -1,0 +1,15 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  user_id: 
+  notification_id: 
+  send: 2013-12-26 21:16:34
+  read: false
+  data: MyText
+
+two:
+  user_id: 
+  notification_id: 
+  send: 2013-12-26 21:16:34
+  read: false
+  data: MyText
