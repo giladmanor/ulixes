@@ -79,13 +79,15 @@ class Rule < ActiveRecord::Base
     line = demand.split(",")
     case line.first
       when UPSET_USER_SCALE
-        "user.remove_badge(#{account.badges.find_by_name(demand.last)})"
+        factor = 
+        value = line.last
+        "user.upset_scale(#{line[1]},last_event.value,#{factor},#{value})"
       when GRANT_USER_BADGE
         "user.add_badge(#{account.badges.find_by_name(demand.last)})"
       when REVOKE_USER_BADGE
         "user.remove_badge(#{account.badges.find_by_name(demand.last)})"
       when SEND_NOTIFICATION
-        "user.remove_badge(#{account.badges.find_by_name(demand.last)})"
+        "user.announce()"
     end 
   end
   
