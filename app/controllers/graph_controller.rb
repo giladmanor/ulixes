@@ -116,7 +116,7 @@ class GraphController < AdminController
   end
   
   def demand_statement
-    operands = {"by (factor)"=>[],"by event value and factored by"=>[], "with event value factored by"=>[]}
+    operands = {"by (value)"=>[],"by event value and factored by"=>[]}
     scales = {}
     @account.scales.each{|s| scales[s.code]=operands}
     badges =  @account.badges.map{|b| b.name} #terminating Array

@@ -73,12 +73,12 @@ class Rule < ActiveRecord::Base
       when "with Value"
         "(last_event.value #{OPERANDS[line[2]]} #{line.last})"
       when "with Code"
-        "(last_event.code#{REGEXP[line[2]]} #{line.last})"
+        "(last_event.code#{REGEXP[line[2]]}(#{line.last}))"
     end
   end
   
   def self.resolve_scale_condition(line)
-    "(user.sum_scale('#{line[1]}') #{OPERANDS[line[2]]} #{line.last})"
+    "(user.score(account.scales.find_by_code('#{line[1]}')) #{OPERANDS[line[2]]} #{line.last})"
   end
   
   def self.resolve_badge_condition(line)
@@ -92,21 +92,24 @@ class Rule < ActiveRecord::Base
   REVOKE_USER_BADGE = "revoke User of Badge"
   SEND_NOTIFICATION = "send Notification"
   
+  
+  
   def self.demand_to_code(demand)
     line = demand.split(",")
     case line.first
       when UPSET_USER_SCALE
         value = line.last
-        added_value = value #TODO finish up this
-        "user.upset_scale(account.scales.find_by_name(#{line[1]}),added_value)"
+        added_value = line[1] == "by (value)" ? value : "last_event.value * #{value}"
+        "user.upset_scale(account.scales.find_by_name(#{line[1]}),#{added_value})"
       when GRANT_USER_BADGE
         "user.add_badge(self.account.badges.find_by_name('#{line.last}'))"
       when REVOKE_USER_BADGE
         "user.remove_badge(self.account.badges.find_by_name('#{line.last}'))"
       when SEND_NOTIFICATION
-        "user.announce()"
+        "user.announce('#{line[1]}',#{line.last}')"
     end 
   end
+  
   
   #-----------------------------------------------------------------------------------
   
