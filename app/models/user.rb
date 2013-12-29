@@ -24,7 +24,7 @@ class User < ActiveRecord::Base
       :node=> self.node.to_info,
       :badges=>self.badges.map{|b| b.to_info},
       :scores=>self.user_scores.map{|s| s.to_info},
-      :notifications=>self.user_notifications{|n| n.to_info}
+      :announcements=>self.user_notifications{|n| n.to_info}
     })
   end
   
