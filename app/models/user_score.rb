@@ -5,7 +5,7 @@ class UserScore < ActiveRecord::Base
   to_info :scale_info, :value
   
   def scale_info
-    self.scale.to_info
+    self.scale.code
   end
   
 end

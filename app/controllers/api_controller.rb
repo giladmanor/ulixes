@@ -20,7 +20,7 @@ class ApiController < ApplicationController
   end
   
   def create
-    if @user.nil? && @account.add_user(params[:user])
+    if @user.nil? && @account.add_user(uid:params[:uid])
       respond_with(SUCCESS)
     else
       respond_with(FAIL)
@@ -32,7 +32,7 @@ class ApiController < ApplicationController
   end
   
   def set
-    @user.resolve_event params[:code],params[:value]
+    @user.resolve_event params[:code],paramsu[:value]
     params[:with_info].present? ? respond_with(@user.spill) : respond_with(SUCCESS)
   end
   

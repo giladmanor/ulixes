@@ -21,6 +21,7 @@ class User < ActiveRecord::Base
   
   def spill
     self.to_info.merge({
+      :node=> self.node.to_info,
       :badges=>self.badges.map{|b| b.to_info},
       :scores=>self.user_scores.map{|s| s.to_info},
       :notifications=>self.user_notifications{|n| n.to_info}
@@ -64,7 +65,18 @@ class User < ActiveRecord::Base
   end
   
   def announce channel, announcement_code
-    
+    self.notifications << render(channel,self.account.notifications.find_by_name(announcement_code))
   end
+  
+  def render_announcement channel, notification
+    self.user_notifications << notification.reduce(channel, seld.local)
+  end
+  
+  def move_to_node(node)
+    self.node = node
+    self.save
+  end
+  
+  
   
 end
