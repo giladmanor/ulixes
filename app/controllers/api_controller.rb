@@ -1,3 +1,4 @@
+require "tokenizer.rb"
 class ApiController < ApplicationController
   before_filter :auth_filter, :except=>[:use_token]
   after_filter :callback_wrapper #JSONP wrapper
@@ -7,11 +8,12 @@ class ApiController < ApplicationController
   FAIL = {:success=>false}
   
   def get_token
-    respond_with({:token=>generate_token(params[:uuid])})
+    logger.debug generate_token(params[:uuid])
+    respond_with(generate_token(params[:uuid]))
   end
   
   def use_token
-    unless @user = validate_token(params[:token])
+    unless validate_token(params[:t])
       render :file => '/public/404.html', :status => :not_found, :layout => false
       return false
     else
@@ -59,12 +61,14 @@ class ApiController < ApplicationController
   end
   
   def generate_token(uuid)
-    Tokenizer.get_token({:uuid => uuid})
+    Tokenizer.get_token(uuid)
   end
   
   def validate_token(token_id)
-    token = Tokenizer.use_token token_id
-    session[:uuid] = token.nil? ? nil : token[:uuid]
+    uuid = Tokenizer.use_token token_id
+    logger.debug "#"*10 + uuid.inspect
+    session[:uuid] = uuid
+    @user = User.find(session[:uuid]) unless uuid.nil?
   end
 
 end
