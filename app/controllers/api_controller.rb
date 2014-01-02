@@ -8,8 +8,8 @@ class ApiController < ApplicationController
   FAIL = {:success=>false}
   
   def get_token
-    logger.debug generate_token(params[:uuid])
-    respond_with(generate_token(params[:uuid]))
+    logger.debug generate_token(@user.id)
+    respond_with(generate_token(@user.id))
   end
   
   def use_token
@@ -48,7 +48,7 @@ class ApiController < ApplicationController
         render :file => 'public/404.html', :status => :not_found, :layout => false
         return false
       end
-      @user = User.find(params[:uuid])
+      @user = User.find_by_uid(params[:uuid])
     else
       @user = User.find(session[:uuid])
       @account = @user.account

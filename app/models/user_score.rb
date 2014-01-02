@@ -2,9 +2,9 @@ class UserScore < ActiveRecord::Base
   belongs_to :user
   belongs_to :scale
   
-  to_info :scale_info, :value
+  to_info :name, :value
   
-  def scale_info
+  def name
     self.scale.code
   end
   
