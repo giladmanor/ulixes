@@ -19,10 +19,17 @@ class User < ActiveRecord::Base
   end
 
   def spill
+    actions = self.events.map{|e| e.code}.uniq
+    actions = actions.map{|a| 
+      sum = 0
+      self.events.select{|e| e.code==a}.each{|e| sum+=(e.value.nil? ? 0 : e.value)}
+      {:code=>a, :value=>sum}
+    }
     self.to_info.merge({
       :node=> self.node.nil? ? nil : self.node.to_info,
       :badges=>self.badges.map{|b| b.to_info},
       :scores=>self.user_scores.map{|s| s.to_info},
+      :actions=>actions,
       :announcements=>self.user_notifications{|n| n.to_info}
     })
   end
