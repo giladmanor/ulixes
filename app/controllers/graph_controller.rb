@@ -36,8 +36,7 @@ class GraphController < AdminController
   end
 
   def get_edge
-    @source = params[:source]
-    @target = params[:target]
+    @edge = @account.edges.find(params[:id])
     @require = require_statement
     @demand = demand_statement
     render :edge, :layout=>false
@@ -78,8 +77,11 @@ class GraphController < AdminController
       logger.debug rule.error
     end
     
-    logger.debug params
-    redirect_to :action=>:get_node, :id => params[:node_id]
+    if params[:edge_id].present?
+      redirect_to :action=>:get_edge, :id => params[:edge_id]
+    else
+      redirect_to :action=>:get_node, :id => params[:node_id]
+    end
   end
   
   
@@ -90,7 +92,7 @@ class GraphController < AdminController
     @account.nodes.each{|n| nodes[n.id]={:id=>n.id, :name=>n.name}}
     {
       :nodes=>nodes,
-      :links=>@account.edges.map{|e| {:source=>e.source_id, :target=>e.target_id, :type=>"suit"}}
+      :links=>@account.edges.map{|e| {:id=>e.id,:source=>e.source_id, :target=>e.target_id, :type=>"suit"}}
     }
   end
   

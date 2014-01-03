@@ -11,7 +11,7 @@ class Rule < ActiveRecord::Base
   
   def relate_to_graph(node_id, edge_id)
     if self.node.nil? && self.edge.nil?
-      node_id.nil? ? self.edge_id = edge_id : self.node_id = node_id 
+      edge_id.nil? ? relate_to_node(node_id) : relate_to_edge(edge_id)
     end
     
   end
