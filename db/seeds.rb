@@ -8,7 +8,7 @@
 account = Account.create({name:"Initial Test Account", key:"a"})
 
 role_lock = [
-    {:name=>"Account", :items=>[{:name=>"Roles", :uri=>"/})list/role"}]},
+    {:name=>"Account", :items=>[{:name=>"Roles", :uri=>"/list/role"}]},
     {:name=>"PBL", :items=>[{:name=>"Badges", :uri=>"/grid/badge"},{:name=>"Scales", :uri=>"/list/scale"}]},  
     {:name=>"Graph", :items=>[{:name=>"Rules", :uri=>"/graph/index"}]}, 
     {:name=>"Editors", :items=>[{:name=>"Mock-up", :uri=>"/mockup/index"}, {:name=>"Notifications", :uri=>"/list/notification"}]}
