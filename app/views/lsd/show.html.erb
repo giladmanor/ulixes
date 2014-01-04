@@ -17,7 +17,7 @@
 		<div class="form-group">
 			<label for="<%= k%>"><%= k.humanize%></label>
 			<%
-			logger.debug @entity.inspect
+			logger.debug k
 			desc = @entity.describe(k)
 
 			case desc[:type].to_sym
@@ -26,7 +26,7 @@
 			<input name="<%= k%>" type="text" class="form-control" id="<%= k%>" placeholder="" value="<%= instance[k]%>">
 			<%
 			when :belongs_to
-			%><%= select_tag(k, options_for_select(desc[:entity].all.where(:account_id=>@account.id)+[desc[:entity].new])) %><%
+			%><%= select_tag(k, options_for_select(desc[:entity].all.where(:account_id=>@account.id).map{|o| [o.name, o.id]})) %><%
 			when :text
 			%>			<textarea name="<%= k%>" class="form-control" rows="3"><%= instance[k]%></textarea><%
 			when :image

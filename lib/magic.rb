@@ -11,7 +11,7 @@ module Magic
       if field_name.include?("_id")
         t = self.reflect_on_association(field_name.gsub("_id", "").to_sym)
         res[:type] = t.macro
-        res[:entity] = t.options[:class_name].constantize
+        res[:entity] = resolve_class(t)
       elsif t = self.serialized_attributes[field_name]
         res[:type] = t.object_class.name
         res[:structure] = self.call("#{field_name}_structure") if self.respond_to?("#{field_name}_structure")
@@ -22,6 +22,11 @@ module Magic
       end
       res
     end
+    
+    def resolve_class(t)
+      t.options[:class_name].nil? ? t.name.to_s.camelize.constantize : t.options[:class_name].constantize
+    end
+    
     
     def acts_as_image field_name, separator_field
       
