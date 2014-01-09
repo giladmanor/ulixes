@@ -1,6 +1,6 @@
 class AdminController < ApplicationController
   before_filter :auth_filter, :except=>[:login]
-  before_filter :menu_filer
+  
 
   def login
     if auth(params[:login], params[:password])
@@ -35,14 +35,10 @@ class AdminController < ApplicationController
     end
   end
   
-  def menu_filer
-    session[:open_menu] = params[:open_menu] if params[:open_menu].present?
-  end
-  
   def auth_filter
     logger.debug "="*40
     @user = User.find(session[:user_id]) unless session[:user_id].nil? 
-    unless @user
+    if @user.nil? || @user.role.nil?
       @error="Please Login"
       render "login", :layout=>false
       return false
