@@ -12,7 +12,11 @@ class Node < ActiveRecord::Base
   def evaluate(user,last_event)
     puts "-"*50
     code = self.rules.map{|r| r.to_code}.join("\n")
+    puts code
     eval code
+    self.edges.each{|e| 
+      return if e.evaluate(user,last_event) 
+    }
     puts "-"*50
   end
   

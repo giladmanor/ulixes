@@ -34,16 +34,16 @@ class Rule < ActiveRecord::Base
   
   #string it out
   
-  def to_code
-    "if #{line_up_cond} \n #{line_up_result} \n end"
+  def to_code(extra=nil)
+    "if #{line_up_cond} \n #{line_up_result(extra)} \n end"
   end
   
   def line_up_cond
     self.require.map{|line| Rule.require_to_code(line)}.join(" and ")
   end
   
-  def line_up_result
-    self.demand.map{|line| Rule.demand_to_code(line)}.join("\n")
+  def line_up_result(extra=nil)
+    (self.demand.map{|line| Rule.demand_to_code(line)}+[extra]).compact.join("\n")
   end
   
   #------------------------------------------------------------------------------
