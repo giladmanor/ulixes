@@ -12,6 +12,7 @@ Ulixes::Application.routes.draw do
   get 'graph(/:action)', :controller=>:graph
   get 'mockup(/:action)', :controller=>:mockup
   post 'mockup(/:action)', :controller=>:mockup
+  post 'show/Notification(/:id)', :controller=>:notification, :action=>:show
   
   post '(/:action(/:entity(/:id)))', :controller=>:lsd
   

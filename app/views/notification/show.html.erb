@@ -1,0 +1,46 @@
+<div class="panel panel-default">
+	<div class="panel-heading">
+		<%= params[:id].present? ? "Editing" : "Creating"%> a Notification
+
+	</div>
+	<div class="panel-body">
+
+		<%= form_tag("/set/notification", role:"form", enctype:"multipart/form-data") do%>
+		<input type="hidden" name="id" value="<%= params[:id]%>" />
+
+		<div class="form-group">
+			<label for="name">Notification Name</label>
+			<input name="name" type="text" class="form-control" id="name" placeholder="" value="<%= @notification.name%>">
+		</div>
+		<div class="checkbox">
+			<label>
+				<input name="multilang" type="checkbox">
+				Multi Language support</label>
+		</div>
+		<div class="form-group">
+			<label for="format">Notification Format</label>
+			<%= select_tag("format", options_for_select(@notification.format_types), class:"form-control") %>
+			
+		</div>
+		<div class="form-group">
+			<label for="name">Content</label>
+			<textarea name="data" class="form-control" rows="3"><%= @notification.data%></textarea>
+		</div>
+		<div class="form-group">
+			<label for="channel">Channel Code</label>
+			<input name="channel" type="text" class="form-control" id="channel" placeholder="" value="<%= @notification.channel%>">
+		</div>
+
+		<p>
+			<button type="submit" class="btn btn-primary">
+				&nbsp;Save&nbsp;
+			</button>
+			&nbsp;&nbsp;&nbsp;
+			<button class="btn btn-warning">
+				Cancel
+			</button>
+		</p>
+		<% end %>
+	</div>
+</div>
+
