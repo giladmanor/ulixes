@@ -13,6 +13,7 @@ Ulixes::Application.routes.draw do
   get 'mockup(/:action)', :controller=>:mockup
   post 'mockup(/:action)', :controller=>:mockup
   post 'show/Notification(/:id)', :controller=>:notification, :action=>:show
+  get 'notification(/:action)', :controller=>:notification
   
   post '(/:action(/:entity(/:id)))', :controller=>:lsd
   

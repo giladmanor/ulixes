@@ -8,23 +8,23 @@
 		<%= form_tag("/set/notification", role:"form", enctype:"multipart/form-data") do%>
 		<input type="hidden" name="id" value="<%= params[:id]%>" />
 
-		<div class="form-group has-error">
+		<div class="form-group has-warning" id="notificationNameInput">
 			<label for="name">Notification Name</label>
-			<input name="name" type="text" class="form-control" id="name" placeholder="" value="<%= @notification.name%>">
+			<input name="name" type="text" class="form-control" id="name" placeholder="" onkeyup="cnt.checkName(<%= params[:id]%>,$(this).val())" value="<%= @notification.name%>">
 		</div>
-		<div>
+		<fieldset <%= @notification.id.nil? ? "" : "disabled"%>>
 			
 			<div class="checkbox">
 				<label>
-					<input name="multilang" type="checkbox">
+					<input name="multilang" type="checkbox" <%= @notification.multilang ? "checked" : ""%>>
 					Multi Language support</label>
 			</div>
 			<div class="form-group">
 				<label for="format">Notification Format</label>
-				<%= select_tag("format", options_for_select(@notification.format_types), class:"form-control") %>
+				<%= select_tag("format", options_for_select(@notification.format_types,@notification.format), class:"form-control") %>
 
 			</div>
-		</div>
+		</fieldset>
 
 		<div class="form-group">
 			<label for="name">Content</label>
@@ -47,4 +47,7 @@
 		<% end %>
 	</div>
 </div>
+<script>
+	var cnt = new NotificationController();
+</script>
 

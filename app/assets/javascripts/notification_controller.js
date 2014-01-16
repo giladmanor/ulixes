@@ -5,7 +5,7 @@ var NotificationController = function(options) {
 
 	this.checkName = function(id, name){
 		get("check_name",{id:id,name:name},function(d){
-			if(d.valid=="true"){
+			if(d.valid){
 				$("#notificationNameInput").addClass("has-success");
 			}else{
 				$("#notificationNameInput").addClass("has-error");
@@ -18,7 +18,7 @@ var NotificationController = function(options) {
 	
 	var get = function(action,data,successFunction) {
 		$.ajax({
-			url : "/graph/"+action,
+			url : "/notification/"+action,
 			data : data
 			//dataType : "JSON" // you want a difference between normal and ajax-calls, and json is standard
 		}).success(function(json) {

@@ -1,10 +1,10 @@
 class Notification < ActiveRecord::Base
   belongs_to :account
-  
-  to_info :name
+  validates_uniqueness_of :name, :scope => [:account_id], :message => "Name taken"
+  to_info :name, :format, :multilang
   
   def format_types
-    [["Web Message",:web],["Mobile",:sms]]
+    [["Web Message",:web],["Short Message",:sms]]
   end
   
 end
