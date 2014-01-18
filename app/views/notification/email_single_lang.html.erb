@@ -1,0 +1,19 @@
+<ul class="list-group">
+	<%
+ lcl = @data.compact.first
+%>
+	<li class="list-group-item">
+		<div class="form-group">
+			<label for="channel">Language</label>
+			<input name="data[]subject" type="text" class="form-control" id="channel" placeholder="" value="<%= lcl["lang"]%>">
+		</div>
+		<div class="form-group">
+			<label for="channel">Subject</label>
+			<input name="data[]subject" type="text" class="form-control" id="channel" placeholder="" value="<%= lcl["subject"]%>">
+		</div>
+		<div class="form-group">
+			<label for="name">Message</label>
+			<textarea name="data[]message" class="form-control" rows="3"><%= lcl["message"]%></textarea>
+		</div>
+	</li>
+</ul>

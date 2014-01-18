@@ -28,11 +28,10 @@
 		<div class="alert alert-info">
 			This Notification is <strong><%= @notification.multilang ? "Multi Lingual" : "Single Language"%></strong>, Formatted for: <strong><%= @notification.format_label %></strong>.
 		</div>
-		
+
 		<%end%>
 
-		<div id="messageFormatHolder"  >
-		</div>
+		<div id="messageFormatHolder"  ></div>
 
 		<div class="form-group">
 			<label for="channel">Channel Code</label>
@@ -52,13 +51,10 @@
 	</div>
 </div>
 <script>
-
-var cnt = new NotificationController();
-$(document).ready(function() {
-	cnt.messageContentForm($('#notificationForm'));
-})
-
-
+	var cnt = new NotificationController();
+	$(document).ready(function() {
+		cnt.messageContentForm($('#notificationForm'));
+	})
 
 </script>
 
