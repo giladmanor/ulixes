@@ -14,6 +14,31 @@ var NotificationController = function(options) {
 	};
 	
 	
+	this.messageContentForm = function(formDOMO){
+		formDOMO.attr('action',"/notification/get_message_content_form");
+		send(formDOMO,function(d){
+			$("#messageFormatHolder").html(d);
+		}, "html");
+	};
+	
+	this.removeLanguage = function(formDOMO,index){
+		formDOMO.attr('action',"/notification/get_message_content_form");
+		var input = $("<input>").attr("type", "hidden").attr("name", "remove_index").val(index);
+		formDOMO.append($(input));
+		send(formDOMO,function(d){
+			$("#messageFormatHolder").html(d);
+		}, "html");
+	};
+	
+	this.save = function(formDOMO){
+		formDOMO.attr('action',"/set/notification");
+		formDOMO.submit();
+	};
+	
+	this.cancel = function(){
+		window.location = "/list/Notification";
+	};
+	
 	////////////////////////////////////////////////////////////
 	
 	var get = function(action,data,successFunction) {
@@ -28,6 +53,7 @@ var NotificationController = function(options) {
 
 	var send = function(formDOM,successFunction, dataType) {
 		var valuesToSubmit = formDOM.serialize();
+		console.log("SEND::: ",valuesToSubmit);
 		$.ajax({
 			url : formDOM.attr('action'), //sumbits it to the given url of the form
 			data : valuesToSubmit,

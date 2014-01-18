@@ -1,0 +1,35 @@
+<ul class="list-group">
+	<%
+	i=0
+	@data.compact.each{|lcl|
+
+	%>
+	<li class="list-group-item">
+		<button type="button" class="btn btn-default btn-xs pull-right" onclick="cnt.removeLanguage($('#notificationForm'),<%=i%>);return false;"><span class="glyphicon glyphicon-remove-circle"></span> Delete</button>
+		Language: <span class="label label-primary"><%= lcl["lang"]%></span>
+		<input type="hidden" name="data[]lang" value="<%= lcl["lang"]%>"/>
+		<div class="form-group">
+			<label for="channel">Subject</label>
+			<input name="data[]subject" type="text" class="form-control" id="channel" placeholder="" value="<%= lcl["subject"]%>">
+		</div>
+		<div class="form-group">
+			<label for="name">Message</label>
+			<textarea name="data[]message" class="form-control" rows="3"><%= lcl["message"]%></textarea>
+		</div>
+	</li>
+
+	<%
+	i+=1
+	}
+
+	%>
+
+	<li class="list-group-item">
+		<div class="input-group">
+			<input name="language" type="text" class="form-control">
+			<div class="input-group-btn">
+				<button type="button" class="btn btn-default" onclick="cnt.messageContentForm($('#notificationForm'));return false;">Add a Language</button>
+			</div>
+		</div>
+	</li>
+</ul>

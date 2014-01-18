@@ -5,42 +5,46 @@
 	</div>
 	<div class="panel-body">
 
-		<%= form_tag("/set/notification", role:"form", enctype:"multipart/form-data") do%>
+		<%= form_tag("/set/notification", role:"form", enctype:"multipart/form-data", id:"notificationForm") do%>
 		<input type="hidden" name="id" value="<%= params[:id]%>" />
 
 		<div class="form-group has-warning" id="notificationNameInput">
 			<label for="name">Notification Name</label>
 			<input name="name" type="text" class="form-control" id="name" placeholder="" onkeyup="cnt.checkName(<%= params[:id]%>,$(this).val())" value="<%= @notification.name%>">
 		</div>
-		<fieldset <%= @notification.id.nil? ? "" : "disabled"%>>
-			
-			<div class="checkbox">
-				<label>
-					<input name="multilang" type="checkbox" <%= @notification.multilang ? "checked" : ""%>>
-					Multi Language support</label>
-			</div>
-			<div class="form-group">
-				<label for="format">Notification Format</label>
-				<%= select_tag("format", options_for_select(@notification.format_types,@notification.format), class:"form-control") %>
-
-			</div>
-		</fieldset>
-
-		<div class="form-group">
-			<label for="name">Content</label>
-			<textarea name="data" class="form-control" rows="3"><%= @notification.data%></textarea>
+		<%
+		if @notification.id.nil?
+		%>
+		<div class="checkbox">
+			<label>
+				<input name="multilang" type="checkbox" <%= @notification.multilang ? "checked" : ""%>>
+				Multi Language support</label>
 		</div>
+		<div class="form-group">
+			<label for="format">Notification Format</label>
+			<%= select_tag("format", options_for_select(@notification.format_types,@notification.format), class:"form-control") %>
+		</div>
+		<%else%>
+		<div class="alert alert-info">
+			This Notification is <strong><%= @notification.multilang ? "Multi Lingual" : "Single Language"%></strong>, Formatted for: <strong><%= @notification.format_label %></strong>.
+		</div>
+		
+		<%end%>
+
+		<div id="messageFormatHolder"  >
+		</div>
+
 		<div class="form-group">
 			<label for="channel">Channel Code</label>
 			<input name="channel" type="text" class="form-control" id="channel" placeholder="" value="<%= @notification.channel%>">
 		</div>
 
 		<p>
-			<button type="submit" class="btn btn-primary">
+			<button type="submit" class="btn btn-primary" onclick="cnt.save($('#notificationForm'));return false;">
 				&nbsp;Save&nbsp;
 			</button>
 			&nbsp;&nbsp;&nbsp;
-			<button class="btn btn-warning">
+			<button class="btn btn-warning" onclick="cnt.cancel();return false;">
 				Cancel
 			</button>
 		</p>
@@ -48,6 +52,13 @@
 	</div>
 </div>
 <script>
-	var cnt = new NotificationController();
+
+var cnt = new NotificationController();
+$(document).ready(function() {
+	cnt.messageContentForm($('#notificationForm'));
+})
+
+
+
 </script>
 
