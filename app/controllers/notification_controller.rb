@@ -19,7 +19,9 @@ class NotificationController < AdminController
     @data +=[{:lang=>params[:language]}] if params[:language].present?
     @data.delete_at(params[:remove_index].to_i) if params[:remove_index].present?
     
-    render :email, :layout=>false
+    view = "#{@notification.format}_#{@notification.multilang ? "multilang" : "single_lang"}".to_sym
+    
+    render view, :layout=>false
   end
   
   def remove_language_entry
