@@ -128,7 +128,7 @@ class GraphController < AdminController
       Rule::UPSET_USER_SCALE=>scales,
       Rule::GRANT_USER_BADGE=>badges,
       Rule::REVOKE_USER_BADGE=>badges,
-      Rule::SEND_NOTIFICATION=>[]
+      Rule::SEND_NOTIFICATION=>@account.notifications.map{|n| n.name}
     }
   end
   
