@@ -16,4 +16,13 @@ class Notification < ActiveRecord::Base
     end
   end
   
+  def reduce(user)
+    message = message_by_lang(user.local) 
+    #TODO: embed dynamic data
+  end
+  
+  def message_by_lang(lang)
+    self.data.select{|m| m["lang"]==lang}.first || self.data.first
+  end
+  
 end

@@ -77,8 +77,9 @@ class User < ActiveRecord::Base
     self.notifications << render(channel,self.account.notifications.find_by_name(announcement_code))
   end
 
-  def render_announcement channel, notification
-    self.user_notifications << notification.reduce(channel, seld.local)
+  def render_announcement notification_name
+    notification = self.account.notifications.find_by_name notification_name 
+    self.user_notifications << notification.reduce(self)
   end
 
   def move_to_node(node)
