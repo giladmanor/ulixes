@@ -15,10 +15,10 @@ class NotificationController < AdminController
     @notification = params[:id].present? ? @account.notifications.find(params[:id]) : Notification.new
     @data = params[:data].present? ? params[:data] : (@notification.data || [])
     
-    logger.debug "+++ #{@data}"
-    @data +=[{:lang=>params[:language]}] if params[:language].present?
-    @data.delete_at(params[:remove_index].to_i) if params[:remove_index].present?
     
+    @data +=[{"lang"=>params[:language]}] if params[:language].present?
+    @data.delete_at(params[:remove_index].to_i) if params[:remove_index].present?
+    logger.debug "+++ #{@data}"
     view = "#{@notification.format}_#{@notification.multilang ? "multilang" : "single_lang"}".to_sym
     
     render view, :layout=>false
