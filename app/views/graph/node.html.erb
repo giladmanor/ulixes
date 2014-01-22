@@ -25,19 +25,21 @@
 
 	<div class="panel-body" style="overflow: auto;height: 500px;">
 		<%
-		(@node.rules + [Rule.new]).each{|rule|
+		list_of_rules = @node.rules.select{|r| r.edge.nil?} + @node.rules.reject{|r| r.edge.nil?} + [Rule.new]
+		list_of_rules.each{|rule|
 		%>
 		<%= form_tag("",class:"form", role:"form",onsubmit:"controller.saveRule($(this));return false;") do%>
 		<input name="id" type="hidden" value="<%= rule.id%>">
 		<input name="node_id" type="hidden" value="<%= @node.id%>">
+		
 		<table class="table table-hover">
 			<thead>
 				<tr>
-					<th>IF ALL (and):
-					<div class="btn-group" style="float: right;">
-						<button type="submit" class="btn btn-default btn-xs"><span class="glyphicon glyphicon-ok-circle"></span> Save</button>
-						<button type="button" class="btn btn-default btn-xs" onclick="closeForm();return false;"><span class="glyphicon glyphicon-remove-circle"></span> Cancel</button>
-					</div>	
+					<th><%=rule.edge.nil? ? "" : "[Move to #{rule.edge.target.name}]"%> IF ALL (and):
+						<div class="btn-group" style="float: right;">
+							<button type="submit" class="btn btn-default btn-xs"><span class="glyphicon glyphicon-ok-circle"></span> Save</button>
+							<button type="button" class="btn btn-default btn-xs" onclick="closeForm();return false;"><span class="glyphicon glyphicon-remove-circle"></span> Cancel</button>
+						</div>	
 					</th>
 					<th style="width: 50px"></th>
 				</tr>
@@ -61,7 +63,7 @@
 
 			</tbody>
 		</table>
-		<table class="table table-hover">
+		<table class="table table-hover" style=" margin-left: 41px; width: 774px; ">
 			<thead>
 				<tr>
 					<th>Then do:</th>
