@@ -106,7 +106,7 @@ class Rule < ActiveRecord::Base
       when REVOKE_USER_BADGE
         "user.remove_badge(self.account.badges.find_by_name('#{line.last}'))"
       when SEND_NOTIFICATION
-        "user.announce(#{line.last}')"
+        "user.announce('#{line.last}')"
     end 
   end
   
