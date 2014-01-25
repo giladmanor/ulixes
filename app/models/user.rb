@@ -30,7 +30,7 @@ class User < ActiveRecord::Base
       :badges=>self.badges.map{|b| b.to_info},
       :scores=>self.user_scores.map{|s| s.to_info},
       :actions=>actions,
-      :announcements=>self.user_notifications{|n| n.to_info}
+      :announcements=>self.user_notifications.select{|n| n.read.nil?}.map{|n| {:id=>n.id,:data=>n.data}}
     })
   end
 

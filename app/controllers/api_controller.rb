@@ -38,6 +38,13 @@ class ApiController < ApplicationController
     params[:with_info].present? ? respond_with(@user.spill) : respond_with(SUCCESS)
   end
   
+  def read
+    un = @user.user_notifications.find(params[:id])
+    un.read = Time.now
+    un.save
+    params[:with_info].present? ? respond_with(@user.spill) : respond_with(SUCCESS)
+  end
+  
   private # private # private # private # private # private # private # private # private # private # 
   
   # FILTER
