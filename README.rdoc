@@ -1,5 +1,5 @@
 =ulixes
-==== Vectoring Rule Processor
+==== Adaptive Rule Engine
 
 * Ruby version: 2.x
 * Rails version 4.x
