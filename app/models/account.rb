@@ -1,5 +1,5 @@
 class Account < ActiveRecord::Base
-  
+  serialize :conf, Hash
   has_many :clusters
   has_many :badges
   has_many :menu_items

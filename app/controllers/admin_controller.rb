@@ -21,6 +21,18 @@ class AdminController < ApplicationController
   
   end
   
+  def configuration
+    
+  end
+  
+  def update_account
+    @account.name=params[:name]
+    @account.key=params[:key]
+    @account.conf = params[:conf]
+    @account.save
+    redirect_to action:"configuration" 
+  end
+  
   private
   
   def auth(login, password)
