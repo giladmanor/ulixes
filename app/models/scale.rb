@@ -4,7 +4,7 @@ class Scale < ActiveRecord::Base
   
   
   def limitted
-    self.upper_limit.nil? ? "Unlimitted" : self.upper_limit
+    self.upper_limit.nil? ? "Unlimitted" : self.upper_limit.to_s
   end
   
   

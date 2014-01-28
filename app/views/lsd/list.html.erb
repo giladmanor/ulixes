@@ -27,7 +27,7 @@
 					<td><span style="color: silver;font-size: 8px"><%= entity.id%></span>&nbsp;</td>
 					<%
 					@entity.to_info_keys.each{|k|
-					%><td><%= entity[k]%></td><%
+					%><td><%= entity.send(k)%></td><%
 					}
 					%>
 
