@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140118173040) do
+ActiveRecord::Schema.define(version: 20140128182911) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -137,6 +137,7 @@ ActiveRecord::Schema.define(version: 20140118173040) do
     t.string   "code"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.decimal  "upper_limit"
   end
 
   add_index "scales", ["account_id"], name: "index_scales_on_account_id", using: :btree

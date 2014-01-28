@@ -60,7 +60,7 @@ class User < ActiveRecord::Base
 
   def upset_scale scale, added_value
     score = self.user_scores.find_by_scale_id(scale.id) || UserScore.new(scale_id:scale.id, user_id:self.id, value:0)
-    score.value += added_value
+    score.add added_value
     score.save
   end
 

@@ -8,4 +8,9 @@ class UserScore < ActiveRecord::Base
     self.scale.code
   end
   
+  def add(value)
+    self.value = self.scale.upper_limit and return if !self.scale.upper_limit.nil? && self.value+value>self.scale.upper_limit
+    self.value += value
+  end
+  
 end
