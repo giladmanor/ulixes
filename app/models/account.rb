@@ -10,5 +10,6 @@ class Account < ActiveRecord::Base
   has_many :nodes
   has_many :edges
   has_many :notifications
+  has_many :languages
   
 end
