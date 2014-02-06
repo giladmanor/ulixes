@@ -28,7 +28,8 @@
 		<div class="form-group">
 			<label for="key" class="col-sm-3 control-label">Default Language</label>
 			<div class="col-sm-9">
-				<input name="conf[lang]" class="form-control" id="key" value="<%= @account.conf["lang"]%>" placeholder="Default Language">
+				<%= select_tag("conf[lang]", options_for_select(@account.languages.map{|o| [o.name, o.code]},@account.conf["lang"]),class:"form-control") %>
+				
 			</div>
 		</div>
 
