@@ -15,7 +15,7 @@ The Ulixes.io project is Open Source under MIT license (basicly means you can do
 
 
 
-==The system ships with the following:
+===The system ships with the following:
 ====Managed Assets:
 * Badges: image assets that hold specific meaning
 * Points: an array of scale indicators
@@ -45,16 +45,27 @@ The Ulixes.io project is Open Source under MIT license (basicly means you can do
 
 ==Instllation Guide
 
+====Requirments
 * Ruby version: 2.x
 * Rails version 4.x
 
 ==== Gemmed as Such 
 * postgres
 
-===== Wiki pages
-[http://giladmanor.github.io/ulixes]
+====Installing Ulixes:
+* Download and extract the (ZIP)[https://github.com/giladmanor/ulixes/zipball/master] or (TAR)[https://github.com/giladmanor/ulixes/tarball/master] file containing the Ulixes project
+* Withing the extracted directory, run the *bundle* command to update required packages
+* Update your Database Credencials at: */conf/database.yml*
+* Run 
+    rake db:create
+    rake db:seed
+* Access your server via browser http://localhost:3000, and login with the default user: *a* password: *a*
 
-===== Copyright and license
+
+
+===== Wiki-pages[http://giladmanor.github.io/ulixes]
+
+=== Copyright and license
 
 The MIT License (MIT)
 
