@@ -1,5 +1,49 @@
-=ulixes
+=Ulixes.io
 ==== Adaptive Rule Engine
+This project was built as a smart tracking system that enables a wide range of responses to user actions on any given electronic platform i.e web/mobile systems.
+
+The Ulixes.io project is Open Source under MIT license (basicly means you can do whatever you want with it)
+
+
+====Potential Use Cases:
+* Loyalty & Partner plans
+* Gamification and user engagement
+* Churn Identification and handling
+* ARPU optimization
+* Marketing Automation and bypassing IT response time
+
+
+
+
+==The system ships with the following:
+====Managed Assets:
+* Badges: image assets that hold specific meaning
+* Points: an array of scale indicators
+* Notifications: any type of communication to display back to the user 
+* Call-To-Actions: interactive notifications that can trigger the user to perform another action
+====Created a Marketing Flow
+* Non linear level graph
+* Rules per level & Transition
+* Control changes in user assets via Rules
+====Track & Measure Everything
+* track all the actions each of your users does
+* Analyse user behavior & habits
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+==Instllation Guide
 
 * Ruby version: 2.x
 * Rails version 4.x
