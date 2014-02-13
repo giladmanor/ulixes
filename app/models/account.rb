@@ -12,4 +12,13 @@ class Account < ActiveRecord::Base
   has_many :notifications
   has_many :languages
   
+  def find_user(uid)
+    user = self.users.find_by_uid(uid)
+    if user.nil? && self.conf[:on_the_fly]
+      user = User.new(:uid=>uid, :account=>self, :node=>self.conf[:graph_entry_point])
+      self.users<<user
+    end
+    user
+  end
+  
 end

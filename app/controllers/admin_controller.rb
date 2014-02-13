@@ -28,6 +28,8 @@ class AdminController < ApplicationController
   def update_account
     @account.name=params[:name]
     @account.key=params[:key]
+    @account.client_key=params[:client_key]
+    
     @account.conf = params[:conf]
     @account.save
     redirect_to action:"configuration" 

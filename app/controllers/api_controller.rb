@@ -51,11 +51,11 @@ class ApiController < ApplicationController
   def auth_filter
     unless session[:uuid]
       @account = Account.find(params[:a_id])
-      unless params[:k]==@account.key
+      unless params[:k]==@account.key || params[:k]==@account.client_key
         render :file => 'public/404.html', :status => :not_found, :layout => false
         return false
       end
-      @user = User.find_by_uid(params[:uuid])
+      @user = @account.find_user(params[:uuid])
     else
       @user = User.find(session[:uuid])
       @account = @user.account

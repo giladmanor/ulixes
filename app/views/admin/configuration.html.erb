@@ -1,12 +1,12 @@
 <div class="panel panel-default">
 	<div class="panel-heading">
-		Account Details Configuration
+		Account Configuration
 	</div>
 	<div class="panel-body">
 		<%= form_tag("/admin/update_account", role:"form", enctype:"multipart/form-data", class:"form-horizontal") do%>
 		<fieldset disabled>
 			<div class="form-group">
-				<label for="name" class="col-sm-3 control-label">Account Number</label>
+				<label for="name" class="col-sm-3 control-label">Account Identifier</label>
 				<div class="col-sm-9">
 					<input  class="form-control" id="name" value="<%= @account.id%>" placeholder="Name">
 				</div>
@@ -18,18 +18,66 @@
 				<input name="name" class="form-control" id="name" value="<%= @account.name%>" placeholder="Name">
 			</div>
 		</div>
-		<div class="form-group">
-			<label for="key" class="col-sm-3 control-label">API Key</label>
-			<div class="col-sm-9">
-				<input name="key" class="form-control" id="key" value="<%= @account.key%>" placeholder="API Key">
-			</div>
-		</div>
 
 		<div class="form-group">
 			<label for="key" class="col-sm-3 control-label">Default Language</label>
 			<div class="col-sm-9">
 				<%= select_tag("conf[lang]", options_for_select(@account.languages.map{|o| [o.name, o.code]},@account.conf["lang"]),class:"form-control") %>
-				
+
+			</div>
+		</div>
+		
+		<div class="form-group">
+			<label for="key" class="col-sm-3 control-label">Default User Entry Point</label>
+			<div class="col-sm-9">
+				<%= select_tag("conf[graph_entry_point]", options_for_select(@account.nodes.map{|o| [o.name, o.id]},@account.conf[:graph_entry_point]),class:"form-control") %>
+
+			</div>
+		</div>
+		
+		<div class="form-group">
+			<label for="key" class="col-sm-3 control-label">API Keys</label>
+			<div class="col-sm-9">
+				<div class="panel panel-default">
+
+					<div class="panel-body">
+						<div class="form-group">
+							<label for="key" class="col-sm-3 control-label">Server API Key</label>
+							<div class="col-sm-9 input-group">
+								<input name="key" class="form-control" id="key" value="<%= @account.key%>" placeholder="API Key">
+								<span class="input-group-btn">
+									<button class="btn btn-default" type="button"  onclick="AccountConfiguration.generate_key($('#key'),20)">
+										Generate Key
+									</button> </span>
+							</div>
+						</div>
+
+						<div class="form-group">
+							<label for="client_key" class="col-sm-3 control-label">Client API Key</label>
+							<div class="col-sm-9 ">
+								Registering New Users to Ulixes
+								<div class="radio">
+									<label>
+										<input type="radio" name="conf[on_the_fly]" id="optionsRadios1" value="false" <%= @account.conf[:on_the_fly]=="true" ? "" : "checked" %>>
+										Only via Server call (Recommended for Loyalty and real rewarding) </label>
+								</div>
+								<div class="radio">
+									<label>
+										<input type="radio" name="conf[on_the_fly]" id="optionsRadios2" value="true" <%= @account.conf[:on_the_fly]=="true" ? "checked" : "" %> >
+										On the fly from the client (Recommended for tracking) </label>
+								</div>
+								<br />
+								<div class="input-group">
+									<input name="client_key" class="form-control" id="client_key" value="<%= @account.client_key%>" placeholder="API Client Key">
+									<span class="input-group-btn">
+										<button class="btn btn-default" type="button" onclick="AccountConfiguration.generate_key($('#client_key'),50)">
+											Generate Key
+										</button> </span>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
 			</div>
 		</div>
 
