@@ -23,7 +23,7 @@
 			<label for="key" class="col-sm-3 control-label">Default Language</label>
 			<div class="col-sm-9">
 				<%= select_tag("conf[lang]", options_for_select(@account.languages.map{|o| [o.name, o.code]},@account.conf["lang"]),class:"form-control") %>
-
+				<span class="help-block">Define <a href="/list/language">supported languages</a> and Choose the default system language for notifications</span>
 			</div>
 		</div>
 
@@ -31,7 +31,7 @@
 			<label for="key" class="col-sm-3 control-label">Default User Entry Point</label>
 			<div class="col-sm-9">
 				<%= select_tag("conf[graph_entry_point]", options_for_select(@account.nodes.map{|o| [o.name, o.id]},@account.conf[:graph_entry_point]),class:"form-control") %>
-
+				<span class="help-block">Create a <a href="/graph/index">graph entry point</a> and Choose the default entry point for a newly registered user</span>
 			</div>
 		</div>
 
@@ -102,10 +102,9 @@
 						Ulixes Client (JS)
 					</button>
 				</div>
-				<textarea id="code_generator_result" class="form-control" rows="3"></textarea>	
+				<textarea id="code_generator_result" class="form-control" rows="3"></textarea>
 			</div>
 		</div>
-		
 
 		<%end%>
 	</div>
