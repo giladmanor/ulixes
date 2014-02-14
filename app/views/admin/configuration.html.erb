@@ -26,7 +26,7 @@
 
 			</div>
 		</div>
-		
+
 		<div class="form-group">
 			<label for="key" class="col-sm-3 control-label">Default User Entry Point</label>
 			<div class="col-sm-9">
@@ -34,7 +34,7 @@
 
 			</div>
 		</div>
-		
+
 		<div class="form-group">
 			<label for="key" class="col-sm-3 control-label">API Keys</label>
 			<div class="col-sm-9">
@@ -80,7 +80,6 @@
 				</div>
 			</div>
 		</div>
-
 		<div class="form-group">
 			<div class="col-sm-offset-3 col-sm-9">
 				<button type="submit" class="btn btn-default">
@@ -88,6 +87,25 @@
 				</button>
 			</div>
 		</div>
+		<hr />
+		<div class="form-group">
+			<label for="client_key" class="col-sm-3 control-label">Generate Code</label>
+			<div class="col-sm-9 ">
+				<div class="btn-group">
+					<button type="button" class="btn btn-default" onclick="AccountConfiguration.ulixes_tracker()">
+						Ulixes Tracker Cleint (JS)
+					</button>
+					<button type="button" class="btn btn-default" onclick="AccountConfiguration.ulixes_conf()">
+						Ulixes Server Conf (PHP)
+					</button>
+					<button type="button" class="btn btn-default" onclick="AccountConfiguration.ulixes_client()">
+						Ulixes Client (JS)
+					</button>
+				</div>
+				<textarea id="code_generator_result" class="form-control" rows="3"></textarea>	
+			</div>
+		</div>
+		
 
 		<%end%>
 	</div>

@@ -1,3 +1,4 @@
+require "open-uri"
 class AdminController < ApplicationController
   before_filter :auth_filter, :except=>[:login]
   
@@ -23,6 +24,13 @@ class AdminController < ApplicationController
   
   def configuration
     
+  end
+  
+  def get_client_tracker
+    uri = "https://raw2.github.com/giladmanor/ulixes-sdk/master/ulixes_tracker_mini.js"
+    file = open(uri).read
+    logger.debug file
+    render :inline=>file.gsub("[SERVER]","#{request.protocol}#{request.host}:#{request.port.to_s}").gsub("[ACCOUNTID]",@account.id.to_s).gsub("[ACCOUNTCLIENTKEY]",@account.client_key)
   end
   
   def update_account

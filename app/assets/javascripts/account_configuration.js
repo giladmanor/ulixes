@@ -10,11 +10,19 @@ var AccountConfiguration = {
 			
 		$(domObj).val(text);
 	},
-	uri : function(url) {
-		if (url.indexOf("dbpedia.org") != -1) {
-			return url.replace("/resource/", "/data/") + ".json";
-		} else {
-			return url;
-		}
+	ulixes_tracker : function() {
+		$.ajax({
+			url : "/admin/get_client_tracker",
+			data : {},
+			dataType : "text" // you want a difference between normal and ajax-calls, and json is standard
+		}).success(function(res) {
+			$('#code_generator_result').text(res);
+		});
+	},
+	ulixes_conf : function() {
+		$('#code_generator_result').text("ulixes_conf Not Ready Yet");
+	},
+	ulixes_client : function() {
+		$('#code_generator_result').text("ulixes_client Not Ready Yet");
 	}
 };
