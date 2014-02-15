@@ -1,0 +1,2 @@
+module VisualAidHelper
+end

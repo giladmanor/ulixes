@@ -1,0 +1,14 @@
+<style>
+	text {
+		font: 14px sans-serif;
+		pointer-events: none;
+		text-shadow: none;
+	}
+</style>
+<script src="http://d3js.org/d3.v3.min.js"></script>
+<div class="bubbles"></div>
+
+<script>
+	bubbles(<%= raw(@account.nodes.map{|n| {:name=>n.name, :size=>n.users.size*10 + 10}}.to_json)%>);
+
+</script>
