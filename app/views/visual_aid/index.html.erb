@@ -4,11 +4,41 @@
 		pointer-events: none;
 		text-shadow: none;
 	}
+
+	.axis text {
+		font: 10px sans-serif;
+	}
+
+	.axis path, .axis line {
+		fill: none;
+		stroke: #000;
+		shape-rendering: crispEdges;
+	}
+
+	.bar {
+		fill: steelblue;
+		fill-opacity: .6;
+	}
+
+	.x.axis path {
+		display: none;
+	}
+
+	label {
+		position: absolute;
+		top: 10px;
+		right: 10px;
+	}
+
 </style>
 <script src="http://d3js.org/d3.v3.min.js"></script>
 <div class="bubbles"></div>
-<div class="actionChart"></div>
+<label style="position: relative"><input id="doSort" type="checkbox"> Sort values</label>
+<div class="container" style="max-width: none">
+	<div class="pull-right actionBarChart"></div>
+	<div class="pull-left actionChart"></div>
+</div>
 <script>
-	bubbles(<%= raw(@account.nodes.map{|n| {:id=>n.id,:name=>n.name, :size=>n.users.size*10 + 10}}.to_json)%>);
+bubbles(<%= raw(@account.nodes.map{|n| {:id=>n.id,:name=>n.name, :size=>n.users.size*10 + 10}}.to_json)%>);
 
 </script>
