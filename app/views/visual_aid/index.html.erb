@@ -7,8 +7,8 @@
 </style>
 <script src="http://d3js.org/d3.v3.min.js"></script>
 <div class="bubbles"></div>
-
+<div class="actionChart"></div>
 <script>
-	bubbles(<%= raw(@account.nodes.map{|n| {:name=>n.name, :size=>n.users.size*10 + 10}}.to_json)%>);
+	bubbles(<%= raw(@account.nodes.map{|n| {:id=>n.id,:name=>n.name, :size=>n.users.size*10 + 10}}.to_json)%>);
 
 </script>
