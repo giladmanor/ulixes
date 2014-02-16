@@ -1,13 +1,16 @@
-var AccountConfiguration = {
-	generate_key : function(domObj,len) {
-		var text = "";
-		var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
-
-		for (var i = 0; i < len; i++){
-			text += possible.charAt(Math.floor(Math.random() * possible.length));
-		}
-			
-			
+var AccountCreator = {
+	validate_login : function(login) {
+		$.ajax({
+			url : "/admin/is_login_unique",
+			data : {login:login},
+			dataType : "json" // you want a difference between normal and ajax-calls, and json is standard
+		}).success(function(res) {
+			if(res.unique){
+				$("#login_name").addClass("has-error");
+			}else{
+				$("#login_name").removeClass("has-error");
+			}
+		});
 		$(domObj).val(text);
 	},
 	ulixes_tracker : function() {

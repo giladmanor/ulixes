@@ -1,0 +1,48 @@
+<div class="panel panel-default">
+	<div class="panel-heading">
+		Account Creation
+	</div>
+	<div class="panel-body">
+		<%= form_tag("/admin/create_account", role:"form", enctype:"multipart/form-data", class:"form-horizontal") do%>
+		
+		<div class="form-group">
+			<label for="name" class="col-sm-3 control-label">Account Name</label>
+			<div class="col-sm-9">
+				<input name="name" class="form-control" id="name" value="<%= params[:name]%>" placeholder="Name">
+			</div>
+		</div>
+
+		<div class="form-group">
+			<label for="key" class="col-sm-3 control-label">Admin User</label>
+			<div class="col-sm-9">
+				<div class="panel panel-default">
+
+					<div class="panel-body">
+						<div id="login_name" class="form-group">
+							<label for="key" class="col-sm-3 control-label">Login name</label>
+							<div class="col-sm-9 input-group">
+								<input name="login" class="form-control" id="key" onchange="AccountCreator(this)" value="<%= params[:login]%>" placeholder="login">
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="key" class="col-sm-3 control-label">Password</label>
+							<div class="col-sm-9 input-group">
+								<input name="password" class="form-control" id="key" value="<%= params[:password]%>" placeholder="password">
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="form-group">
+			<div class="col-sm-offset-3 col-sm-9">
+				<button type="submit" class="btn btn-default">
+					Save
+				</button>
+			</div>
+		</div>
+		<hr />
+		
+		<%end%>
+	</div>
+</div>
