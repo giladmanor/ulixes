@@ -15,7 +15,7 @@ class Account < ActiveRecord::Base
   def find_user(uid)
     user = self.users.find_by_uid(uid)
     if user.nil? && self.conf[:on_the_fly]
-      user = User.new(:uid=>uid, :account=>self, :node=>self.conf[:graph_entry_point])
+      user = User.new(:uid=>uid, :account=>self, :node=>self.nodes.find(self.conf[:graph_entry_point]))
       self.users<<user
     end
     user
