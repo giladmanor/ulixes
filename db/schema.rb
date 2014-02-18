@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140213183648) do
+ActiveRecord::Schema.define(version: 20140218224849) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -194,5 +194,27 @@ ActiveRecord::Schema.define(version: 20140213183648) do
 
   add_index "users", ["account_id"], name: "index_users_on_account_id", using: :btree
   add_index "users", ["role_id"], name: "index_users_on_role_id", using: :btree
+
+  create_table "zero_sum_game_users", force: true do |t|
+    t.integer  "zero_sum_game_id"
+    t.integer  "user_id"
+    t.string   "group"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "zero_sum_game_users", ["user_id"], name: "index_zero_sum_game_users_on_user_id", using: :btree
+  add_index "zero_sum_game_users", ["zero_sum_game_id"], name: "index_zero_sum_game_users_on_zero_sum_game_id", using: :btree
+
+  create_table "zero_sum_games", force: true do |t|
+    t.integer  "account_id"
+    t.string   "name"
+    t.text     "resources"
+    t.text     "conf"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "zero_sum_games", ["account_id"], name: "index_zero_sum_games_on_account_id", using: :btree
 
 end

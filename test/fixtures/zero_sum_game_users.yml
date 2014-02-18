@@ -1,0 +1,9 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  zero_sum_game_id: 
+  user_id: 
+
+two:
+  zero_sum_game_id: 
+  user_id: 

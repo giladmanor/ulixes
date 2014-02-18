@@ -8,6 +8,9 @@ class User < ActiveRecord::Base
   has_many :badges, :through=>:user_badges
   has_many :user_notifications
   has_many :user_scores
+  
+  has_many :zero_sum_game_users
+  has_many :zero_sum_games, :through=>:zero_sum_game_users
 
   to_info :uid, :login,:node_info, :parent_info
   def node_info
