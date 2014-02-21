@@ -3,7 +3,10 @@ class User < ActiveRecord::Base
   belongs_to :account
   belongs_to :node
   belongs_to :role
+  
   has_many :events
+  has_many :flags, -> { where flag: true}, class_name:"Event"
+  
   has_many :user_badges
   has_many :badges, :through=>:user_badges
   has_many :user_notifications
@@ -52,8 +55,7 @@ class User < ActiveRecord::Base
   end
 
   def score scale
-    if score = self.user_scores.find_by_scale_id(scale.id)
-      score.value
+    if score = self.user_scores.find_ 
     else
       0
     end
