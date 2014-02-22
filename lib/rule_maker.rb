@@ -11,8 +11,13 @@ class RuleMaker
     "if User Scale"=>["(user.score(account.scales.find_by_code('",:next,"')) ",OPERANDS,:last,")"],
     "if User Has Badge"=>["(user.has_badge_named?('",:last,"'))"],
     "unless User has Badge"=>["(!user.has_badge_named?('",:last,"'))"],
-    "if User is Flagged with"=>[],
-    "unless User is Flagged with"=>[],
+    "if User is Flagged with"=>["(user.has_flag('",:last,"'))"],
+    "unless User is Flagged with"=>["(!user.has_flag('",:last,"'))"],
+    "upset User Scale"=>{},
+    "grant User with Badge"=>[],
+    "revoke User of Badge"=>[],
+    "send Notification"=>[],
+    "flag user with"=>[]
 
   }
   
