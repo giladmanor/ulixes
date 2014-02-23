@@ -12,16 +12,16 @@ class LoadTest
     (1 .. len)
   end
 
-  def self.do
+  def self.do(a,b)
 
     t = Time.now
 
     1000.times{
-      user_list(1000).each{|uid|
+      (a .. b).each{|uid|
         10.times{
           send({:uuid=>uid, :code=>ACTIONS.shuffle.first, :value=>VALUES.shuffle.first})
         }
-        
+        p Time.now - t
       }
     }
 
@@ -32,7 +32,7 @@ class LoadTest
 
   def self.send(args)
     args.merge!({
-      :with_info=>true,
+      #:with_info=>true,
       :a_id=>ACCOUNT_NUMBER,
       :k=>ACCOUNT_KEY
     })
