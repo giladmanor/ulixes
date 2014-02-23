@@ -86,6 +86,7 @@ class User < ActiveRecord::Base
   end
 
   def move_to_node(node)
+    self.events << Event.new({:flag=>true, :code=>"T::#{self.node.id}=>#{node.id}", :vlaue=>1})
     self.node = node
     self.save
   end
