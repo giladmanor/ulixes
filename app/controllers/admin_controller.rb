@@ -47,7 +47,18 @@ class AdminController < ApplicationController
     file = open(uri).read
     logger.debug file
     render :inline=>file.gsub("[SERVER]","#{request.protocol}#{request.host}:#{request.port.to_s}").gsub("[ACCOUNTID]",@account.id.to_s).gsub("[ACCOUNTCLIENTKEY]",@account.client_key)
+    
   end
+
+  def download_client_tracker
+    uri = "https://raw2.github.com/giladmanor/ulixes-sdk/master/ulixes_tracker_mini.js"
+    file = open(uri).read
+    logger.debug file
+    content = file.gsub("[SERVER]","#{request.protocol}#{request.host}:#{request.port.to_s}").gsub("[ACCOUNTID]",@account.id.to_s).gsub("[ACCOUNTCLIENTKEY]",@account.client_key)
+    
+    send_data content ,:type => 'text; charset=iso-8859-1',:disposition => "attachment; filename=ulixes_tracker.js"
+  end
+
 
   def update_account
     @account.name=params[:name]

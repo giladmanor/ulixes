@@ -55,7 +55,8 @@ class User < ActiveRecord::Base
   end
 
   def score scale
-    if score = self.user_scores.find_ 
+    if score = self.user_scores.find_by_scale_id(scale.id)
+      score.value
     else
       0
     end
