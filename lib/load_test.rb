@@ -2,27 +2,37 @@ require 'net/http'
 
 class LoadTest
   SERVER = "http://localhost:3000/api/set/"
-  ACCOUNT_NUMBER = 2
-  ACCOUNT_KEY = "wgQ91tTfuQ4onIOJkckiYGMCOOLmBxfI9MA4iBr44jUAvkMZvX"
+  ACCOUNT_NUMBER = 3
+  ACCOUNT_KEY = "PcD18LoSxnhx7HetBUCi5CMRm8UwdeeA6oa1UrmkG1hhHKOZDG"
 
-  ACTIONS = ["a","move","buy","d","e","f","g","h"]
+  ACTIONS = ["a","b","c","d","e","f","g","h"]
+  VALUES = [1,5,10,15]
 
   def self.user_list(len)
     (1 .. len)
   end
 
   def self.do
-    10.times{
-      user_list(10).each{|uid|
-        send({:uuid=>uid, :code=>ACTIONS.shuffle.first, :value=>1})
+
+    t = Time.now
+
+    1000.times{
+      user_list(1000).each{|uid|
+        10.times{
+          send({:uuid=>uid, :code=>ACTIONS.shuffle.first, :value=>VALUES.shuffle.first})
+        }
+        
       }
     }
 
+    p "="*50
+    p Time.now - t
+    p "="*50
   end
 
   def self.send(args)
     args.merge!({
-      #:with_info=>true,
+      :with_info=>true,
       :a_id=>ACCOUNT_NUMBER,
       :k=>ACCOUNT_KEY
     })
