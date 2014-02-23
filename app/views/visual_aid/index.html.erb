@@ -33,10 +33,20 @@
 </style>
 <script src="http://d3js.org/d3.v3.min.js"></script>
 <div class="bubbles"></div>
-<label style="position: relative"><input id="doSort" type="checkbox"> Sort values</label>
-<div class="container" style="max-width: none">
-	<div class="pull-right actionBarChart"></div>
-	<div class="pull-left actionChart"></div>
+
+<div class="panel panel-default">
+	<div class="panel-heading">
+		Welcome to <span id="node_name"></span>, Population: <span id="node_size"></span>
+		<label class="pull-right" style="position: relative">
+			<input id="doSort" type="checkbox">
+			Sort values</label>
+	</div>
+	<div class="panel-body">
+		<div class="container" style="max-width: none">
+			<div class="pull-right actionBarChart"></div>
+			<div class="pull-left actionChart"></div>
+		</div>
+	</div>
 </div>
 <script>
 bubbles(<%= raw(@account.nodes.map{|n| {:id=>n.id,:name=>n.name, :size=>(2*Math::log(n.users.size+1) + 10)}}.to_json)%>);
