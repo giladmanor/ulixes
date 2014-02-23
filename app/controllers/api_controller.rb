@@ -2,14 +2,13 @@ require "tokenizer.rb"
 class ApiController < ApplicationController
   before_filter :auth_filter, :except=>[:use_token]
   after_filter :callback_wrapper #JSONP wrapper
-  respond_to :json
   
   SUCCESS = {:success=>true}
   FAIL = {:success=>false}
   
   def get_token
-    logger.debug generate_token(@user.id)
-    respond_with(generate_token(@user.id))
+    #logger.debug generate_token(@user.id)
+    render :json=> generate_token(@user.id)
   end
   
   def use_token
@@ -17,32 +16,32 @@ class ApiController < ApplicationController
       render :file => '/public/404.html', :status => :not_found, :layout => false
       return false
     else
-      params[:with_info].present? ? respond_with(@user.spill) : respond_with(SUCCESS)
+      render :json=> params[:with_info].present? ? @user.spill : SUCCESS
     end
   end
   
   def create
     if @user.nil? && @account.add_user(uid:params[:uid])
-      respond_with(SUCCESS)
+      render :json=> SUCCESS
     else
-      respond_with(FAIL)
+      render :json=> FAIL
     end
   end
   
   def get
-    respond_with(@user.spill)
+    render :json=> @user.spill
   end
   
   def set
     @user.resolve_event params[:code],params[:value]
-    params[:with_info].present? ? respond_with(@user.spill) : respond_with(SUCCESS)
+    render :json=> params[:with_info].present? ? @user.spill : SUCCESS
   end
   
   def read
     un = @user.user_notifications.find(params[:id])
     un.read = Time.now
     un.save
-    params[:with_info].present? ? respond_with(@user.spill) : respond_with(SUCCESS)
+    render :json=> params[:with_info].present? ? @user.spill : SUCCESS
   end
   
   private # private # private # private # private # private # private # private # private # private # 
