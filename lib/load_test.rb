@@ -15,13 +15,15 @@ class LoadTest
   def self.do(a,b)
 
     t = Time.now
+    tt = t
 
     1000.times{
       (a .. b).each{|uid|
         10.times{
           send({:uuid=>uid, :code=>ACTIONS.shuffle.first, :value=>VALUES.shuffle.first})
         }
-        p Time.now - t
+        p Time.now - tt
+        tt= Time.now
       }
     }
 

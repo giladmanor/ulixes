@@ -32,7 +32,7 @@
 
 </style>
 <script src="http://d3js.org/d3.v3.min.js"></script>
-<div class="bubbles"></div>
+<div class="chart_placeholder"></div>
 
 <div class="panel panel-default">
 	<div class="panel-heading">
@@ -49,6 +49,24 @@
 	</div>
 </div>
 <script>
-bubbles(<%= raw(@account.nodes.map{|n| {:id=>n.id,:name=>n.name, :size=>(7*Math::log(n.users.size+1) + 10)}}.to_json)%>);
+<%
+trans = @account.nodes.map{|n| n.users.map{|u| u.flags.select{|e| e.code.starts_with?("T::")}}}
+
+
+%>
+
+
+
+var chart = d3.chart.dependencyWheel();
+var data = {
+  packageNames: <%= raw(@account.nodes.map{|n| n.name}.to_json)%>,
+  matrix: [[0, 1, 1], // Main depends on A and B
+           [0, 0, 1], // A depends on B
+           [0, 0, 0]] // B doesn't depend on A or Main
+};
+ 
+d3.select('.chart_placeholder')
+  .datum(data)
+  .call(chart);
 
 </script>

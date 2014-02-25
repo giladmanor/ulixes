@@ -5,7 +5,7 @@ function bubbles(data) {
 	$(".bubbles").text("");
 	var svg = d3.select(".bubbles").append("svg").attr("width", width).attr("height", height);
 
-	var force = d3.layout.force().gravity(.5).charge(-400).size([width, height]);
+	var force = d3.layout.force().gravity(.1).charge(-600).size([width, height]);
 	force.nodes(data).start();
 
 	var color = d3.scale.category20();

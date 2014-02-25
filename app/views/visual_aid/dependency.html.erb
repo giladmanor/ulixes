@@ -1,68 +1,29 @@
-<style>
-	text {
-		font: 14px sans-serif;
-		pointer-events: none;
-		text-shadow: none;
-	}
-
-	.axis text {
-		font: 10px sans-serif;
-	}
-
-	.axis path, .axis line {
-		fill: none;
-		stroke: #000;
-		shape-rendering: crispEdges;
-	}
-
-	.bar {
-		fill: steelblue;
-		fill-opacity: .6;
-	}
-
-	.x.axis path {
-		display: none;
-	}
-
-	label {
-		position: absolute;
-		top: 10px;
-		right: 10px;
-	}
-
-</style>
 <script src="http://d3js.org/d3.v3.min.js"></script>
+<script src="/d3.dependencyWheel.js"></script>
 <div class="chart_placeholder"></div>
 
-<div class="panel panel-default">
-	<div class="panel-heading">
-		Welcome to <span id="node_name"></span>, Population: <span id="node_size"></span>
-		<label class="pull-right" style="position: relative">
-			<input id="doSort" type="checkbox">
-			Sort values</label>
-	</div>
-	<div class="panel-body">
-		<div class="container" style="max-width: none">
-			<div class="pull-right actionBarChart"></div>
-			<div class="pull-left actionChart"></div>
-		</div>
-	</div>
-</div>
+
 <script>
 <%
-trans = @account.nodes.map{|n| n.users.map{|u| u.flags.select{|e| e.code.starts_with?("T::")}}}
+node_names = @account.nodes.map{|n| n.name}
+node_ids = @account.nodes.map{|n| n.id}
 
+transitions = @account.users.map{|u| u.flags.where(code:"_TRANSITION").map{|e| e.value.to_i}}.flatten
+
+dependencies =node_ids.map{|nid| node_ids.map{|nidd| 0}}
+transitions.map{|eid| 
+	edge = @account.edges.find(eid)
+	dependencies[node_ids.index(edge.target_id)][node_ids.index(edge.source_id)] +=1 
+}
+
+logger.debug dependencies.inspect
 
 %>
 
-
-
 var chart = d3.chart.dependencyWheel();
 var data = {
-  packageNames: <%= raw(@account.nodes.map{|n| n.name}.to_json)%>,
-  matrix: [[0, 1, 1], // Main depends on A and B
-           [0, 0, 1], // A depends on B
-           [0, 0, 0]] // B doesn't depend on A or Main
+  packageNames: <%= raw(node_names.to_json)%>,
+  matrix: <%=raw(dependencies.to_json)%>
 };
  
 d3.select('.chart_placeholder')

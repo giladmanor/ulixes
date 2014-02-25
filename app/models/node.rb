@@ -29,11 +29,7 @@ class Node < ActiveRecord::Base
 
   end
 
-  #["if User Event,with Scale,add,grater then,0"] => ["revoke User of Badge,Test"]
-
-  def rendered(user,last_event)
-    user.remove_badge("Test") if last_event.code == "add" && last_event.value>0
-  end
+  
 
   def user_events
     actions = {}

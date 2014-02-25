@@ -11,7 +11,7 @@ class Edge < ActiveRecord::Base
     logger.debug code
     
     if res = eval(code)
-      user.move_to_node self.target
+      user.move_to_node self
     end
     logger.debug res
     puts "="*50

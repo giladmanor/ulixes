@@ -1,5 +1,6 @@
 require "tokenizer.rb"
 class ApiController < ApplicationController
+  skip_before_filter :verify_authenticity_token
   before_filter :auth_filter, :except=>[:use_token]
   after_filter :callback_wrapper #JSONP wrapper
   

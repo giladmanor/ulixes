@@ -85,9 +85,9 @@ class User < ActiveRecord::Base
     self.user_notifications << un
   end
 
-  def move_to_node(node)
-    self.events << Event.new({:flag=>true, :code=>"T::#{self.node.id}=>#{node.id}", :value=>1})
-    self.node = node
+  def move_to_node(edge)
+    self.events << Event.new({:flag=>true, :code=>"_TRANSITION", :value=>edge.id})
+    self.node = edge.target
     self.save
   end
 
