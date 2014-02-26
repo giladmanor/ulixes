@@ -1,0 +1,23 @@
+.loaderAnimation {
+	z-index: 100;
+	background-color: white;
+	opacity: 0.6;
+	left: 0;
+	position: absolute;
+	top: 0;
+	width: 100%;
+	height: 100%;
+	align-self: center;
+	
+}
+.loaderAnimationHolder{
+	margin-left: 350px;
+	
+}
+.loaderAnimationCaption{
+	float:left;
+	margin-top:-200px;
+	margin-left: 450px;
+	font-size: 48px;
+	
+}

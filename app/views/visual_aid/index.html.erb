@@ -52,3 +52,4 @@
 bubbles(<%= raw(@account.nodes.map{|n| {:id=>n.id,:name=>n.name, :size=>(7*Math::log(n.users.size+1) + 10)}}.to_json)%>);
 
 </script>
+

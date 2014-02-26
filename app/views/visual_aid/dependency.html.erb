@@ -2,32 +2,24 @@
 <script src="/d3.dependencyWheel.js"></script>
 <div class="chart_placeholder"></div>
 
-
 <script>
-<%
-node_names = @account.nodes.map{|n| n.name}
-node_ids = @account.nodes.map{|n| n.id}
+	$(document).ready(function() {
+		LoaderAnimation.show("Generating Report");
+		$.ajax({
+			url : "/visual_aid/get_node_dependancy", //sumbits it to the given url of the form
+			data : {},
+			dataType : "JSON" // you want a difference between normal and ajax-calls, and json is standard
+		}).success(function(json) {
+			LoaderAnimation.hide();
+			var chart = d3.chart.dependencyWheel();
+			var data = {
+				packageNames : json.nodes,
+				matrix : json.dependencies
 
-transitions = @account.users.map{|u| u.flags.where(code:"_TRANSITION").map{|e| e.value.to_i}}.flatten
-
-dependencies =node_ids.map{|nid| node_ids.map{|nidd| 0}}
-transitions.map{|eid| 
-	edge = @account.edges.find(eid)
-	dependencies[node_ids.index(edge.target_id)][node_ids.index(edge.source_id)] +=1 
-}
-
-logger.debug dependencies.inspect
-
-%>
-
-var chart = d3.chart.dependencyWheel();
-var data = {
-  packageNames: <%= raw(node_names.to_json)%>,
-  matrix: <%=raw(dependencies.to_json)%>
-};
- 
-d3.select('.chart_placeholder')
-  .datum(data)
-  .call(chart);
+			};
+			d3.select('.chart_placeholder').datum(data).call(chart);
+		});
+	});
+	
 
 </script>

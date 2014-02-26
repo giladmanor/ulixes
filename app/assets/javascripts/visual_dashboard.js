@@ -39,6 +39,7 @@ function bubbles(data) {
 };
 
 function openActions(node) {
+	LoaderAnimation.show("Calculating");
 	$.ajax({
 		url : "/visual_aid/get_node_trace",
 		data : {
@@ -46,6 +47,7 @@ function openActions(node) {
 		},
 		dataType : "json" // you want a difference between normal and ajax-calls, and json is standard
 	}).success(function(res) {
+		LoaderAnimation.hide();
 		$("#node_name").text(res.name);
 		$("#node_size").text(res.size);
 		actionPie(res.actions);
