@@ -17,7 +17,7 @@ function bubbles(data) {
 		return color(d.size);
 	}).call(force.drag);
 
-	var text = svg.append("g").selectAll("text").data(force.nodes()).enter().append("text").attr("x", -10).attr("y", ".31em").text(function(d) {
+	var text = svg.append("g").selectAll("text").data(force.nodes()).enter().append("text").style("text-anchor", "middle").attr("y", ".31em").text(function(d) {
 		return d.name;
 	});
 

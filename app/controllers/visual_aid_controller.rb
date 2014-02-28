@@ -28,4 +28,33 @@ class VisualAidController < AdminController
     render :json=>{:nodes=>node_names, :dependencies=>dependencies}
   end
 
+  def clusters
+    render :json=>@account.nodes.map{|n| {:name=>n.name, :size=>n.users.size}}
+  end
+
+  def get_node_funnels
+    node_names = @account.nodes.map{|n| {:name=>n.name}}
+    node_ids = @account.nodes.map{|n| n.id}
+
+    transitions = @account.users.map{|u| u.flags.where(:code=>"_TRANSITION").map{|e| e.value.to_i}}.flatten
+
+    dependencies ={}
+    transitions.map{|eid|
+      dependencies[eid] = (dependencies[eid] || 0) + 1
+    }
+    tmp_nodes = []
+    edges = dependencies.map{|k,v|
+      edge = @account.edges.find(k)
+      unless tmp_nodes.index(edge.target_id)
+        tmp_nodes << edge.source_id
+        {:value=>v}.merge({:source=>node_ids.index(edge.source_id),:target=>node_ids.index(edge.target_id)})
+      else
+        nil
+      end
+    }.compact
+    res = {:nodes=>node_names, :edges=>edges}
+    logger.debug res.inspect
+    render :json=>res
+  end
+
 end

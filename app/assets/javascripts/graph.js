@@ -54,8 +54,8 @@ var Graph = function(nodes, links,openNodeFormFunction,openLinkFormFunction){
 	var text = svg.append("g").selectAll("text")
 	    .data(force.nodes())
 	  .enter().append("text")
-	    .attr("x", -10)
 	    .attr("y", ".31em")
+	    .style("text-anchor", "middle")
 	    .text(function(d) { return d.name; });
 	
 	// Use elliptical arc path segments to doubly-encode directionality.
