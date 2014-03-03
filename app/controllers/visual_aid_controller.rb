@@ -35,12 +35,7 @@ class VisualAidController < AdminController
     render :json=>{:name=>"root",:size=>@account.users.size, :children=>@account.nodes.map{|n| {:name=>n.name, :size=>n.users.size, :children=>n.users.map{|u| {:name=>u.uid, :size=>1,:children=>[]}}}}}
   end
   
-  def distance(v1,v2)
-    v=v1.merge(v2){|k,vv1,vv2| ((vv1||0)+(vv2||0))^2}
-    sum = 0
-    v.values{|vv| sum+=vv}
-    Math.sqrt(sum)
-  end
+  
 
   def get_node_funnels
     node_names = @account.nodes.map{|n| {:name=>n.name}}

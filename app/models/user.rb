@@ -3,15 +3,15 @@ class User < ActiveRecord::Base
   belongs_to :account
   belongs_to :node
   belongs_to :role
-  
-  has_many :events
+
+  has_many :events, -> { where flag: false}
   has_many :flags, -> { where flag: true}, class_name:"Event"
-  
+
   has_many :user_badges
   has_many :badges, :through=>:user_badges
   has_many :user_notifications
   has_many :user_scores
-  
+
   has_many :zero_sum_game_users
   has_many :zero_sum_games, :through=>:zero_sum_game_users
 
@@ -23,14 +23,23 @@ class User < ActiveRecord::Base
   def parent_info
     {:uid=>self.parent.uid, :login=>self.parent.login} unless self.parent.nil?
   end
-  
+
   def vector
-    actions = self.events.map{|e| e.code}.uniq
-    actions = actions.map{|a| 
-      sum = 0
-      self.events.select{|e| e.code==a}.each{|e| sum+=(e.value.nil? ? 0 : e.value)}
-      {:code=>a, :value=>sum}
+    actions = {}
+    self.events.each{|e|
+      actions[e.code] = (actions[e.code] || 0 ) + (e.value || 0)
     }
+    actions
+  end
+
+  def self.distance(u1,u2)
+    v1=u1.vector
+    v2=u2.vector
+    v=v1.merge(v2){|k,vv1,vv2| ((vv1||0)+(vv2||0))**2}
+    sum = 0
+    #p v.map{|k,v| "#{k}=>(#{v.to_f})"}
+    v.values.each{|vv| sum+=vv}
+    Math.sqrt(sum)
   end
 
   def spill
@@ -59,9 +68,9 @@ class User < ActiveRecord::Base
 
   def score scale
     if score = self.user_scores.find_by_scale_id(scale.id)
-      score.value
+    score.value
     else
-      0
+    0
     end
   end
 
@@ -83,7 +92,7 @@ class User < ActiveRecord::Base
   end
 
   def announce announcement_code
-    notification = self.account.notifications.find_by_name announcement_code 
+    notification = self.account.notifications.find_by_name announcement_code
     un = UserNotification.new({:data=>notification.reduce(self), :notification_id=>notification.id})
     self.user_notifications << un
   end

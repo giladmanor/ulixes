@@ -21,4 +21,14 @@ class Account < ActiveRecord::Base
     user
   end
   
+  
+  def vector_file(n)
+    out = File.open("#{n}.txt","wb" )
+    self.users.each{|u| 
+      out.puts(u.vector.to_json)
+      u=nil
+      }
+    out.close
+  end
+  
 end
