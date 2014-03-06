@@ -9,7 +9,8 @@ class VisualAidController < AdminController
 
   def get_node_trace
     node = @account.nodes.find(params[:id])
-    render :json=>{:name=>node.name,:size=>node.users.size,:actions=>node.user_events.map{|k,v| {:name=>k,:value=>v}}}
+    size = node.users.size
+    render :json=>{:name=>node.name,:size=>size,:actions=>node.user_events.map{|k,v| {:name=>k,:value=>v/(size+0.1)}}}
   end
 
   def get_node_dependancy
@@ -29,7 +30,7 @@ class VisualAidController < AdminController
   end
 
   def get_node_clusters
-    vectors = @account.users.map{|u| u.vector}
+    #vectors = @account.users.map{|u| u.vector}
     
     
     render :json=>{:name=>"root",:size=>@account.users.size, :children=>@account.nodes.map{|n| {:name=>n.name, :size=>n.users.size, :children=>n.users.map{|u| {:name=>u.uid, :size=>1,:children=>[]}}}}}
