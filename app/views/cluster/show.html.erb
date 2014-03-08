@@ -1,0 +1,65 @@
+<div class="panel panel-default">
+	<div class="panel-heading">
+		<%= params[:id].present? ? "Editing" : "Creating"%> a Cluster
+
+	</div>
+	<div class="panel-body">
+
+		<%= form_tag("/cluster/set", role:"form", enctype:"multipart/form-data", id:"notificationForm") do%>
+		<input type="hidden" name="id" value="<%= params[:id]%>" />
+
+		<div class="form-group has-warning" id="notificationNameInput">
+			<label for="name">Cluster Name</label>
+			<input name="name" type="text" class="form-control" id="name" placeholder="" value="<%= @cluster.name%>">
+		</div>
+
+		
+
+		<table class="table table-hover">
+			
+			<tbody>
+				<%
+				
+				(@cluster.require + [""]).each{|condition|
+				%>
+				<tr>
+					<td>
+					<input id="---1" name="require[]" type="text" class="form-control requirment" value="<%= condition%>" >
+					</td>
+					<td><span class="glyphicon glyphicon-remove-circle" onclick=""></span></td>
+				</tr>
+
+				<%
+				}
+				%>
+
+			</tbody>
+		</table>
+
+		<p>
+			<button type="submit" class="btn btn-primary" >
+				&nbsp;Save&nbsp;
+			</button>
+			&nbsp;&nbsp;&nbsp;
+			<button class="btn btn-warning" >
+				Cancel
+			</button>
+		</p>
+		<% end %>
+	</div>
+</div>
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js" type="text/javascript" charset="utf-8"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.9.2/jquery-ui.min.js" type="text/javascript" charset="utf-8"></script>
+<script src="/tag-it.js"></script>
+<script>
+
+var requirments=<%= raw(@require.to_json)%>;
+console.log("require::: ", requirments);
+$(document).ready(function() {
+	//domO.val(initData);
+	$(".requirment").each(function() {
+		makeRule($(this),requirments);
+	});
+});
+</script>
+

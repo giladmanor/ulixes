@@ -3,21 +3,7 @@ class GraphController < AdminController
     @require = require_statement
     @demand = demand_statement
     #logger.debug JSON.pretty_generate(@condition_obj)
-    @nodes = {}
-    ["Gilad","HTC","Microsoft","Samsung","Motorola","Nokia", "Kodak","Apple","Barnes & Noble"].each{|n| @nodes[n.hash]={:id=>n.hash, :name=>n}}
     
-    @links = [
-      
-      {:source=>"Microsoft".hash, :target=> "HTC".hash, :type=> "licensing"},
-      {:source=>"Samsung".hash, :target=> "Apple".hash, :type=> "suit"},
-      {:source=>"Motorola".hash, :target=> "Apple".hash, :type=> "suit"},
-      {:source=>"Nokia".hash, :target=> "Apple".hash, :type=> "resolved"},
-      {:source=>"HTC".hash, :target=> "Apple".hash, :type=> "suit"},
-      {:source=>"Kodak".hash, :target=> "Apple".hash, :type=> "suit"},
-      {:source=>"Apple".hash, :target=> "Kodak".hash, :type=> "resolved"},
-      
-      {:source=>"Microsoft".hash, :target=> "Barnes & Noble".hash, :type=> "suit"}
-    ]
     
     g = graph_data(nil)
     @nodes = g[:nodes]

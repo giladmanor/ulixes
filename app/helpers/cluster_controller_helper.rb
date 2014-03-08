@@ -1,0 +1,2 @@
+module ClusterControllerHelper
+end

@@ -16,6 +16,8 @@ Ulixes::Application.routes.draw do
   get 'mockup(/:action)', :controller=>:mockup
   post 'mockup(/:action)', :controller=>:mockup
   post 'show/Notification(/:id)', :controller=>:notification, :action=>:show
+  post 'show/Cluster(/:id)', :controller=>:cluster, :action=>:show
+  post 'cluster(/:action)', :controller=>:cluster
   get 'notification(/:action)', :controller=>:notification
   get 'visual_aid(/:action(/:id))', :controller=>:visual_aid
   
