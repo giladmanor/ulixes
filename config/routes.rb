@@ -18,6 +18,7 @@ Ulixes::Application.routes.draw do
   post 'show/Notification(/:id)', :controller=>:notification, :action=>:show
   post 'show/Cluster(/:id)', :controller=>:cluster, :action=>:show
   post 'cluster(/:action)', :controller=>:cluster
+  get 'cluster(/:action)', :controller=>:cluster
   get 'notification(/:action)', :controller=>:notification
   get 'visual_aid(/:action(/:id))', :controller=>:visual_aid
   
