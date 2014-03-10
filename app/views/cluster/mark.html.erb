@@ -1,0 +1,50 @@
+<div class="panel panel-default">
+	<div class="panel-heading">
+		Cluster Batch Action
+
+	</div>
+	<div class="panel-body">
+
+		<%= form_tag("/cluster/set", role:"form", enctype:"multipart/form-data", id:"notificationForm") do%>
+
+		<div class="form-group" id="notificationNameInput">
+			<label for="name">Select a Cluster</label>
+			<%= select_tag(:id, options_for_select(@account.clusters.map{|o| [o.name, o.id]}), class:"form-control") %>
+		</div>
+
+		<div class="form-group" id="notificationNameInput">
+			<label for="name">Perform Action on</label>
+			<div class="checkbox">
+				<label>
+					<input type="checkbox">
+					Cluster Population </label>
+			</div>
+			<div class="checkbox">
+				<label>
+					<input type="checkbox">
+					Out of Cluster population </label>
+			</div>
+		</div>
+
+		<div class="form-group" id="notificationNameInput">
+			<label for="name">Referencing Clusters</label>
+			<%= select_tag(:clusters, options_for_select(@account.clusters.map{|o| [o.name, o.id]}),:multiple => true, class:"form-control") %>
+		</div>
+
+		<div class="form-group" id="notificationNameInput">
+			<label for="name">Action</label>
+			<%= select_tag(:id, options_for_select(["Flag users","Upset Scale","Grant Badge", "Revoke Badge","Migrate to Node"]), class:"form-control") %>
+		</div>
+		<p>
+			<button type="submit" class="btn btn-primary" >
+				&nbsp;Run Batch&nbsp;
+			</button>
+			&nbsp;&nbsp;&nbsp;
+			<button class="btn btn-warning" >
+				Cancel
+			</button>
+		</p>
+		<% end %>
+	</div>
+</div>
+
