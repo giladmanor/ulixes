@@ -22,6 +22,10 @@ Ulixes::Application.routes.draw do
   get 'notification(/:action)', :controller=>:notification
   get 'visual_aid(/:action(/:id))', :controller=>:visual_aid
   
+  post 'wb(/:action(/:id))', :controller=>:wb
+  get 'wb(/:action(/:id))', :controller=>:wb
+  
+  
   post '(/:action(/:entity(/:id)))', :controller=>:lsd
   
   

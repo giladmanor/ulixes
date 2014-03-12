@@ -1,0 +1,73 @@
+<div class="panel panel-default">
+	<div class="panel-heading">
+		Wikibrains Map List Editor for <%= @map_list["name"] || "New Map List"%>
+	</div>
+	<div class="panel-body">
+		<%=form_tag("/wb/set_map_list/#{@map_list["id"] || ''}",class:"form-horizontal", role:"form") do%>
+
+		<div class="form-group">
+			<label for="name" class="col-sm-2 control-label">Name</label>
+			<div class="col-sm-9">
+				<input name="name" class="form-control" id="name" value="<%= @map_list["name"]%>" placeholder="Name">
+			</div>
+		</div>
+
+		<hr />
+
+		<table class="table table-striped">
+
+			<thead>
+				<tr>
+
+					<th >Map Key</th>
+					<th >Preview</th>
+
+					<th>Actions</th>
+				</tr>
+			</thead>
+			<tbody>
+				<%
+				(@map_list["ids"]+[""]).each{|entity|
+				%>
+
+				<tr>
+
+					<td>
+					<div class="col-sm-6">
+						<input name="ids[]" class="form-control" value="<%= entity%>" placeholder="Map Key">
+					</div></td>
+					<td> 
+						<%
+							begin
+							d = open "#{@callback_url}/persistence/info/#{entity}"
+							d = JSON.parse(d.read)
+							rescue
+								d = {"title"=>"Unavailable"}
+							end	
+						 %> 
+						 
+						<div class="pull-left col-sm-4">
+							Title: <%= d["title"]%><br />
+							Description: <%= d["description"]%>
+						</div>
+						<div class="pull-right" style="width: 250px;height: 70px;background-size:250px auto;background-image: url('<%=@callback_url%>/persistence/preview/<%= entity%>');background-position:0px center"></div>
+						
+						 
+					</td>
+
+					<td width="140px"><span> </td>
+
+				</tr>
+
+				<%
+				}
+				%>
+
+			</tbody>
+		</table>
+		<button name="what" value="save" class="btn btn-default">Save (and continue editing)</button> </span>
+		<p><hr /></p>
+		<button name="what" value="done" class="btn btn-default">Done (save and go back to lists)</button> </span>
+		<% end %>
+	</div>
+</div>

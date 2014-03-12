@@ -1,0 +1,43 @@
+<div class="panel panel-default">
+	<div class="panel-heading">
+		Map Lists for Wikibrains viewer
+	</div>
+	<div class="panel-body">
+		<table class="table table-striped">
+
+			<thead>
+				<tr>
+					<th width="10px"></th>
+					<th >Name</th>
+					<th >Number of Maps</th>
+					
+					<th>Actions</th>
+				</tr>
+			</thead>
+			<tbody>
+				<%
+				(@map_lists+[{"ids"=>[]}]).each{|entity|
+				%>
+
+				<tr>
+					<td><span style="color: silver;font-size: 8px"></span>&nbsp;</td>
+					<td><%= entity["name"]%></td>
+					<td><%= entity["ids"].length%></td>
+
+					<td width="140px"><span><%=form_tag("/wb/show_map_list/#{entity["id"] || ''}",class:"form-horizontal", role:"form") do%>
+						<button value="Edit" class="btn btn-default">
+							<%= entity["id"].nil? ? "New" : "Edit"%>
+						</button> <% end %></span>
+						
+					</td>
+
+				</tr>
+
+				<%
+				}
+				%>
+
+			</tbody>
+		</table>
+	</div>
+</div>
