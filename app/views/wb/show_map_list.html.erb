@@ -27,7 +27,7 @@
 			</thead>
 			<tbody>
 				<%
-				(@map_list["ids"]+[""]).each{|entity|
+				((@map_list["ids"]|| [])+[""]).each{|entity|
 				%>
 
 				<tr>
