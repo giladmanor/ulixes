@@ -36,7 +36,7 @@ class WbController < AdminController
     res = JSON.parse(response.body)
     logger.debug "+"*20 + " " + res["id"]
     if params[:what]=="save"
-      redirect_to :action=>:show_map_list, vparams[:id]
+      redirect_to :action=>:show_map_list, :id=>params[:id]
     else
       redirect_to :action=>:map_lists,:id=>res["id"]
     end
