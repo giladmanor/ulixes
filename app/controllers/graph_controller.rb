@@ -59,8 +59,13 @@ class GraphController < AdminController
     rule.require = params[:require].reject{|cnd| cnd==""}
     rule.demand = params[:demand].reject{|dmd| dmd==""}
     rule.relate_to_graph(params[:node_id],params[:edge_id])
-    unless rule.save
-      logger.debug rule.error
+    
+    if rule.require.empty? 
+      rule.destroy
+    else
+      unless rule.save
+        logger.debug rule.error
+      end
     end
     
     if params[:edge_id].present?

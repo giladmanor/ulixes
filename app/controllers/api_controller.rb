@@ -62,6 +62,10 @@ class ApiController < ApplicationController
     end
   end
   
+  def load_account(account_id)
+    @account = Account.find(account_id)
+  end
+  
   # FILTER
   def callback_wrapper
     response.body = "#{params[:callback]}(#{response.body});" unless params[:callback].nil?

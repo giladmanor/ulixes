@@ -43,13 +43,14 @@ class User < ActiveRecord::Base
   end
 
   def spill
-    self.to_info.merge({
+    res = self.to_info.merge({
       :node=> self.node.nil? ? nil : self.node.to_info,
       :badges=>self.badges.map{|b| b.to_info},
       :scores=>self.user_scores.map{|s| s.to_info},
-      :actions=>vector,
-      :announcements=>self.user_notifications.select{|n| n.read.nil?}.map{|n| {:id=>n.id,:data=>n.data}}
-    })
+      :actions=>vector.map{|k,v|{:name=>k, :value=>v}},
+      :announcements=>self.user_notifications.select{|n| n.read.nil? }.map{|n| {:id=>n.id,:data=>n.data}}
+    })#&& n.notification.format=="web"
+    res
   end
 
   def resolve_event(code,value)
