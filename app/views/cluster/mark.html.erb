@@ -1,6 +1,6 @@
 <div class="panel panel-default">
 	<div class="panel-heading">
-		Cluster Batch Action
+		Preform an Action on a Cluster "Like" segment
 
 	</div>
 	<div class="panel-body">
@@ -8,32 +8,26 @@
 		<%= form_tag("/cluster/set", role:"form", enctype:"multipart/form-data", id:"notificationForm") do%>
 
 		<div class="form-group" id="notificationNameInput">
-			<label for="name">Select a Cluster</label>
+			<label for="name">Select a Target Population</label>
 			<%= select_tag(:id, options_for_select(@account.clusters.map{|o| [o.name, o.id]}), class:"form-control") %>
+			<span class="help-block">The Batch will run on this population</span>
+		</div>
+		<div class="form-group" id="notificationNameInput">
+			<label for="name">Select a Positive Reference</label>
+			<%= select_tag(:id, options_for_select(@account.clusters.map{|o| [o.name, o.id]}), class:"form-control") %>
+			<span class="help-block">The Batch will include users that are similar to this cluster</span>
 		</div>
 
 		<div class="form-group" id="notificationNameInput">
-			<label for="name">Perform Action on</label>
-			<div class="checkbox">
-				<label>
-					<input type="checkbox">
-					Cluster Population </label>
-			</div>
-			<div class="checkbox">
-				<label>
-					<input type="checkbox">
-					Out of Cluster population </label>
-			</div>
-		</div>
-
-		<div class="form-group" id="notificationNameInput">
-			<label for="name">Referencing Clusters</label>
+			<label for="name">Select Negative References</label>
 			<%= select_tag(:clusters, options_for_select(@account.clusters.map{|o| [o.name, o.id]}),:multiple => true, class:"form-control") %>
+			<span class="help-block">The batch will exclude users that are similar to these clusters</span>
 		</div>
 
 		<div class="form-group" id="notificationNameInput">
-			<label for="name">Action</label>
+			<label for="name">Choose Batch Action</label>
 			<%= select_tag(:id, options_for_select(["Send Notification","Flag users","Upset Scale","Grant Badge", "Revoke Badge","Migrate to Node"]), class:"form-control") %>
+			<span class="help-block">The action to take on the selected users</span>
 		</div>
 		<p>
 			<button type="submit" class="btn btn-primary" >
