@@ -6,19 +6,12 @@ class ApiController < ApplicationController
   
   SUCCESS = {:success=>true}
   FAIL = {:success=>false}
+    
+  # Server to Server API # Server to Server API # Server to Server API # Server to Server API 
   
   def get_token
     #logger.debug generate_token(@user.id)
     render :json=> generate_token(@user.id)
-  end
-  
-  def use_token
-    unless validate_token(params[:t])
-      render :file => '/public/404.html', :status => :not_found, :layout => false
-      return false
-    else
-      render :json=> params[:with_info].present? ? @user.spill : SUCCESS
-    end
   end
   
   def create
@@ -28,23 +21,30 @@ class ApiController < ApplicationController
       render :json=> FAIL
     end
   end
-  
-  def get
-    if params[:code].present?
-      @user.resolve_event params[:code],params[:value]
+    
+  # General API # General API # General API # General API # General API # General API
+  def use_token
+    unless validate_token(params[:t])
+      render :file => '/public/404.html', :status => :not_found, :layout => false
+      return false
+    else
+      render :json=> params[:with_info].present? ? @user.spill : SUCCESS
     end
+  end
+     
+  def get 
+    @user.resolve_event(params[:code],params[:value]) if params[:code].present?
+    @user.append_data(params[:user]) if params[:user].present?
     render :json=> @user.spill
   end
   
-  def set
+  def set 
     @user.resolve_event params[:code],params[:value]
     render :json=> params[:with_info].present? ? @user.spill : SUCCESS
   end
   
   def read
-    un = @user.user_notifications.find(params[:id])
-    un.read = Time.now
-    un.save
+    un = @user.read_message(params[:id])
     render :json=> params[:with_info].present? ? @user.spill : SUCCESS
   end
   
@@ -74,6 +74,7 @@ class ApiController < ApplicationController
     response.body = "#{params[:callback]}(#{response.body});" unless params[:callback].nil?
   end
   
+  # Tokenizer Instrumentation
   def generate_token(uuid)
     Tokenizer.get_token(uuid)
   end

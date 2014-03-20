@@ -16,6 +16,18 @@ class User < ActiveRecord::Base
   has_many :zero_sum_games, :through=>:zero_sum_game_users
 
   to_info :uid, :login,:node_info, :parent_info
+  
+  
+  def append_data(data)
+    
+  end
+  
+  def read_message(id)
+    self.user_notifications.find(id)
+    un.read = Time.now
+    un.save
+  end
+  
   def node_info
     self.node.name unless self.node.nil?
   end
