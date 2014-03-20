@@ -1,5 +1,7 @@
 class User < ActiveRecord::Base
   acts_as_tree
+  
+  serialize :data, Hash
   belongs_to :account
   belongs_to :node
   belongs_to :role
@@ -19,7 +21,8 @@ class User < ActiveRecord::Base
   
   
   def append_data(data)
-    
+    self.data.merge(data)
+    self.save
   end
   
   def read_message(id)
