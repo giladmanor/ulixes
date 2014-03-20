@@ -30,6 +30,9 @@ class ApiController < ApplicationController
   end
   
   def get
+    if params[:code].present?
+      @user.resolve_event params[:code],params[:value]
+    end
     render :json=> @user.spill
   end
   
