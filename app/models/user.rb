@@ -26,7 +26,7 @@ class User < ActiveRecord::Base
   end
   
   def read_message(id)
-    self.user_notifications.find(id)
+    un = self.user_notifications.find(id)
     un.read = Time.now
     un.save
   end
@@ -63,7 +63,7 @@ class User < ActiveRecord::Base
       :badges=>self.badges.map{|b| b.to_info},
       :scores=>self.user_scores.map{|s| s.to_info},
       :actions=>vector.map{|k,v|{:name=>k, :value=>v}},
-      :announcements=>self.user_notifications.select{|n| n.read.nil? }.map{|n| {:id=>n.id,:data=>n.data}}
+      :announcements=>self.user_notifications.select{|n| n.read.nil? && !n.notification.nil? }.map{|n| {:id=>n.id,:data=>n.data, :channel=>n.notification.channel}}
     })#&& n.notification.format=="web"
     res
   end
