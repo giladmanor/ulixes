@@ -43,15 +43,4 @@ class Node < ActiveRecord::Base
     actions.map{|k,v| {:name=>k,:value=>v,:count=>count[k],:avg=>(v/size)}}
   end
   
-
-  def user_events
-    actions = {}
-    self.users.each{|u|
-      u.events.each{|e|
-        actions[e.code] = (actions[e.code] || 0 ) + (e.value || 0)
-      }
-    }
-    actions
-  end
-
 end
