@@ -29,6 +29,19 @@ class Node < ActiveRecord::Base
 
   end
 
+  def events_sum
+    actions = {}
+    count = {}
+    size = self.users.size
+    return [] unless size>0
+    events = Event.where(:user_id=>self.users)
+    events.each{|e|
+      actions[e.code] = (actions[e.code] || 0 ) + (e.value || 0)
+      count[e.code] = (count[e.code] || 0) +1
+    }
+    
+    actions.map{|k,v| {:name=>k,:value=>v,:count=>count[k],:avg=>(v/size)}}
+  end
   
 
   def user_events

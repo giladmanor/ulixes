@@ -20,7 +20,7 @@
     node = @account.nodes.find params[:node_id]
     size = node.users.size
     if size>0
-    	events = node.user_events.map{|k,v| {:name=>k,:value=>(v / (size)) }}
+    	events = node.events_sum.sort{|a,b| b[:value]<=>a[:value]}
     end
 end
 %>
@@ -34,7 +34,9 @@ end
 	<thead>
 		<tr>
 			<th>Code</th>
-			<th>Avarage of Values</th>
+			<th>Value</th>
+			<th>Count</th>
+			<th>Avg</th>
 		</tr>
 	</thead>
 	<tbody>
@@ -45,6 +47,8 @@ end
 		<tr>
 			<td><%= event[:name]%></td>
 			<td><%= event[:value]%></td>
+			<td><%= event[:count]%></td>
+			<td><%= event[:avg]%></td>
 		</tr>
 
 		<%

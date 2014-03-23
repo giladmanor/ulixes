@@ -10,7 +10,7 @@ class VisualAidController < AdminController
   def get_node_trace
     node = @account.nodes.find(params[:id])
     size = node.users.size
-    render :json=>{:name=>node.name,:size=>size,:actions=>node.user_events.map{|k,v| {:name=>k,:value=>v/(size+0.1)}}}
+    render :json=>{:name=>node.name,:size=>size,:actions=>node.events_sum}
   end
 
   def get_node_dependancy
