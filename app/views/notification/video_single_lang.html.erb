@@ -1,0 +1,15 @@
+<ul class="list-group">
+	<%
+ lcl = @data.compact.first || {}
+%>
+	<li class="list-group-item">
+		<div class="form-group">
+			<label for="name">Youtube embed URL</label>
+			<input name="data[]video" class="form-control" value="<%= lcl["video"]%>">
+		</div>
+		<div class="form-group">
+			<label for="name">Message</label>
+			<textarea name="data[]message" class="form-control" rows="3"><%= lcl["message"]%></textarea>
+		</div>
+	</li>
+</ul>

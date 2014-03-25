@@ -5,7 +5,7 @@ class Notification < ActiveRecord::Base
   serialize :data, Array
   
   def format_types
-    [["Mail Message",:email],["Web Message",:web],["SMS",:sms],["Twitter",:twitter]]
+    [["Web Message",:web],["Video Message",:video],["Mail Message",:email],["SMS",:sms],["Twitter",:twitter]]
   end
   
   def format_label
