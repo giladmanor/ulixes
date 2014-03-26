@@ -12,17 +12,23 @@ Ulixes::Application.routes.draw do
   
   get 'list(/:entity)', :controller=>:lsd, :action=>:list
   get 'grid(/:entity)', :controller=>:lsd, :action=>:list
+  
   get 'graph(/:action)', :controller=>:graph
+  
   get 'mockup(/:action)', :controller=>:mockup
   post 'mockup(/:action)', :controller=>:mockup
+  
   post 'show/Notification(/:id)', :controller=>:notification, :action=>:show
+  get 'show/Notification(/:id)', :controller=>:notification, :action=>:show
+  post 'set/notification(/:id)', :controller=>:notification, :action=>:set
+  get 'notification(/:action)', :controller=>:notification
+  
   post 'show/Cluster(/:id)', :controller=>:cluster, :action=>:show
   post 'cluster(/:action)', :controller=>:cluster
   get 'cluster(/:action)', :controller=>:cluster
-  get 'notification(/:action)', :controller=>:notification
+  
   get 'visual_aid(/:action(/:id))', :controller=>:visual_aid
   post 'show/User(/:id)', :controller=>:admin, :action=>:user_tester
-  
   
   post 'wb(/:action(/:id))', :controller=>:wb
   get 'wb(/:action(/:id))', :controller=>:wb

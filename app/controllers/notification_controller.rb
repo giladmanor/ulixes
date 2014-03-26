@@ -28,6 +28,24 @@ class NotificationController < AdminController
     
   end
   
+  def set
+    #return unless params[:id].present?
+    view = params[:id].present? ? :list : :show  
+    logger.debug view
+    entity = params[:id].present? ? Notification.find(params[:id]) : Notification.new 
+    entity.set(params.except(:id))
+    if Notification.attribute_method?('account')
+      entity.account = @user.account
+    end
+    
+    
+    if entity.save
+      @info = "#{@entity} saved"  
+    else
+      @error = "Server error: #{entity.errors.messages.values.join(', ')}"
+    end
+    redirect_to :action=>view, :entity=>Notification, :info=>@info, :error=>@error, :id=>entity.id
+  end
   
   
 end

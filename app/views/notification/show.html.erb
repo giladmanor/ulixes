@@ -24,6 +24,7 @@
 			<label for="format">Notification Format</label>
 			<%= select_tag("format", options_for_select(@notification.format_types,@notification.format), class:"form-control") %>
 		</div>
+		
 		<%else%>
 		<div class="alert alert-info">
 			This Notification is <strong><%= @notification.multilang ? "Multi Lingual" : "Single Language"%></strong>, Formatted for: <strong><%= @notification.format_label %></strong>.
