@@ -1,0 +1,89 @@
+<a href="#" onclick="getRuleList()"><span class="glyphicon glyphicon-chevron-left"></span> Back to List</a>
+	
+	<%= form_tag("",class:"form", role:"form",onsubmit:"controller.saveRule($(this));return false;") do%>
+	<input name="id" type="hidden" value="<%= @rule.id%>">
+	<input name="node_id" type="hidden" value="<%= @node.id%>">
+
+	<table class="table table-hover">
+		<thead>
+			<tr>
+				<th> IF ALL (and):
+				<div class="btn-group" style="float: right;">
+					<button type="submit" class="btn btn-default btn-xs">
+						<span class="glyphicon glyphicon-ok-circle"></span> Save
+					</button>
+					<button type="button" class="btn btn-default btn-xs" onclick="closeForm();return false;">
+						<span class="glyphicon glyphicon-remove-circle"></span> Cancel
+					</button>
+				</div></th>
+				<th style="width: 50px"></th>
+			</tr>
+		</thead>
+		<tbody>
+			<%
+			(@rule.require + [""]).each{|condition|
+			%>
+			<tr>
+				<td>
+				<input id="---1" name="require[]" type="text" class="form-control requirment" value="<%= condition%>" >
+				</td>
+				
+			</tr>
+
+			<%
+			}
+			%>
+
+		</tbody>
+	</table>
+	<table class="table table-hover" style=" margin-left: 41px; width: 774px; ">
+		<thead>
+			<tr>
+				<th>Then <%= raw(@rule.edge.nil? ? "do:" : "Move to <span class='label label-primary'>#{@rule.edge.target.name}</span> and...")%></th>
+				<th style="width: 50px"></th>
+			</tr>
+		</thead>
+		<tbody>
+			<%
+			(@rule.demand + [""]).each{|result|
+			%>
+			<tr>
+				<td>
+				<input id="---2" name="demand[]" type="text" class="form-control demand" value="<%= result%>" >
+				</td>
+				
+			</tr>
+
+			<%
+			}
+			%>
+
+		</tbody>
+	</table>
+
+	<%
+	end
+	%>
+	
+	
+
+<script>
+
+var requirments =<%= raw(@require.to_json)%>;
+var demands =<%= raw(@demand.to_json)%>;
+
+$(".table").ready(function() {
+	console.log("RULE requirment");
+	$(".requirment").each(function(){
+		makeRule($(this), requirments);
+	});
+	console.log("RULE demand");
+	$(".demand").each(function(){
+		makeRule($(this), demands);
+	});
+	
+
+});
+	
+</script>
+

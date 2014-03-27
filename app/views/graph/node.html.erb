@@ -24,93 +24,35 @@
 	</div>
 
 	<div class="panel-body" style="overflow: auto;height: 500px;">
-		<%
-		list_of_rules = @node.rules.select{|r| r.edge.nil?} + @node.rules.reject{|r| r.edge.nil?} + [Rule.new]
-		list_of_rules.each{|rule|
-		%>
-		<%= form_tag("",class:"form", role:"form",onsubmit:"controller.saveRule($(this));return false;") do%>
-		<input name="id" type="hidden" value="<%= rule.id%>">
-		<input name="node_id" type="hidden" value="<%= @node.id%>">
+		<div id="ruleForm" ></div>
+		<div id="ruleList" class="list-group">
+			
+		</div>
 		
-		<table class="table table-hover">
-			<thead>
-				<tr>
-					<th><%=rule.edge.nil? ? "" : "[Move to #{rule.edge.target.name}]"%> IF ALL (and):
-						<div class="btn-group" style="float: right;">
-							<button type="submit" class="btn btn-default btn-xs"><span class="glyphicon glyphicon-ok-circle"></span> Save</button>
-							<button type="button" class="btn btn-default btn-xs" onclick="closeForm();return false;"><span class="glyphicon glyphicon-remove-circle"></span> Cancel</button>
-						</div>	
-					</th>
-					<th style="width: 50px"></th>
-				</tr>
-			</thead>
-			<tbody>
-				<%
-				rule.demand# = rule.demand
-				
-				(rule.require + [""]).each{|condition|
-				%>
-				<tr>
-					<td>
-					<input id="---1" name="require[]" type="text" class="form-control requirment" value="<%= condition%>" >
-					</td>
-					<td><span class="glyphicon glyphicon-remove-circle" onclick="closeForm()"></span></td>
-				</tr>
-
-				<%
-				}
-				%>
-
-			</tbody>
-		</table>
-		<table class="table table-hover" style=" margin-left: 41px; width: 774px; ">
-			<thead>
-				<tr>
-					<th>Then do:</th>
-					<th style="width: 50px"></th>
-				</tr>
-			</thead>
-			<tbody>
-				<%
-				(rule.demand + [""]).each{|result|
-				%>
-				<tr>
-					<td>
-					<input id="---2" name="demand[]" type="text" class="form-control demand" value="<%= result%>" >
-					</td>
-					<td><span class="glyphicon glyphicon-remove-circle" onclick="closeForm()"></span></td>
-				</tr>
-
-				<%
-				}
-				%>
-
-			</tbody>
-		</table>
-		
-		
-		<%
-		end
-		%><hr><%
-		}%>
 	</div>
 </div>
 <script>
-
-var requirments =<%= raw(@require.to_json)%>;
-var demands =<%= raw(@demand.to_json)%>;
-
-$(document).ready(function() {
-	//domO.val(initData);
-	$(".requirment").each(function(){
-		makeRule($(this), requirments);
-	});
-	$(".demand").each(function(){
-		makeRule($(this), demands);
-	});
+	var getRuleForm=function(id){
+		$('#ruleList').text("");
+		$.ajax({
+			url : "/graph/get_rule/",
+			data : {id:id,node_id:<%=@node[:id]%>}
+			//dataType : "JSON" // you want a difference between normal and ajax-calls, and json is standard
+		}).success(function(res) {
+			$('#ruleForm').html(res);
+		});
 	
-
-});
+	}
+	var getRuleList=function(){
+		$('#ruleForm').text("");
+		$.ajax({
+			url : "/graph/list_rules/",
+			data : {node_id:<%=@node[:id]%>}
+			//dataType : "JSON" // you want a difference between normal and ajax-calls, and json is standard
+		}).success(function(res) {
+			$('#ruleList').html(res);
+		});
 	
+	}
+	getRuleList();
 </script>
-

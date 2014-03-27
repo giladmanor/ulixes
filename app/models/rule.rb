@@ -26,6 +26,16 @@ class Rule < ActiveRecord::Base
     self.node_id = self.account.edges.find(edge_id).source_id 
   end  
   
+  def nice_display
+    unless self.edge.nil?
+      _demand = self.demand + ["move to #{self.edge.target.name}"]
+    else 
+      _demand = self.demand 
+    end
+    res = (self.require || [""]).join(" and ").gsub(","," ") + " <strong>THEN</strong> " + (_demand || [""]).join(" and ").gsub(","," ")
+    res.gsub!("if","<strong>IF</strong>")
+    res
+  end
   
   
   #----------------------------------------------------------------------------

@@ -81,7 +81,7 @@ var requirments =<%= raw(@require.to_json)%>;
 var demands =<%= raw(@demand.to_json)%>;
 
 $(document).ready(function() {
-	//domO.val(initData);
+	
 	$(".requirment").each(function(){
 		makeRule($(this), requirments);
 	});

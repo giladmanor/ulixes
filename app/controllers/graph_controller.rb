@@ -53,6 +53,20 @@ class GraphController < AdminController
     render :json=> gd
   end
 
+  def list_rules
+    @rules = params[:node_id].present? ? @account.nodes.find(params[:node_id]).rules : @account.edges.find(params[:edge_id]).rules
+    render :rules, :layout=>false
+  end
+
+  def get_rule
+    @rule = params[:id].present? ? @account.rules.find(params[:id]) : Rule.new
+    @node=@account.nodes.find(params[:node_id]) if params[:node_id].present?
+    @edge=@account.nodes.find(params[:edge_id]) if params[:edge_id].present?
+    @require = require_statement
+    @demand = demand_statement
+    render :rule, :layout=>false
+  end
+
   def set_rule
     rule = params[:id].present? ? @account.rules.find(params[:id]) : Rule.create(:account_id=>@account.id)
     

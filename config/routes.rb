@@ -13,7 +13,7 @@ Ulixes::Application.routes.draw do
   get 'list(/:entity)', :controller=>:lsd, :action=>:list
   get 'grid(/:entity)', :controller=>:lsd, :action=>:list
   
-  get 'graph(/:action)', :controller=>:graph
+  get 'graph(/:action(/:id))', :controller=>:graph
   
   get 'mockup(/:action)', :controller=>:mockup
   post 'mockup(/:action)', :controller=>:mockup
