@@ -100,7 +100,7 @@ class Rule < ActiveRecord::Base
       when UPSET_USER_SCALE
         value = line.last
         added_value = line[1] == "by (value)" ? value : "last_event.value * #{value}"
-        "user.upset_scale(account.scales.find_by_name('#{line[1]}'),#{added_value})"
+        "user.upset_scale(account.scales.find_by_code('#{line[1]}'),#{added_value})"
       when GRANT_USER_BADGE
         "user.add_badge(self.account.badges.find_by_name('#{line.last}'))"
       when REVOKE_USER_BADGE

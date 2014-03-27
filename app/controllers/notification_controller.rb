@@ -44,7 +44,7 @@ class NotificationController < AdminController
     else
       @error = "Server error: #{entity.errors.messages.values.join(', ')}"
     end
-    redirect_to :action=>view, :entity=>Notification, :info=>@info, :error=>@error, :id=>entity.id
+    redirect_to "/#{view}/Notification/#{entity.id}"#:action=>view, :entity=>Notification, :info=>@info, :error=>@error, :id=>entity.id
   end
   
   

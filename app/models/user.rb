@@ -12,6 +12,7 @@ class User < ActiveRecord::Base
   has_many :user_badges
   has_many :badges, :through=>:user_badges
   has_many :user_notifications
+  has_many :notifications, -> {where read:nil}, class_name:'UserNotification'
   has_many :user_scores
 
   has_many :zero_sum_game_users
@@ -63,7 +64,8 @@ class User < ActiveRecord::Base
       :badges=>self.badges.map{|b| b.to_info},
       :scores=>self.user_scores.map{|s| s.to_info},
       :actions=>vector.map{|k,v|{:name=>k, :value=>v}},
-      :announcements=>self.user_notifications.select{|n| n.read.nil? && !n.notification.nil? }.map{|n| {:id=>n.id,:data=>n.data, :channel=>n.notification.channel,:format=>n.notification.format}}
+      :announcements=>self.notifications.reject{|n| n.notification.nil? }.map{|n| {:id=>n.id,:data=>n.data, :channel=>n.notification.channel,:format=>n.notification.format}}
+      #:announcements=>self.user_notifications.select{|n| n.read.nil? && !n.notification.nil? }.map{|n| {:id=>n.id,:data=>n.data, :channel=>n.notification.channel,:format=>n.notification.format}}
     })#&& n.notification.format=="web"
     res
   end
