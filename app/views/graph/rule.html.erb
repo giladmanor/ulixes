@@ -2,7 +2,8 @@
 	
 	<%= form_tag("",class:"form", role:"form",onsubmit:"controller.saveRule($(this));return false;") do%>
 	<input name="id" type="hidden" value="<%= @rule.id%>">
-	<input name="node_id" type="hidden" value="<%= @node.id%>">
+	<input name="node_id" type="hidden" value="<%= @node.nil? ? "" : @node.id%>">
+	<input name="edge_id" type="hidden" value="<%= @edge.nil? ? "" : @edge.id%>">
 
 	<table class="table table-hover">
 		<thead>
