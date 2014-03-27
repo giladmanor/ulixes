@@ -3,9 +3,10 @@
 %>
 <a href="#" class="list-group-item" onclick="getRuleForm(<%= rule.id%>)"> 
 	<span class="glyphicon glyphicon-link"></span> <%= raw(rule.nice_display)%>
-	<span class="glyphicon glyphicon-remove pull-right"></span> 
+	 
 </a>
 
 <%
 }%>
-<a href="#" onclick="getRuleForm()" class="list-group-item" ><span class="glyphicon glyphicon-plus"></span> <strong>Add a new Rule</strong></a>
+<a href="#" onclick="getRuleForm();return false" class="list-group-item" ><span class="glyphicon glyphicon-plus"></span> <strong>Add a new Rule</strong></a>
+

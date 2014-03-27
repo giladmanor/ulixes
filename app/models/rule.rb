@@ -33,7 +33,7 @@ class Rule < ActiveRecord::Base
       _demand = self.demand 
     end
     res = (self.require || [""]).join(" and ").gsub(","," ") + " <strong>THEN</strong> " + (_demand || [""]).join(" and ").gsub(","," ")
-    res.gsub!("if","<strong>IF</strong>")
+    res.gsub!("if ","<strong>IF</strong> ")
     res
   end
   
