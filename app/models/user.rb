@@ -64,9 +64,8 @@ class User < ActiveRecord::Base
       :badges=>self.badges.map{|b| b.to_info},
       :scores=>self.user_scores.map{|s| s.to_info},
       :actions=>vector.map{|k,v|{:name=>k, :value=>v}},
-      :announcements=>self.notifications.reject{|n| n.notification.nil? }.map{|n| {:id=>n.id,:data=>n.data, :channel=>n.notification.channel,:format=>n.notification.format}}
-      #:announcements=>self.user_notifications.select{|n| n.read.nil? && !n.notification.nil? }.map{|n| {:id=>n.id,:data=>n.data, :channel=>n.notification.channel,:format=>n.notification.format}}
-    })#&& n.notification.format=="web"
+      :announcements=>self.notifications.reject{|n| n.notification.nil? }.map{|n| n.to_data}
+    })
     res
   end
 
