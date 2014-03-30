@@ -5,13 +5,15 @@
 		<%= @entity.name.pluralize%>
 		
 		<div class="pull-right col-md-3" style="margin-top: -4px">
-		<%=form_tag("/list/#{@entity}",class:"", role:"form") do%>
-		<div class="input-group input-group-sm">
-			<input name="id" type="text" class="form-control" placeholder="Username">
-			<span class="input-group-addon" onclick="this.form.submit()"><span class="glyphicon glyphicon-search"></span></span>
+		
+			<%=form_tag("/list/#{@entity}",id:"searchForm", role:"form") do%>
+			<div class="input-group input-group-sm">
+				<input name="id" type="text" class="form-control" placeholder="Search For" value="<%=params[:id]%>">
+				<span class="input-group-addon" ><span class="glyphicon glyphicon-search" onclick="$('#searchform').submit()"> </span></span>
+			</div>
+			<%end%>
 		</div>
-		<%end%>
-		</div>
+		<span class="label label-default pull-right ">Showing <%=(@entities.size)-1%> of <%=@result_size%> found</span>
 	</div>
 	<div class="panel-body">
 		<table class="table table-striped">

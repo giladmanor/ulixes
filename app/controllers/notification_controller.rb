@@ -1,7 +1,5 @@
 class NotificationController < AdminController
 
-
-
   def show
     @notification = params[:id].present? ? @account.notifications.find(params[:id]) : Notification.new(params[:notification])
   end
@@ -14,7 +12,6 @@ class NotificationController < AdminController
   def get_message_content_form
     @notification = params[:id].present? ? @account.notifications.find(params[:id]) : Notification.new
     @data = params[:data].present? ? params[:data] : (@notification.data || [])
-    
     
     @data +=[{"lang"=>params[:language]}] if params[:language].present?
     @data.delete_at(params[:remove_index].to_i) if params[:remove_index].present?
@@ -38,13 +35,12 @@ class NotificationController < AdminController
       entity.account = @user.account
     end
     
-    
     if entity.save
       @info = "#{@entity} saved"  
     else
       @error = "Server error: #{entity.errors.messages.values.join(', ')}"
     end
-    redirect_to "/#{view}/Notification/#{entity.id}"#:action=>view, :entity=>Notification, :info=>@info, :error=>@error, :id=>entity.id
+    redirect_to "/#{view}/Notification/#{view==:list ? "" : entity.id}"#:action=>view, :entity=>Notification, :info=>@info, :error=>@error, :id=>entity.id
   end
   
   

@@ -10,6 +10,8 @@ class LsdController < AdminController
       @entities=@entity.find(:all,:conditions=>cond);
     end
     
+    @result_size = @entities.size
+    @entities = @entities.take(30)
     
     if @entity.new.respond_to?("upload_image")
       logger.debug "##grid##"*10
