@@ -3,6 +3,15 @@
 <div class="panel panel-default">
 	<div class="panel-heading">
 		<%= @entity.name.pluralize%>
+		
+		<div class="pull-right col-md-3" style="margin-top: -4px">
+		<%=form_tag("/list/#{@entity}",class:"", role:"form") do%>
+		<div class="input-group input-group-sm">
+			<input name="id" type="text" class="form-control" placeholder="Username">
+			<span class="input-group-addon" onclick="this.form.submit()"><span class="glyphicon glyphicon-search"></span></span>
+		</div>
+		<%end%>
+		</div>
 	</div>
 	<div class="panel-body">
 		<table class="table table-striped">

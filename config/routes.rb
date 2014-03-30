@@ -10,7 +10,7 @@ Ulixes::Application.routes.draw do
   get 'config' , :controller=>:admin, :action=>:configuration
   get 'creator' , :controller=>:admin, :action=>:creator
   
-  get 'list(/:entity)', :controller=>:lsd, :action=>:list
+  get 'list(/:entity(/:id))', :controller=>:lsd, :action=>:list
   get 'grid(/:entity)', :controller=>:lsd, :action=>:list
   
   get 'graph(/:action(/:id))', :controller=>:graph

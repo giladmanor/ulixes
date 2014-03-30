@@ -55,7 +55,7 @@
 		node.filter(function(d) {
 			return true;//!d.children;
 		}).append("text").attr("dy", ".3em").style("text-anchor", "middle").text(function(d) {
-			return d.name + (d.size ? "" : ": " + format(d.size));
+			return d.name ;
 		});
 	});
 
