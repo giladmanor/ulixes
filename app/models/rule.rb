@@ -3,18 +3,11 @@ class Rule < ActiveRecord::Base
   belongs_to :edge
   belongs_to :account
   
-  serialize :require, Array
+  serialize :requirement, Array
   serialize :demand, Array
   serialize :stats, Array
   to_info :name, :description, :node
   
-  
-  def relate_to_graph(node_id, edge_id)
-    if self.node.nil? && self.edge.nil?
-      edge_id.nil? ? relate_to_node(node_id) : relate_to_edge(edge_id)
-    end
-    
-  end
   
   def relate_to_node(node_id)
     self.edge_id = nil
@@ -32,7 +25,7 @@ class Rule < ActiveRecord::Base
     else 
       _demand = self.demand 
     end
-    res = (self.require || [""]).join(" and ").gsub(","," ") + " <strong>THEN</strong> " + (_demand || [""]).join(" and ").gsub(","," ")
+    res = (self.requirement || [""]).join(" and ").gsub(","," ") + " <strong>THEN</strong> " + (_demand || [""]).join(" and ").gsub(","," ")
     res.gsub!("if ","<strong>IF</strong> ")
     res
   end
@@ -49,7 +42,7 @@ class Rule < ActiveRecord::Base
   end
   
   def line_up_cond
-    self.require.map{|line| Rule.require_to_code(line)}.join(" and ")
+    self.requirement.map{|line| Rule.require_to_code(line)}.join(" and ")
   end
   
   def line_up_result(extra=nil)
@@ -67,7 +60,7 @@ class Rule < ActiveRecord::Base
   REGEXP = {"starts with"=>".start_with?","end_with"=>".end_with?", "contains"=>".include?","equals"=>"==","expression"=>".match"}
   
   def self.require_to_code(require)
-    line = require.split(",")
+    line = requirement.split(",")
     case line.first
       when IF_USER_EVENT
         resolve_event_condition(line)

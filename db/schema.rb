@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140308212901) do
+ActiveRecord::Schema.define(version: 20140331002050) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -45,7 +45,7 @@ ActiveRecord::Schema.define(version: 20140308212901) do
     t.text     "vector"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.text     "require"
+    t.text     "requirement"
   end
 
   add_index "clusters", ["account_id"], name: "index_clusters_on_account_id", using: :btree
@@ -124,7 +124,7 @@ ActiveRecord::Schema.define(version: 20140308212901) do
     t.integer  "account_id"
     t.string   "name"
     t.string   "description"
-    t.text     "require"
+    t.text     "requirement"
     t.text     "demand"
     t.text     "stats"
     t.datetime "created_at"

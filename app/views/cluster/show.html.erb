@@ -20,11 +20,11 @@
 			<tbody>
 				<%
 				
-				(@cluster.require + [""]).each{|condition|
+				(@cluster.requirement + [""]).each{|condition|
 				%>
 				<tr>
 					<td>
-					<input id="---1" name="require[]" type="text" class="form-control requirment" value="<%= condition%>" >
+					<input id="---1" name="requirement[]" type="text" class="form-control requirment" value="<%= condition%>" >
 					</td>
 					<td><span class="glyphicon glyphicon-remove-circle" onclick=""></span></td>
 				</tr>

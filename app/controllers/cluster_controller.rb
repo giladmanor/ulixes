@@ -8,7 +8,7 @@ class ClusterController < AdminController
   def set
     @cluster = params[:id].present? ? @account.clusters.find(params[:id]) : Cluster.new
     @cluster.name=params[:name]
-    @cluster.require = params[:require].reject{|r| r.empty?}
+    @cluster.requirement = params[:requirement].reject{|r| r.empty?}
     @account.clusters << @cluster
     @require = require_statement
     render :show, :id=>@cluster.id

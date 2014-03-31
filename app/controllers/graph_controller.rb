@@ -16,15 +16,11 @@ class GraphController < AdminController
 
   def get_node
     @node=@account.nodes.find(params[:id])
-    @require = require_statement
-    @demand = demand_statement
     render :node, :layout=>false
   end
 
   def get_edge
     @edge = @account.edges.find(params[:id])
-    @require = require_statement
-    @demand = demand_statement
     render :edge, :layout=>false
   end
 
@@ -61,7 +57,7 @@ class GraphController < AdminController
   def get_rule
     @rule = params[:id].present? ? @account.rules.find(params[:id]) : Rule.new
     @node=@account.nodes.find(params[:node_id]) if params[:node_id].present?
-    @edge=@account.nodes.find(params[:edge_id]) if params[:edge_id].present?
+    @edge=@account.edges.find(params[:edge_id]) if params[:edge_id].present?
     @require = require_statement
     @demand = demand_statement
     render :rule, :layout=>false
@@ -70,11 +66,12 @@ class GraphController < AdminController
   def set_rule
     rule = params[:id].present? ? @account.rules.find(params[:id]) : Rule.create(:account_id=>@account.id)
     
-    rule.require = params[:require].reject{|cnd| cnd==""}
+    rule.requirement = params[:requirement].reject{|cnd| cnd==""}
     rule.demand = params[:demand].reject{|dmd| dmd==""}
-    rule.relate_to_graph(params[:node_id],params[:edge_id])
+    rule.relate_to_node(params[:node_id]) if params[:node_id].present?
+    rule.relate_to_edge(params[:edge_id]) if params[:edge_id].present?
     
-    if rule.require.empty? 
+    if rule.requirement.empty? 
       rule.destroy
     else
       unless rule.save

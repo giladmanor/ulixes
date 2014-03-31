@@ -3,7 +3,7 @@ class Cluster < ActiveRecord::Base
   belongs_to :account
   to_info :name, :population
   serialize :vector, Hash
-  serialize :require, Array
+  serialize :requirement, Array
   
   def population
     self.id ? 100 : 0
