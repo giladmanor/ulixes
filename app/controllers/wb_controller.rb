@@ -42,6 +42,31 @@ class WbController < AdminController
     end
 
   end
+  
+  def clue_moderation
+    if params[:id].present?
+      d = open "#{@callback_url}/api/search_autocomplete/#{params[:id]}"
+      @clues = JSON.parse(d.read)
+    else
+      @clues = []
+    end
+    #@clues = [{"id"=>1, "name"=>"Gilad"}]
+    logger.debug @clues.inspect
+  end
+  
+  def clue_moderation_act
+    data = {:id=>params[:id],:name=>params[:name]}.merge(@callback_auth)
+    uri = URI.parse("#{@callback_url}/persistence/clue_action_#{params[:act]}/")
+    http = Net::HTTP.new(uri.host, uri.port)
+    http.use_ssl = true if uri.scheme == 'https'
+    response = Net::HTTP.post_form(uri, data)
+    logger.debug "+"*20
+    logger.debug response.body.inspect
+    logger.debug "+"*20
+    res = JSON.parse(response.body)
+    
+    redirect_to :action=> :clue_moderation, :id=>params[:name]
+  end
 
   private
 
