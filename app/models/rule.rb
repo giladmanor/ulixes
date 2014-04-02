@@ -60,7 +60,7 @@ class Rule < ActiveRecord::Base
   REGEXP = {"starts with"=>".start_with?","end_with"=>".end_with?", "contains"=>".include?","equals"=>"==","expression"=>".match"}
   
   def self.require_to_code(require)
-    line = requirement.split(",")
+    line = require.split(",")
     case line.first
       when IF_USER_EVENT
         resolve_event_condition(line)
