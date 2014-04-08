@@ -1,6 +1,6 @@
 class User < ActiveRecord::Base
   acts_as_tree
-  
+
   serialize :data, Hash
   belongs_to :account
   belongs_to :node
@@ -19,19 +19,17 @@ class User < ActiveRecord::Base
   has_many :zero_sum_games, :through=>:zero_sum_game_users
 
   to_info :uid, :login,:node_info, :parent_info
-  
-  
   def append_data(data)
     self.data.merge(data)
     self.save
   end
-  
+
   def read_message(id)
     un = self.user_notifications.find(id)
     un.read = Time.now
     un.save
   end
-  
+
   def node_info
     self.node.name unless self.node.nil?
   end
@@ -49,7 +47,7 @@ class User < ActiveRecord::Base
     self.save
     actions
   end
-  
+
   def vector
     self.data[:vector] || self.vectorize
   end
