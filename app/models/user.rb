@@ -40,12 +40,18 @@ class User < ActiveRecord::Base
     {:uid=>self.parent.uid, :login=>self.parent.login} unless self.parent.nil?
   end
 
-  def vector
+  def vectorize
     actions = {}
     self.events.each{|e|
       actions[e.code] = (actions[e.code] || 0 ) + (e.value || 0)
     }
+    self.data[:vector] = actions
+    self.save
     actions
+  end
+  
+  def vector
+    self.data[:vector] || self.vectorize
   end
 
   def self.distance(u1,u2)
