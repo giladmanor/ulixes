@@ -32,7 +32,23 @@ class Sparse
   end
 
   def to_s
-    @dimentions.map{|k,va| "#{k}=>#{va}"}.join("\n")
+    @points.map{|p| "<#{p.join("|")}>"}.join("\n")
+  end
+  
+  def self.read(file_name)
+    p "Reasing vector file #{file_name}"
+    r = File.open(file_name,"rb" )
+    dimentions = r.gets.gsub("\r\n","").split(",")
+    p "loaded dimentions #{dimentions.inspect}"
+    s = Sparse.new(dimentions)
+    
+    while line = r.gets#.gsub("\r\n","")
+      p "adding #{line}"
+      s<<ActiveSupport::JSON.decode(line)
+    end
+    r.close
+    
+    s
   end
 
 end
