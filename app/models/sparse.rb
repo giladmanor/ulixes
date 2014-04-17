@@ -10,23 +10,26 @@ class Sparse
 
   def vote(paragons)
     paragon_pull = paragons.map{|p| p}
-    
-    @points.each{|p|
+    point_count =Array.new(paragons.length,1)
+    @points.shuffle.each{|p|
     #Calculate pull factors for each paragon
       pull_factors = paragons.map{|pr| distance(p,pr)}
       mover = paragons[pull_factors.index(pull_factors.min)]
-      p "#{p} Moves #{mover} to #{move(mover,p,@points.length)} "
-      paragon_pull[paragons.index(mover)] = move(paragon_pull[paragons.index(mover)],p,@points.length)
+      p "#{p} Moves #{mover} to #{add(paragon_pull[paragons.index(mover)],p,2)} "
+      paragon_pull[paragons.index(mover)] = add(paragon_pull[paragons.index(mover)],p,2)#,@points.length)
+      point_count[paragons.index(mover)] +=1
     }
-    paragon_pull
+    #paragons.map.with_index{|p,i| sub(paragon_pull[i],p,2)}
+    p point_count
+    paragon_pull.map.with_index{|p,i| add(p,p,2)}
   end
   
-  def sub(p1,p2,f)#returns a new point/vector
-    p1.map.with_index{|c,i| (c-p2[i]).to_f/f}
+  def sub(p1,p2,f=1)#returns a new point/vector
+    p1.map.with_index{|c,i| (c - p2[i]).to_f/f}
   end
   
-  def add(p1,p2)
-    p1.map.with_index{|c,i| c+p2[i]}
+  def add(p1,p2,f=1)
+    p1.map.with_index{|c,i| (c+p2[i]).to_f/f}
   end
   
   def move(p1,p2,f)
@@ -42,6 +45,10 @@ class Sparse
 
   def to_s
     @points.map{|p| "<#{p.join("|")}>"}.join("\n")
+  end
+  
+  def points
+    @points
   end
 
   

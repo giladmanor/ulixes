@@ -62,5 +62,32 @@ class VisualAidController < AdminController
     logger.debug res.inspect
     render :json=>res
   end
+  
+  
+  
+  ######################################################################################
+  
+  def get_vector_visuals
+    s=Sparse.read "vector_data.txt"
+    users = s.points.map{|c| {:type=>"User", :a=>c[0],:b=>c[1]}}
+    #p=[[6,6],[6.1,6],[6,6.1],[6.1,6.1],[6.1,5.9]]#,[6,4],[6,5],[6,6],[6,7]]
+    p=[[7.4,7.5],[7.6,7.5],[7.5,7.4],[7.5,7.6]]
+    p_a = []
+    pp=[]
+    20.times{|i|
+      p "-"*20 + i.to_s
+      pp = s.vote(p)
+      p_a = p.map{|c| {:type=>"C#{i}", :a=>c[0],:b=>c[1]}}
+      p = pp
+    }
+    
+    
+    res = (users + p_a)
+    render :json=>res
+  end
+  
+  
+  
+  
 
 end
