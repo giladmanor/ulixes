@@ -71,18 +71,22 @@ class VisualAidController < AdminController
     s=Sparse.read "vector_data.txt"
     users = s.points.map{|c| {:type=>"User", :a=>c[0],:b=>c[1]}}
     #p=[[6,6],[6.1,6],[6,6.1],[6.1,6.1],[6.1,5.9]]#,[6,4],[6,5],[6,6],[6,7]]
-    p=[[7.4,7.5],[7.6,7.5],[7.5,7.4],[7.5,7.6]]
+    #p=[[7.4,7.5],[7.6,7.5],[7.5,7.4],[7.5,7.6],[7.5,7.7]]
+    p = Array.new(10,[7.5,7.5]).map{|c| [c[0]+Random.rand(10).to_f/100,c[1]+Random.rand(10).to_f/100] }
+    p1 = p.map{|c| c}
+    res = p.map{|c| {:type=>"S", :a=>c[0],:b=>c[1]}}
+    
     p_a = []
     pp=[]
     20.times{|i|
       p "-"*20 + i.to_s
       pp = s.vote(p)
-      p_a = p.map{|c| {:type=>"C#{i}", :a=>c[0],:b=>c[1]}}
+      #p_a = p.map{|c| {:type=>"C#{i}", :a=>c[0],:b=>c[1]}}
       p = pp
     }
     
     
-    res = (users + p_a)
+    res = (users + (pp-p1).map{|c| {:type=>"F", :a=>c[0],:b=>c[1]}})
     render :json=>res
   end
   

@@ -7,25 +7,33 @@ class Sparse
   def <<(point)
     @points<< @dimentions.map{|d| point[d] || 0}
   end
+  
+  def suggest_controll_points
+    maxd = Array.new(@dimentions.length,0)
+    points.each{|p|
+      maxd = p.map.with_index{|c,i| c>maxd[i] ? c : maxd[i]}
+    }
+    res = [Array.new(@dimentions.length,0)]
+    maxd.each.with_index{|p,i| 
+      res<<(maxd.map.with_index{|c,j| i==j ? c : 0} )
+    }
+    res
+  end
 
   def vote(paragons)
     paragon_pull = paragons.map{|p| p}
     point_count =Array.new(paragons.length,1)
     mover_index = []
-    @points.shuffle.each{|p|
-    #Calculate pull factors for each paragon
+    @points.each{|p|
+      #Calculate pull factors for each paragon
       pull_factors = paragons.map{|pr| distance(p,pr)}
       
       mover_index = pull_factors.index(pull_factors.min)
       mover = paragons[mover_index]
       
-      #p "#{p} Moves #{mover} to #{add(paragon_pull[paragons.index(mover)],p,2)} "
-      
       paragon_pull[mover_index] = add(paragon_pull[mover_index],p)#,@points.length)
       point_count[mover_index] +=1
     }
-    #paragons.map.with_index{|p,i| sub(paragon_pull[i],p,2)}
-    p point_count
     paragon_pull.map.with_index{|p,i| div(p,point_count[i])}
   end
   
