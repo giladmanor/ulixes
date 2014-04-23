@@ -1,5 +1,31 @@
 class ClusterController < AdminController
   
+  def gmm
+    #s=Sparse.read "vector_data.txt"
+    @dim = Event.where(:user_id=>@account.users).map{|e| e.code}.uniq
+    s = Sparse.new(@dim)
+    @account.users.each{|user|
+      s<<user.vectorize 
+    }
+    
+    
+    #users = s.points.map{|c| {:type=>"User", :a=>c[0],:b=>c[1]}}
+    p = s.initiate#Array.new(100,[7.5,7.5]).map{|c| [c[0]+Random.rand(10).to_f/100,c[1]+Random.rand(10).to_f/100] }
+    p1 = p.map{|c| c}
+    
+    p_a = []
+    pp=[]
+    10.times{|i|
+      p "-"*20 + i.to_s
+      pp = s.vote(p)
+      p = pp
+    }
+    
+    @paragons = s.paragon_population(pp)
+    @suggested_paragons = []#s.initiate
+  end
+  
+  
   def show
     @cluster = params[:id].present? ? @account.clusters.find(params[:id]) : Cluster.new(params[:cluster])
     @require = require_statement

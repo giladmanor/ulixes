@@ -1,14 +1,19 @@
+# GMM sparse model for hump hunting
 class Sparse
+  
+  # initialize the sparse model with a list of available dimention names
   def initialize(dimentions)
     @dimentions = dimentions.sort
     @points = []
   end
 
+  # Add a point i.e. {:a=>1, :b=>2} to the model
   def <<(point)
     @points<< @dimentions.map{|d| point[d] || 0}
   end
   
-  def suggest_controll_points
+  #initiate the controller points
+  def initiate
     maxd = Array.new(@dimentions.length,0)
     points.each{|p|
       maxd = p.map.with_index{|c,i| c>maxd[i] ? c : maxd[i]}
@@ -20,6 +25,7 @@ class Sparse
     res
   end
 
+  # given a set of controller points, and a populated sparse model, will return a new set of points that are closer to humps  
   def vote(paragons)
     paragon_pull = paragons.map{|p| p}
     point_count =Array.new(paragons.length,1)
@@ -35,6 +41,29 @@ class Sparse
       point_count[mover_index] +=1
     }
     paragon_pull.map.with_index{|p,i| div(p,point_count[i])}
+  end
+  
+  # given a set of paragon points, will remove all unpopulated paragons
+  def clean_empty_paragons(paragons)
+    point_count =Array.new(paragons.length,0)
+    @points.each{|p|
+      pull_factors = paragons.map{|pr| distance(p,pr)}
+      mover_index = pull_factors.index(pull_factors.min)
+      point_count[mover_index] +=1
+    }
+    paragons.delete_if.with_index{|p,i| point_count[i]==0}
+  end
+  
+  def paragon_population(paragons)
+    point_count =Array.new(paragons.length,0)
+    @points.each{|p|
+      pull_factors = paragons.map{|pr| distance(p,pr)}
+      mover_index = pull_factors.index(pull_factors.min)
+      point_count[mover_index] +=1
+    }
+    res = paragons#.delete_if.with_index{|p,i| point_count[i]==0}
+    p res
+    res.map.with_index{|p,i| {:name=>i,:p=>p,:value=>point_count[i]}}.delete_if{|p| p[:value]==0}
   end
   
   def add(p1,p2,f=1)

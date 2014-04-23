@@ -1,0 +1,64 @@
+<div class="panel panel-default">
+	<div class="panel-heading">
+		Unclassified Clusters
+
+	</div>
+	<div class="panel-body">
+		<%=@dim.sort%>
+		<table class="table table-striped">
+			<thead>
+				<tr>
+					<th>Code</th>
+					<th>Population</th>
+					<th>Footprint</th>
+				</tr>
+			</thead>
+			<tbody>
+				<%
+				@paragons.each{|point|
+				%>
+
+				<tr>
+					<td><%= point[:name]%></td>
+					<td><%= point[:value]%></td>
+					<td><%= point[:p]%></td>
+				</tr>
+
+				<%
+				}
+				%>
+
+			</tbody>
+		</table>
+		
+		
+		
+		
+		<table class="table table-striped">
+			<thead>
+				<tr>
+					<th>Vector</th>
+					
+				</tr>
+			</thead>
+			<tbody>
+				<%
+				@suggested_paragons.each{|v|
+				%>
+
+				<tr>
+					<td><%= v%></td>
+					
+				</tr>
+
+				<%
+				}
+				%>
+
+			</tbody>
+		</table>
+		
+
+	</div>
+</div>
+
