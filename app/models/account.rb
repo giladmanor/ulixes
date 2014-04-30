@@ -31,4 +31,38 @@ class Account < ActiveRecord::Base
     out.close
   end
   
+  def gmm_dimentions(force=false)
+    if force || self.conf[:dimentions].nil?
+      self.conf[:dimentions] = Event.where(:user_id=>self.users).map{|e| e.code}.uniq
+    end
+    self.conf[:dimentions]
+  end
+  
+  def user_vectorization
+    self.users.each{|user|
+      user.vectorize 
+    }
+  end
+  
+  def gmm_paragons
+    s = Sparse.new(self.gmm_dimentions)
+    self.users.each{|user|
+      s<<user.vector 
+    }
+    
+    p = s.initiate
+    pp=[]
+    10.times{|i|
+      p "-"*20 + i.to_s
+      pp = s.vote(p)
+      p = pp
+    }
+    
+    self.conf[:paragons] = s.paragon_population(pp)
+    self.save
+    self.conf[:paragons]
+  end
+    
+  
+  
 end
