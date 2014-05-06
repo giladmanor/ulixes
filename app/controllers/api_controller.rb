@@ -35,7 +35,7 @@ class ApiController < ApplicationController
   def get 
     @user.resolve_event(params[:code],params[:value]) if params[:code].present?
     @user.append_data(params[:user]) if params[:user].present?
-    render :json=> @user.spill
+    render :json=> @user.spill!
   end
   
   def set 
@@ -52,7 +52,7 @@ class ApiController < ApplicationController
   
   # FILTER
   def auth_filter
-    unless session[:uuid]
+    unless params[:uuid].nil?
       @account = Account.find(params[:a_id])
       unless params[:k]==@account.key || params[:k]==@account.client_key
         render :file => 'public/404.html', :status => :not_found, :layout => false

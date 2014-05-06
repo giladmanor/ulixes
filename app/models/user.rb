@@ -38,13 +38,13 @@ class User < ActiveRecord::Base
     {:uid=>self.parent.uid, :login=>self.parent.login} unless self.parent.nil?
   end
 
-  def vectorize
+  def vectorize(do_save=true)
     actions = {}
     self.events.each{|e|
       actions[e.code] = (actions[e.code] || 0 ) + (e.value || 0)
     }
     self.data[:vector] = actions
-    self.save
+    self.save if do_save
     actions
   end
 
@@ -60,6 +60,11 @@ class User < ActiveRecord::Base
     #p v.map{|k,v| "#{k}=>(#{v.to_f})"}
     v.values.each{|vv| sum+=vv}
     Math.sqrt(sum)
+  end
+
+  def spill!
+    vectorize(true)
+    spill
   end
 
   def spill
