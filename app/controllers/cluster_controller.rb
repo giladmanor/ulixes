@@ -3,11 +3,15 @@ class ClusterController < AdminController
   def gmm
     #s=Sparse.read "vector_data.txt"
     @dim = Event.where(:user_id=>@account.users).map{|e| e.code}.uniq
+    
+    logger.debug @dim.length
+    
     s = Sparse.new(@dim)
     @account.users.each{|user|
-      s<<user.vectorize 
+      s<<user.vector
     }
     
+    logger.debug "Users are vectorized"
     
     #users = s.points.map{|c| {:type=>"User", :a=>c[0],:b=>c[1]}}
     p = s.initiate#Array.new(100,[7.5,7.5]).map{|c| [c[0]+Random.rand(10).to_f/100,c[1]+Random.rand(10).to_f/100] }

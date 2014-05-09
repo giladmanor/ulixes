@@ -47,3 +47,6 @@ end
 gem 'acts_as_tree'
 gem 'quiet_assets', :group => :development
 #gem "strong_parameters"
+
+gem 'delayed_job_active_record'
+gem "daemons"
