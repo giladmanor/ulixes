@@ -6,15 +6,27 @@ Delayed::Worker.max_attempts = 5
 Delayed::Worker.max_run_time = 4.hour
 Delayed::Worker.delay_jobs = !Rails.env.test?
 
+workers = 2
+
+
 if Rails.env.production? || Rails.env.development?
   # Check if the delayed job process is already running
   # Since the process loads the rails env, this file will be called over and over
   # Unless this condition is set.
-  if(!File.exists?(Rails.root.join('tmp','pids', 'delayed_job.pid')))
-    system "RAILS_ENV=development #{Rails.root.join('bin','delayed_job')} stop"
-    system "RAILS_ENV=development #{Rails.root.join('bin','delayed_job')} -n 2 start"
-    system "echo \"Starting delayed_jobs...\""
-    #system "./bin/delayed_job start &"
+  pids = Dir.glob(Rails.root.join('tmp','pids','*'))
+  
+  system "echo \"delayed_jobs INIT check\""
+  if pids.select{|pid| pid.start_with?(Rails.root.join('tmp','pids','delayed_job.init').to_s)}.empty?
+    
+    f = File.open(Rails.root.join('tmp','pids','delayed_job.init'), "w+") 
+    f.write(".")
+    f.close
+    system "echo \"Restatring delayed_jobs...\""
+    system "RAILS_ENV=#{Rails.env} #{Rails.root.join('bin','delayed_job')} stop"
+    system "RAILS_ENV=#{Rails.env} #{Rails.root.join('bin','delayed_job')} -n #{workers} start"
+    system "echo \"delayed_jobs Workers Initiated\""
+    File.delete(Rails.root.join('tmp','pids','delayed_job.init')) if File.exist?(Rails.root.join('tmp','pids','delayed_job.init'))
+    
   else
     system "echo \"delayed_jobs is running\""
   end
