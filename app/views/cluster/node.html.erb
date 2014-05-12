@@ -1,0 +1,44 @@
+<div class="panel panel-default">
+	<div class="panel-heading">
+		Marketing Flow Node <strong><%= @node.name.upcase%></strong>
+
+	</div>
+	<div class="panel-body">
+		<div class="btn-group pull-right">
+			<button type="button" class="btn btn-default" onclick="openData('node_aggregation');return false;">
+				Aggregation and means
+			</button>
+			<button type="button" class="btn btn-default" onclick="openData('node_markov');return false;">
+				Probabilities
+			</button>
+			<button type="button" class="btn btn-default" onclick="openData('node_paragons');return false;">
+				Segmentation
+			</button>
+		</div>
+		<hr />
+
+		<div id="formHolder"></div>
+
+	</div>
+</div>
+<script>
+	function openData(name) {
+		get(name, {id:<%= @node.id%>}, function(d){
+			$("#formHolder").html(d);
+		})
+		
+	}
+	
+	
+	
+	var get = function(entity,data,successFunction) {
+		$.ajax({
+			url : "/cluster/"+entity,
+			data : data
+			//dataType : "JSON" // you want a difference between normal and ajax-calls, and json is standard
+		}).success(function(json) {
+			successFunction(json);
+		});
+	};
+
+</script>

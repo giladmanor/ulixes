@@ -1,0 +1,35 @@
+<div>
+	<h2>Aggregation and means information</h2>
+	<ul class="list-group">
+		<li class="list-group-item">
+			Current Population <%= @node.users.size%>
+		</li>
+		<li class="list-group-item">
+			Users move from this node to:
+			<strong><%= @node.edges.map{|edge| edge.target.name.upcase}.join(", ")%></strong>
+		</li>
+		<li class="list-group-item">
+			Users move to this node from:
+			<strong><%= @account.edges.select{|edge| edge.target_id==@node.id}.map{|edge| edge.source.name.upcase}.join(", ")%></strong>
+		</li>
+		<li class="list-group-item">
+			Mean events histogram for this population:
+			<div class="pull-right">xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xx</div>
+			<ul >
+			<%
+			@node.events_sum.sort{|a,b| b[:avg]<=>a[:avg]}.each{|e|
+				%>
+				<li><%=e[:name]%> ~ <%= e[:avg].to_i%></li>
+				<%
+				}
+			%>
+			</ul>
+			
+		</li>
+		<li class="list-group-item">
+			Closest user to node mean value:
+			
+		</li>
+	</ul>
+
+</div>

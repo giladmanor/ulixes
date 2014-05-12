@@ -2,10 +2,10 @@ require 'net/http'
 
 class LoadTest
   SERVER = "http://localhost:3000/api/set/"
-  ACCOUNT_NUMBER = 1
+  ACCOUNT_NUMBER = 2
   ACCOUNT_KEY = "a"
 
-  ACTIONS = ["me","b","dolar","move","entry","f","g","h"]
+  ACTIONS = ["b","n","p","m"]
   VALUES = [1,5,10,15]
 
   def self.user_list(len)

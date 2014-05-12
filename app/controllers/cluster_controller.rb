@@ -6,9 +6,24 @@ class ClusterController < AdminController
     
   end
   
+  def node
+    @node = @account.nodes.find(params[:id])
+  end
   
+  def node_aggregation
+    @node = @account.nodes.find(params[:id])
+    render :node_aggregation, :layout=>false
+  end
   
+  def node_markov
+    @node = @account.nodes.find(params[:id])
+    render :node_markov, :layout=>false
+  end
   
+  def node_paragons
+    @node = @account.nodes.find(params[:id])
+    render :node_paragons, :layout=>false
+  end
   
   
   

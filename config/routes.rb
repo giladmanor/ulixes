@@ -26,8 +26,8 @@ Ulixes::Application.routes.draw do
   get 'notification(/:action)', :controller=>:notification
   
   post 'show/Cluster(/:id)', :controller=>:cluster, :action=>:show
-  post 'cluster(/:action)', :controller=>:cluster
-  get 'cluster(/:action)', :controller=>:cluster
+  post 'cluster(/:action(/:id))', :controller=>:cluster
+  get 'cluster(/:action(/:id))', :controller=>:cluster
   
   get 'visual_aid(/:action(/:id))', :controller=>:visual_aid
   post 'show/User(/:id)', :controller=>:admin, :action=>:user_tester
