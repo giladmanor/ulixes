@@ -1,5 +1,18 @@
 class ClusterController < AdminController
   
+  
+  def list_nodes
+    @nodes = @account.nodes
+    
+  end
+  
+  
+  
+  
+  
+  
+  
+  
   def gmm
     #s=Sparse.read "vector_data.txt"
     @dim = Event.where(:user_id=>@account.users).map{|e| e.code}.uniq

@@ -1,0 +1,38 @@
+<div class="panel panel-default">
+	<div class="panel-heading">
+		Marketing Flow Clustering
+
+	</div>
+	<div class="panel-body">
+		<table class="table table-striped">
+
+			<thead>
+				<tr>
+					<th width="10px"></th>
+					<th>Name</th>
+					<th>Population</th>
+					<th>Actions</th>
+				</tr>
+			</thead>
+			<tbody>
+				<%
+				@nodes.each{|node|
+				%>
+
+				<tr>
+					<td><span style="color: silver;font-size: 8px"><%= node.id%></span>&nbsp;</td>
+					<td><%= node.name%></td>
+					<td><%= node.users.size%></td>
+					<td>
+					<button type="button" class="btn btn-default btn-xs">
+						<span class="glyphicon glyphicon-play"></span> show spread
+					</button></td>
+				</tr>
+				<%
+				}
+				%>
+
+			</tbody>
+		</table>
+	</div>
+</div>

@@ -1,3 +1,0 @@
-class JobController < AdminController
-  
-end

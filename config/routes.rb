@@ -5,6 +5,8 @@ Ulixes::Application.routes.draw do
   get 'api(/:action(/:id))' , :controller=>:api
   post 'api(/:action(/:id))' , :controller=>:api
   
+  get 'batch(/:action(/:id))' , :controller=>:batch
+  
   post 'admin(/:action)' , :controller=>:admin
   get 'admin(/:action)' , :controller=>:admin
   get 'config' , :controller=>:admin, :action=>:configuration
