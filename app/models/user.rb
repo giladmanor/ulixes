@@ -51,10 +51,14 @@ class User < ActiveRecord::Base
   def vector
     self.data[:vector] || self.vectorize
   end
+  
+  def distance(r)
+    User.distance(self.vector,r)
+  end
 
-  def self.distance(u1,u2)
-    v1=u1.vector
-    v2=u2.vector
+  def self.distance(v1,v2)
+    # v1=u1.vector
+    # v2=u2.vector
     v=v1.merge(v2){|k,vv1,vv2| ((vv1||0)+(vv2||0))**2}
     sum = 0
     #p v.map{|k,v| "#{k}=>(#{v.to_f})"}

@@ -1,3 +1,36 @@
+<style>
+	text {
+		font: 14px sans-serif;
+		pointer-events: none;
+		text-shadow: none;
+	}
+
+	.axis text {
+		font: 10px sans-serif;
+	}
+
+	.axis path, .axis line {
+		fill: none;
+		stroke: #000;
+		shape-rendering: crispEdges;
+	}
+
+	.bar {
+		fill: steelblue;
+		fill-opacity: .6;
+	}
+
+	.x.axis path {
+		display: none;
+	}
+
+	label {
+		position: absolute;
+		top: 10px;
+		right: 10px;
+	}
+
+</style>
 <div>
 	<h2>Aggregation and means information</h2>
 	<ul class="list-group">
@@ -12,24 +45,119 @@
 			Users move to this node from:
 			<strong><%= @account.edges.select{|edge| edge.target_id==@node.id}.map{|edge| edge.source.name.upcase}.join(", ")%></strong>
 		</li>
-		<li class="list-group-item">
-			Mean events histogram for this population:
-			<div class="pull-right">xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xx</div>
-			<ul >
-			<%
-			@node.events_sum.sort{|a,b| b[:avg]<=>a[:avg]}.each{|e|
+		<li class="list-group-item" style="max-height: 300px;min-height: 250px;overflow: auto">
+			
+			
+			<div class="pull-right actionBarChart">
+				xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xx
+			</div>
+			<ul class="list-group col-md-3">
+				<li class="list-group-item active">
+					Mean events histogram for this population:
+				</li>
+				<%
+				
+				node_vector =  @node.vector
+				logger.debug node_vector
+				node_vector.map{|k,v| {:name=>k,:value=>v}}.sort{|a,b| b[:value]<=>a[:value]}.each{|e|
 				%>
-				<li><%=e[:name]%> ~ <%= e[:avg].to_i%></li>
+				<li class="list-group-item">
+					<%= e[:name]%> ~ <%= e[:value].to_i%>
+				</li>
 				<%
 				}
-			%>
+				%>
 			</ul>
-			
+
 		</li>
 		<li class="list-group-item">
 			Closest user to node mean value:
+			<%
+			users = @node.users.sort{|a,b| b.distance(node_vector) <=> b.distance(node_vector)}
 			
+			%>
+			 
+			<%= users.first.uid%>
+
+		</li>
+		<li class="list-group-item">
+			Furthest user to node mean value:
+			 
+			<%= users.last.uid%>
+
 		</li>
 	</ul>
 
 </div>
+<script src="http://d3js.org/d3.v3.min.js"></script>
+<script>
+	function actionBars(data) {
+	console.log("bar chart: ",data);
+	$(".actionBarChart").text("");
+	var margin = {
+		top : 20,
+		right : 20,
+		bottom : 30,
+		left : 40
+	}, width = 760 - margin.left - margin.right, height = 250 - margin.top - margin.bottom;
+	var formatPercent = d3.format(".0");
+	var x = d3.scale.ordinal().rangeRoundBands([0, width], .1, 1);
+	var y = d3.scale.linear().range([height, 0]);
+	var xAxis = d3.svg.axis().scale(x).orient("bottom");
+	var yAxis = d3.svg.axis().scale(y).orient("left").tickFormat(formatPercent);
+	var svg = d3.select(".actionBarChart").append("svg").attr("width", width + margin.left + margin.right).attr("height", height + margin.top + margin.bottom).append("g").attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+	
+
+	data.forEach(function(d) {
+		d.value = +d.value;
+	}); 
+	
+	x.domain(data.map(function(d) {return d.name;}));
+	y.domain([0, d3.max(data, function(d) {return d.value;})]);
+
+	svg.append("g").attr("class", "x axis").attr("transform", "translate(0," + height + ")").call(xAxis);
+	svg.append("g").attr("class", "y axis").call(yAxis).append("text").attr("transform", "rotate(-90)").attr("y", 6).attr("dy", ".71em").style("text-anchor", "end").text("value");
+
+	svg.selectAll(".bar").data(data).enter().append("rect").attr("class", "bar").attr("x", function(d) {
+		return x(d.name);
+	}).attr("width", x.rangeBand()).attr("y", function(d) {
+		return y(d.value);
+	}).attr("height", function(d) {
+		return height - y(d.value);
+	});
+
+	d3.select("#doSort").on("change", change);
+
+	var sortTimeout = setTimeout(function() {
+		d3.select("#doSort").property("checked", true).each(change);
+	}, 2000);
+
+	function change() {
+		clearTimeout(sortTimeout);
+
+		// Copy-on-write since tweens are evaluated after a delay.
+		var x0 = x.domain(data.sort(this.checked ? function(a, b) {
+			return b.value - a.value;
+		} : function(a, b) {
+			return d3.ascending(a.name, b.name);
+		}).map(function(d) {
+			return d.name;
+		})).copy();
+
+		var transition = svg.transition().duration(750), delay = function(d, i) {
+			return i * 50;
+		};
+
+		transition.selectAll(".bar").delay(delay).attr("x", function(d) {
+			return x0(d.name);
+		});
+
+		transition.select(".x.axis").call(xAxis).selectAll("g").delay(delay);
+	}
+
+}
+	
+	
+	actionBars(<%=raw(@node.events_sum.sort{|a,b| b[:avg]<=>a[:avg]}.map{|e| {:name=>e[:name],:value=>e[:avg]}}.to_json)%>)
+
+</script>

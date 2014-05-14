@@ -43,4 +43,10 @@ class Node < ActiveRecord::Base
     actions.map{|k,v| {:name=>k,:value=>v,:count=>count[k],:avg=>(v/size)}}
   end
   
+  def vector
+    res = {}
+    events_sum.each{|e| res[e[:name]]=e[:avg]}
+    res
+  end
+  
 end

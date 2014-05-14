@@ -1,11 +1,35 @@
 <div>
-
+	<h2>Probabilities</h2>
 	<ul class="list-group">
-		<li class="list-group-item">
-			Population <%= @node.users.size%>
+		<li class="list-group-item" style="max-height: 300px;min-height: 250px;overflow: auto">
+			<ul class="list-group col-md-3">
+				<li class="list-group-item active">
+					Transition Probabilities
+				</li>
+				<% 
+				transitions = Event.where(:user_id=>@account.users,:code=>"_TRANSITION",:value=>@node.edge_ids.map{|v| v.to_f})
+				t_size = transitions.size
+				@node.edges.each{|edge| 
+					et = transitions.select{|t| t.value==edge.id.to_f}
+					
+					%>
+					<li class="list-group-item ">
+					<%= edge.target.name.upcase%> ~ <strong><%= et.size/t_size %></strong>, Total of <%= et.map{|e| e.user_id}.uniq.size%> users
+					</li>
+					<%
+					}
+				%>
+				
+				
+			</ul>
 		</li>
 		<li class="list-group-item">
-			Users move from this node to:
+			<%
+			users_passing_through = transitions.map{|e| e.user_id}.uniq.size
+			resident_users = @node.users.size
+			%>
+			
+			Concurent Transitioning out probability  <strong><%= (100 * users_passing_through.to_f / (users_passing_through + resident_users).to_f).round %>%</strong>
 		</li>
 		<li class="list-group-item">
 			Users move to this node from:
