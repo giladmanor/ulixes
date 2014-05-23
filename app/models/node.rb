@@ -1,5 +1,7 @@
 class Node < ActiveRecord::Base
   belongs_to :account
+  serialize :data, Hash
+  
   has_many :users
   has_many :rules
   has_many :edges, :class_name=>"Edge", :foreign_key=>"source_id"
@@ -34,18 +36,25 @@ class Node < ActiveRecord::Base
     count = {}
     size = self.users.size
     return [] unless size>0
-    events = Event.where(:user_id=>self.users)
-    events.each{|e|
+    #events = Event.where(:user_id=>self.users)
+    logger.debug "Events Loaded, calculating sums--------------"
+    Event.where(:user_id=>self.users).find_each({:batch_size=>100000}){|e|
       actions[e.code] = (actions[e.code] || 0 ) + (e.value || 0)
       count[e.code] = (count[e.code] || 0) +1
+      
     }
-    
+    logger.debug "Mapping Actions------------------------"
     actions.map{|k,v| {:name=>k,:value=>v,:count=>count[k],:avg=>(v/size)}}
   end
   
-  def vector
-    res = {}
-    events_sum.each{|e| res[e[:name]]=e[:avg]}
+  def vector(force=false)
+    res = self.data[:vector] || {}
+    if res.empty? || force
+      events_sum.each{|e| res[e[:name]]=e[:avg]}
+      self.data[:vector] = res
+      self.save 
+    end
+    
     res
   end
   

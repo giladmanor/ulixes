@@ -35,7 +35,7 @@
 	<h2>Aggregation and means information</h2>
 	<ul class="list-group">
 		<li class="list-group-item">
-			Current Population <%= @node.users.size%>
+			Current Population <strong><%= @node.users.size%></strong>
 		</li>
 		<li class="list-group-item">
 			Users move from this node to:
@@ -73,6 +73,7 @@
 		<li class="list-group-item">
 			Closest user to node mean value:
 			<%
+			logger.debug "#"*50
 			users = @node.users.sort{|a,b| b.distance(node_vector) <=> b.distance(node_vector)}
 			
 			%>

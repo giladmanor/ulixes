@@ -33,13 +33,13 @@ class Account < ActiveRecord::Base
   
   def gmm_dimentions(force=false)
     if force || self.conf[:dimentions].nil?
-      self.conf[:dimentions] = Event.where(:user_id=>self.users).map{|e| e.code}.uniq
+      self.conf[:dimentions] = Event.where(:user_id=>self.users).uniq.pluck(:code)
     end
     self.conf[:dimentions]
   end
   
   def user_vectorization
-    self.users.each{|user|
+    self.users.find_each({:batch_size=>100}){|user|
       user.vectorize 
     }
   end
