@@ -66,6 +66,16 @@ class Sparse
     res.map.with_index{|p,i| {:name=>i,:p=>p,:value=>point_count[i]}}.delete_if{|p| p[:value]==0}
   end
   
+  def paragon_vector_hash(paragons)
+    res = paragons.map{|p| 
+      v = {}
+      @dimentions.each.with_index{|d,i|
+        v[d]=p[i]
+      }
+      v
+    }
+  end
+  
   def add(p1,p2,f=1)
     p1.map.with_index{|c,i| (c+p2[i]).to_f/f}
   end

@@ -21,8 +21,51 @@ class ClusterController < AdminController
   end
   
   def node_paragons
+    @nodes = @account.nodes.map{|n| {:id=>n.id, :name=>n.name,:v=>n.vector, :p=>0}}
     @node = @account.nodes.find(params[:id])
+    @node.users.find_each{|u|
+      @nodes.sort{|a,b| u.distance(b[:v]) <=> u.distance(a[:v])}.first[:p] +=1 
+    }
+    
+    @dim = @account.gmm_dimentions
+    s = Sparse.new(@dim)
+    @node.users.each{|user|
+      s<<user.vector
+    }
+    p = s.initiate
+    p1 = p.map{|c| c}
+    
+    p_a = []
+    pp=[]
+    10.times{|i|
+      p "-"*20 + i.to_s
+      pp = s.vote(p)
+      p = pp
+    }
+    
+    @paragons = s.paragon_population(pp)
+    
     render :node_paragons, :layout=>false
+  end
+  
+  
+  def gmm_nodes
+    @res = {}
+    @paragons = @account.gmm_paragons true
+    @nodes = @account.nodes
+    
+    @account.nodes.each{|node|
+      @res[node.id] = {}
+      @paragons.each{|p| 
+        @res[node.id][p] = 0
+      }
+      node.users.each{|u|
+        paragon = @paragons.sort{|a,b| u.distance(b) <=> u.distance(a)}.first
+        @res[node.id][paragon] +=1
+      }
+      
+    }
+    
   end
   
   
@@ -30,7 +73,7 @@ class ClusterController < AdminController
   
   def gmm
     #s=Sparse.read "vector_data.txt"
-    @dim = Event.where(:user_id=>@account.users).map{|e| e.code}.uniq
+    @dim = @account.gmm_dimentions true
     
     logger.debug @dim.length
     

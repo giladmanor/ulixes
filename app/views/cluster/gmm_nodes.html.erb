@@ -12,7 +12,15 @@
 					<th width="10px"></th>
 					<th>Name</th>
 					<th>Population</th>
-					<th>Actions</th>
+					<%
+					@paragons.each{|p|
+						%>
+						<th><%=p[:name]%></th>
+						<%
+					}
+					%>
+					
+					
 				</tr>
 			</thead>
 			<tbody>
@@ -24,11 +32,14 @@
 					<td><span style="color: silver;font-size: 8px"><%= node.id%></span>&nbsp;</td>
 					<td><%= node.name%></td>
 					<td><%= node.users.size%></td>
-					<td>
-					<button type="button" class="btn btn-default btn-xs">
-						<a href="/cluster/node/<%= node.id%>"><span class="glyphicon glyphicon-play"></span> Analysis</a>
-					</button>
-					</td>
+					<%
+					@paragons.each{|p|
+						%>
+						<td><%= @res[node.id][p]%></td>
+						<%
+					}
+					%>
+					
 				</tr>
 				<%
 				}
