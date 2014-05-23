@@ -16,8 +16,8 @@ var Graph = function(nodes, links,openNodeFormFunction,openLinkFormFunction){
 	    .nodes(d3.values(nodes))
 	    .links(links)
 	    .size([width, height])
-	    .linkDistance(120)
-	    .charge(-1500)
+	    .linkDistance(160)
+	    .charge(-5000)
 	    .on("tick", tick)
 	    .start();
 	
@@ -31,13 +31,13 @@ var Graph = function(nodes, links,openNodeFormFunction,openLinkFormFunction){
 	  .enter().append("marker")
 	    .attr("id", function(d) { return d; })
 	    .attr("viewBox", "0 -5 10 10")
-	    .attr("refX", 16)
-	    .attr("refY", -1)
-	    .attr("markerWidth", 1.1)
-	    .attr("markerHeight", 1.1)
+	    .attr("refX", 60)//distance from node
+	    .attr("refY", -10)
+	    .attr("markerWidth", 9.1)
+	    .attr("markerHeight", 1.3)
 	    .attr("orient", "auto")
 	  .append("path")
-	    .attr("d", "M0,-5L10,0L0,5");
+	    .attr("d", "M-1,-5L5,0L0,5");//.attr("d", "M 0,0 V 4 L6,2 Z");
 	
 	var path = svg.append("g").selectAll("path")
 	    .data(force.links())
@@ -48,7 +48,7 @@ var Graph = function(nodes, links,openNodeFormFunction,openLinkFormFunction){
 	var circle = svg.append("g").selectAll("circle")
 	    .data(force.nodes())
 	  .enter().append("circle")
-	    .attr("r", 20)
+	    .attr("r", 25)
 	    .call(force.drag);
 	
 	var text = svg.append("g").selectAll("text")
