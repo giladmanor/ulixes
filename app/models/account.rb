@@ -64,7 +64,7 @@ class Account < ActiveRecord::Base
       self.save  
     end
     p "-"*20
-    p self.conf[:paragons].first
+    p self.conf[:paragons].last
     p "-"*20
     self.conf[:paragons]
   end

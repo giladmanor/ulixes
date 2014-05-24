@@ -60,7 +60,7 @@ class ClusterController < AdminController
         @res[node.id][p] = 0
       }
       node.users.each{|u|
-        paragon = @paragons.sort{|a,b| u.distance(b) <=> u.distance(a)}.first
+        paragon = @paragons.sort{|a,b| u.distance(b) <=> u.distance(a)}.last
         @res[node.id][paragon] +=1
       }
       
