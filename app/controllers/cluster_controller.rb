@@ -47,8 +47,7 @@ class ClusterController < AdminController
     
     render :node_paragons, :layout=>false
   end
-  
-  
+    
   def gmm_nodes
     @res = {}
     @paragons = @account.gmm_paragons true
@@ -63,9 +62,6 @@ class ClusterController < AdminController
       node.users.each{|u|
         paragon = @paragons.sort{|a,b| u.distance(b) <=> u.distance(a)}.last
         @res[node.id][paragon] +=1
-        logger.debug @users[paragon]
-        logger.debug "%"*20
-        logger.debug u
         @users[paragon] = @users[paragon].nil? ? u : (u.distance(paragon)<@users[paragon].distance(paragon) ? u : @users[paragon])
       }
       
@@ -73,7 +69,15 @@ class ClusterController < AdminController
     logger.debug @users
   end
   
-  
+  def paragon
+    @persona = @account.find_user(params[:id])
+    paragons = @account.gmm_paragons true
+    @paragon = paragons.sort{|a,b| @persona.distance(b) <=> @persona.distance(a)}.last
+    @paragon_info = @account.paragon_info(@paragon)
+    logger.debug "%"*20
+    logger.debug @paragon_info.inspect
+    logger.debug "%"*20
+  end
   
   
   def gmm

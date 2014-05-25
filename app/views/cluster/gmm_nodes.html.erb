@@ -62,11 +62,11 @@
 
 	.leaf circle {
 		fill: #FFD700;
-		fill-opacity: 1;
+		fill-opacity: 0.7;
 	}
 
 	text {
-		font: 10px sans-serif;
+		font: 12px sans-serif;
 	}
 </style>
 
@@ -81,7 +81,7 @@
 
 	var svg = d3.select(".graphGoesHere").append("svg").attr("width", diameter).attr("height", diameter).append("g").attr("transform", "translate(2,2)");
 
-	var draw = function( root) {
+	var draw = function(root) {
 		LoaderAnimation.hide();
 		var node = svg.datum(root).selectAll(".node").data(pack.nodes).enter().append("g").attr("class", function(d) {
 			return d.children ? "node" : "leaf node";
@@ -102,16 +102,33 @@
 		}).append("text").attr("dy", ".3em").style("text-anchor", "middle").text(function(d) {
 			return d.name.substring(0, d.r / 3);
 		});
+		node.filter(function(d) {
+			return d.children;
+		}).append("text").attr("dy", function(d){
+			return -d.r+18+"px";
+		})
+			.style("text-anchor", "middle")
+			.style("font-size", "large")
+			.text(function(d) {
+			return d.name.substring(0, d.r / 3);
+		});
+		
+		node.on("click", function(d) {
+	    	window.location=d.url;
+		});
+		
 	};
 <%
 g = {
 		:name=>"roots",
+		:url=>"/cluster/list_nodes",
 		:size=>@account.users.size, 
 		:children=>@account.nodes.map{|n| 
 				{
-					:name=>n.name, 
+					:name=>n.name,
+					:url=>"/cluster/node/#{n.id}", 
 					:size=>n.users.size,
-					:children=>@paragons.select{|p| !@users[p].nil?}.map{|p| {:name=> "User #{@users[p].uid}", :size=>@res[n.id][p],:children=>[] }}
+					:children=>@paragons.select{|p| !@users[p].nil?}.map{|p| {:name=> "User #{@users[p].uid}",:url=>"/cluster/paragon/#{@users[p].uid}", :size=>@res[n.id][p],:children=>[] }}
 				}
 		}
 	}

@@ -1,0 +1,132 @@
+<div class="row">
+	<div class="col-md-4">
+		<ul class="list-group">
+			<li class="list-group-item active">
+				Persona <strong><%= @persona.uid%></strong> &nbsp;
+				
+					<%
+					@persona.badges.each{|b|
+					%>
+					 	 <span class="label label-default">
+						 	<img height='40' width='40' src='<%= b.icon%>' class="img-circle">
+						 	<%= b.name%>
+					 	</span>
+					<%
+					}
+					%>
+				
+			</li>
+			<li class="list-group-item">
+				There are <%= @paragon_info["value"]%> Users similar to this Persona
+			</li>
+			<li class="list-group-item">
+				Activities
+				<ul class="list-group ">
+					<%
+					@persona.vector.map{|k,v| {:name=>k,:value=>v}}.sort{|a,b| b[:value]<=>a[:value]}.each{|e|
+					%>
+					<li class="list-group-item">
+						<%= e[:name]%> ~ <%= e[:value].to_i%>
+					</li>
+					<%
+					}
+					%>
+				</ul>	
+
+			</li>
+			<li class="list-group-item">
+				Scales
+				<ul class="list-group ">
+					<%
+					@persona.user_scores.map{|s| s.to_info}.each{|e|
+					%>
+					<li class="list-group-item">
+						<%= e[:name]%> ~ <%= e[:value].to_i%>
+					</li>
+					<%
+					}
+					%>
+				</ul>	
+			</li>
+			<li class="list-group-item">
+				Transition History
+				<br />
+				<%
+				@persona.flags.where(:code=>"_TRANSITION").each{|t|
+					edge = @account.edges.find(t.value.to_i)
+				%>
+				 	 <span class="label label-default">
+					 	<%= edge.source.name%>
+				 	</span>
+				 	&nbsp;<span class="glyphicon glyphicon-arrow-right"></span>
+				<%
+				}
+				%>
+				<span class="label label-default">
+					<%= @persona.node.name%>
+				</span>
+			</li>
+		</ul>
+	</div>
+	<div class="col-md-4">
+		
+		<ul class="list-group">
+			<li class="list-group-item active">
+				Campaigns
+			</li>
+			<li class="list-group-item">
+				Approaches ~ 47
+
+			</li>
+			<li class="list-group-item">
+				Positive Reactions ~ 15
+
+			</li>
+			<li class="list-group-item">
+				Negative Reactions ~ 32
+
+			</li>
+		</ul>
+		
+		<ul class="list-group">
+			<li class="list-group-item active">
+				Snapshoots
+			</li>
+			<li class="list-group-item">
+				Positive Behaviour ~ 3
+
+			</li>
+			<li class="list-group-item">
+				Negative Behaviour ~ 1
+
+			</li>
+		</ul>
+	</div>
+	<div class="col-md-4">
+		
+		<ul class="list-group">
+			<li class="list-group-item active">
+				Data from Host system
+			</li>
+			<li class="list-group-item">
+				Data
+
+			</li>
+			<li class="list-group-item">
+				Transitions
+
+			</li>
+		</ul>
+	</div>
+</div>
+<div class="row">
+	<div class="col-md-4">
+		.col-md-4
+	</div>
+	<div class="col-md-4">
+		.col-md-4
+	</div>
+	<div class="col-md-4">
+		.col-md-4
+	</div>
+</div>

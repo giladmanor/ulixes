@@ -59,7 +59,7 @@ class Account < ActiveRecord::Base
         pp = s.vote(p)
         p = pp
       }
-      
+      self.conf[:paragons_population] = s.paragon_population(pp)
       self.conf[:paragons] = s.paragon_vector_hash(pp)
       self.save  
     end
@@ -68,7 +68,11 @@ class Account < ActiveRecord::Base
     p "-"*20
     self.conf[:paragons]
   end
-    
+  
+  def paragon_info(p)
+    self.gmm_paragons
+    self.conf[:paragons_population].select{|pi| pi[:p]==p}.first
+  end  
   
   
 end

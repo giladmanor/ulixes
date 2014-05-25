@@ -73,18 +73,18 @@
 		<li class="list-group-item">
 			Closest user to node mean value:
 			<%
-			logger.debug "#"*50
 			users = @node.users.sort{|a,b| b.distance(node_vector) <=> b.distance(node_vector)}
-			
 			%>
-			 
-			<%= users.first.uid%>
-
+			<strong>
+			<a href=""><%= users.first.uid%></a>
+			</strong>
 		</li>
 		<li class="list-group-item">
 			Furthest user to node mean value:
-			 
-			<%= users.last.uid%>
+			<strong> 
+			<a href=""><%= users.last.uid%></a>
+			
+			</strong>
 
 		</li>
 	</ul>

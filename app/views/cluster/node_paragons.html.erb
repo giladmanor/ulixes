@@ -11,7 +11,7 @@
 						<th width="10px"></th>
 						<th>Name</th>
 						<th>Population</th>
-						<th>Relative (%)</th>
+						<th>Relative</th>
 						<th>Actions</th>
 					</tr>
 				</thead>
@@ -24,7 +24,7 @@
 						<td><span style="color: silver;font-size: 8px"><%= node[:id]%></span>&nbsp;</td>
 						<td><%= node[:name]%></td>
 						<td><%= node[:p]%></td>
-						<td><%= 100* node[:p].to_f/@node.users.size.to_f%></td>
+						<td><%= (100* node[:p].to_f/@node.users.size.to_f).floor%>%</td>
 						<td>
 						</td>
 					</tr>
