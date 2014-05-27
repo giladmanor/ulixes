@@ -13,7 +13,7 @@
 					<th>Name</th>
 					<th>Population</th>
 					<%
-					@paragons.each.with_index{|p,i|
+					@paragons.reject{|p| @users[p].nil?}.each.with_index{|p,i|
 						%>
 						<th><%= @users[p].nil? ? "Paragon#{i}" : "User #{@users[p].uid}"%></th>
 						<%
@@ -33,7 +33,7 @@
 					<td><%= node.name%></td>
 					<td><%= node.users.size%></td>
 					<%
-					@paragons.each{|p|
+					@paragons.reject{|p| @users[p].nil?}.each{|p|
 						%>
 						<td><%= @res[node.id][p]%></td>
 						<%
