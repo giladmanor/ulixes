@@ -1,4 +1,8 @@
+<div id="persona_insight" class="pull-right panel panel-default">
+	
+</div>
 <div class="graphGoesHere"></div>
+
 <div class="panel panel-default">
 	<div class="panel-heading">
 		Homogeneous Groups Spread within Marketing flow
@@ -73,13 +77,33 @@
 
 <script>
 	LoaderAnimation.show("Calculating");
-	var diameter = 660, format = d3.format(",d");
+	var diameter = 600, format = d3.format(",d");
 
 	var pack = d3.layout.pack().size([diameter - 4, diameter - 4]).value(function(d) {
 		return d.size;
 	});
 
 	var svg = d3.select(".graphGoesHere").append("svg").attr("width", diameter).attr("height", diameter).append("g").attr("transform", "translate(2,2)");
+	
+	
+	var get = function(entity,data,successFunction) {
+		$.ajax({
+			url : "/cluster/"+entity,
+			data : data
+			//dataType : "JSON" // you want a difference between normal and ajax-calls, and json is standard
+		}).success(function(json) {
+			successFunction(json);
+		});
+	};
+	
+	
+	var showPersonaDetails = function(data){
+		console.log(">>>>>",data);
+		//persona_insight
+		get("persona_insight",{name:data.name},function(d){
+			$("#persona_insight").html(d);
+		});
+	}
 
 	var draw = function(root) {
 		LoaderAnimation.hide();
@@ -113,9 +137,31 @@
 			return d.name.substring(0, d.r / 3);
 		});
 		
-		node.on("click", function(d) {
+		node.filter(function(d) {
+			return d.children;
+		}).on("click", function(d) {
 	    	window.location=d.url;
 		});
+		
+		node.filter(function(d) {
+			return !d.children;
+		}).on("click", function(data) {
+	    	
+	    	//clear all nodes
+	    	node.filter(function(nodes) {
+				return !nodes.children;
+			}).select("circle").style({"fill-opacity":'0.5'}).style({"fill":'#FFD700'});
+	    	
+	    	//paint nodes belonging to paragon
+	    	node.filter(function(nodes) {
+				return !nodes.children && nodes.name == data.name;
+			}).select("circle").transition()        
+                 .duration(400).style({"fill-opacity":'1'}).style({"fill":'#99D777'});
+	    	
+	    	
+	    	showPersonaDetails(data);
+		});
+		
 		
 		node.filter(function(d) {
 			return !d.children;

@@ -79,6 +79,11 @@ class ClusterController < AdminController
     logger.debug "%"*20
   end
   
+  def persona_insight
+    
+    render :layout=>false
+  end
+  
   
   def gmm
     #s=Sparse.read "vector_data.txt"
