@@ -1,4 +1,4 @@
-
+<div class="graphGoesHere"></div>
 <div class="panel panel-default">
 	<div class="panel-heading">
 		Homogeneous Groups Spread within Marketing flow
@@ -29,7 +29,7 @@
 				%>
 
 				<tr>
-					<td><span style="color: silver;font-size: 8px"><%= node.id%></span>&nbsp;</td>
+					<td><span style="color: silver;font-size: 8px" ><%= node.id%></span>&nbsp;</td>
 					<td><%= node.name%></td>
 					<td><%= node.users.size%></td>
 					<%
@@ -62,7 +62,7 @@
 
 	.leaf circle {
 		fill: #FFD700;
-		fill-opacity: 0.7;
+		fill-opacity: 0.5;
 	}
 
 	text {
@@ -70,7 +70,7 @@
 	}
 </style>
 
-<div class="graphGoesHere"></div>
+
 <script>
 	LoaderAnimation.show("Calculating");
 	var diameter = 660, format = d3.format(",d");
@@ -117,18 +117,37 @@
 	    	window.location=d.url;
 		});
 		
+		node.filter(function(d) {
+			return !d.children;
+		}).on("mouseover", function(data) {
+	    	var nodeSelection = node.filter(function(d) {
+				return d.name == data.name;
+			}).select("circle").transition()        
+                .duration(400).style({"fill-opacity":'1'}).style({"fill":'#99D777'});
+    		
+		});
+		node.filter(function(d) {
+			return !d.children;
+		}).on("mouseout", function(data) {
+	    	var nodeSelection = node.filter(function(d) {
+				return d.name == data.name;
+			}).select("circle").transition()        
+                .duration(400).style({"fill-opacity":'0.5'}).style({"fill":'#FFD700'});
+    		
+		});
+		
 	};
 <%
 g = {
-		:name=>"roots",
+		:name=>"Population",
 		:url=>"/cluster/list_nodes",
 		:size=>@account.users.size, 
-		:children=>@account.nodes.map{|n| 
+		:children=>@account.nodes.select{|n| n.users.size>0}.sort{|a,b| b.users.size<=>a.users.size}.map{|n| 
 				{
 					:name=>n.name,
 					:url=>"/cluster/node/#{n.id}", 
 					:size=>n.users.size,
-					:children=>@paragons.select{|p| !@users[p].nil?}.map{|p| {:name=> "User #{@users[p].uid}",:url=>"/cluster/paragon/#{@users[p].uid}", :size=>@res[n.id][p],:children=>[] }}
+					:children=>@paragons.select{|p| !@users[p].nil? && @res[n.id][p]>0}.sort{|a,b| @res[n.id][b]<=>@res[n.id][a]}.map{|p| {:name=> "#{@users[p].uid}",:url=>"/cluster/paragon/#{@users[p].uid}", :size=>@res[n.id][p],:children=>[] }}
 				}
 		}
 	}
