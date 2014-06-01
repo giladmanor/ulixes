@@ -1,3 +1,4 @@
+<script src="http://d3js.org/d3.v3.min.js"></script>
 <div id="persona_insight" class="pull-right panel panel-default">
 	
 </div>
@@ -55,7 +56,7 @@
 </div>
 
 
-<script src="http://d3js.org/d3.v3.min.js"></script>
+
 <style>
 	circle {
 		fill: #3CB371;
@@ -100,7 +101,7 @@
 	var showPersonaDetails = function(data){
 		console.log(">>>>>",data);
 		//persona_insight
-		get("persona_insight",{name:data.name},function(d){
+		get("persona_insight",{name:data.name, vector:data.vector},function(d){
 			$("#persona_insight").html(d);
 		});
 	}
@@ -191,9 +192,18 @@ g = {
 		:children=>@account.nodes.select{|n| n.users.size>0}.sort{|a,b| b.users.size<=>a.users.size}.map{|n| 
 				{
 					:name=>n.name,
-					:url=>"/cluster/node/#{n.id}", 
+					:url=>"/cluster/node/#{n.id}",
 					:size=>n.users.size,
-					:children=>@paragons.select{|p| !@users[p].nil? && @res[n.id][p]>0}.sort{|a,b| @res[n.id][b]<=>@res[n.id][a]}.map{|p| {:name=> "#{@users[p].uid}",:url=>"/cluster/paragon/#{@users[p].uid}", :size=>@res[n.id][p],:children=>[] }}
+					:children=>@paragons.select{|p| !@users[p].nil? && @res[n.id][p]>0}
+						.sort{|a,b| @res[n.id][b]<=>@res[n.id][a]}
+						.map{|p| {
+							:name=> "#{@users[p].uid}",
+							:url=>"/cluster/paragon/#{@users[p].uid}", 
+							:size=>@res[n.id][p],
+							:children=>[],
+							:vector=>p 
+							}
+						}
 				}
 		}
 	}

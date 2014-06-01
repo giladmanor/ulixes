@@ -80,7 +80,31 @@ class ClusterController < AdminController
   end
   
   def persona_insight
+    name = params[:name]
+    @vector = {}
+    params[:vector].each{|k,v|
+      @vector[k] = v.to_f
+    }
+    @nodes = @account.nodes.sort{|a,b| User.distance(b.vector,@vector)<=>User.distance(a.vector,@vector)}
     
+    @paragons = @account.gmm_paragons true
+    @res = {}
+    @users = {}
+    
+    @account.nodes.each{|node|
+      @res[node.id] = {}
+      @paragons.each{|p| 
+        @res[node.id][p] = 0
+      }
+      node.users.each{|u|
+        paragon = @paragons.sort{|a,b| u.distance(b) <=> u.distance(a)}.last
+        @res[node.id][paragon] +=1
+        @users[paragon] = @users[paragon].nil? ? u : (u.distance(paragon)<@users[paragon].distance(paragon) ? u : @users[paragon])
+      }
+      
+    }
+    
+    @populations = @account.nodes.map{|n| {:name=>n.name, :size=>@res[n.id][@vector]}}
     render :layout=>false
   end
   
