@@ -1,5 +1,5 @@
 <script src="http://d3js.org/d3.v3.min.js"></script>
-<div id="persona_insight" class="pull-right panel panel-default">
+<div id="persona_insight" class="pull-right panel panel-default" >
 	
 </div>
 <div class="graphGoesHere"></div>
@@ -88,6 +88,7 @@
 	
 	
 	var get = function(entity,data,successFunction) {
+		console.log(">>>>>",data);
 		$.ajax({
 			url : "/cluster/"+entity,
 			data : data
@@ -101,7 +102,14 @@
 	var showPersonaDetails = function(data){
 		console.log(">>>>>",data);
 		//persona_insight
-		get("persona_insight",{name:data.name, vector:data.vector},function(d){
+		vector = {}
+		for (var k in data.vector){
+			if(k!=""){
+				vector[k] = data.vector[k];
+			}
+			
+		}
+		get("persona_insight",{name:data.name, vector:vector},function(d){
 			$("#persona_insight").html(d);
 		});
 	}

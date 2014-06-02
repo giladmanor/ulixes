@@ -39,7 +39,7 @@ class ApiController < ApplicationController
   end
   
   def set 
-    @user.resolve_event params[:code],params[:value]
+    @user.resolve_event params[:code],params[:value] unless params[:code].empty?
     render :json=> params[:with_info].present? ? @user.spill : SUCCESS
   end
   

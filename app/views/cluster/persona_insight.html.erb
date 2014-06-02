@@ -1,7 +1,7 @@
-<div class="panel-heading">
+<div class="panel-heading" >
 	Persona Architype <strong><a href="/cluster/paragon/<%= params[:name]%>"><%= params[:name]%></a></strong>
 </div>
-<div class="panel-body">
+<div class="panel-body" style="width: 510px">
 	<ul class="list-group">
 		<%
 		@populations.each{|p|
@@ -16,7 +16,7 @@
 		
 		<li class="list-group-item">
 			Closest Node Median to this Persona is <strong><%= @nodes.first.name%></strong><br />
-			In order of similarity: <strong><%= @nodes.map{|n| n.name}.join(",")%></strong>
+			In order of similarity: <strong><%= @nodes.map{|n| n.name}.join(", ")%></strong>
 
 		</li>
 		<li class="list-group-item">
