@@ -52,10 +52,15 @@ class Node < ActiveRecord::Base
     if res.empty? || force
       events_sum.each{|e| res[e[:name]]=e[:avg]}
       self.data[:vector] = res
+      self.data[:vector_updated] = Time.now
       self.save 
     end
     
     res
+  end
+  
+  def vector_updated_at
+    self.data[:vector_updated]
   end
   
 end

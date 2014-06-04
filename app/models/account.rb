@@ -34,9 +34,14 @@ class Account < ActiveRecord::Base
   def gmm_dimentions(force=false)
     if force || self.conf[:dimentions].nil?
       self.conf[:dimentions] = Event.where(:user_id=>self.users).uniq.pluck(:code)
+      self.conf[:dimentions_updated] = Time.now
       self.save
     end
     self.conf[:dimentions]
+  end
+  
+  def gmm_dimentions_updated_at
+    self.conf[:dimentions_updated]
   end
   
   def user_vectorization

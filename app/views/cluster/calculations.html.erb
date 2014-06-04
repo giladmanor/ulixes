@@ -1,0 +1,57 @@
+<ul class="list-group">
+
+	<li class="list-group-item active">
+		Recalculate Machine learned values
+	</li>
+	<li class="list-group-item">
+		<button type="button" class="btn btn-default">
+			<span class="glyphicon glyphicon-refresh"></span> Account Dimentions
+		</button>
+		<hr />
+		<p>Dimentions: <strong><%=@account.gmm_dimentions.sort.join(", ")%></strong></p>
+		<p>Last Updated <strong><%=time_ago_in_words(@account.gmm_dimentions_updated_at)%></strong> ago</p>
+
+	</li>
+	<li class="list-group-item">
+		<button type="button" class="btn btn-default">
+			<span class="glyphicon glyphicon-refresh"></span> Node Medians
+		</button>
+		<hr />
+		<%@account.nodes.each{|n| 
+			%>
+			<p>
+				<strong><%=n.name%></strong> Last updated <strong><%= n.vector_updated_at.nil? ? "Never" : "#{time_ago_in_words(n.vector_updated_at)} ago"%></strong> 
+			</p>		
+			<%
+		}%>
+		
+		
+	</li>
+	<li class="list-group-item">
+		<button type="button" class="btn btn-default">
+			<span class="glyphicon glyphicon-refresh"></span> User vectors
+		</button>
+		<hr />
+		<p><%=@account.users.size%></p>
+
+	</li>
+	<li class="list-group-item">
+		<%= form_tag("/cluster/calculations", role:"form", enctype:"multipart/form-data") do
+			%>
+			<input type="hidden" name="gmm_dimentions" value="false"/>
+			<input type="hidden" name="node_vectors" value="false" />
+			<input type="hidden" name="user_vectors" value="false" />
+			
+			<%
+		end
+		%>
+		
+	</li>
+</ul>
+
+<script>
+var requestBatch = function(req){
+	
+}
+	
+</script>

@@ -108,6 +108,25 @@ class ClusterController < AdminController
     render :layout=>false
   end
   
+  def calculations
+    
+  end
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
   
   def gmm
     #s=Sparse.read "vector_data.txt"
