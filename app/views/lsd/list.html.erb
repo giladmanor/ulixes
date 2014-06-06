@@ -6,7 +6,7 @@
 		
 		<div class="pull-right col-md-3" style="margin-top: -4px">
 		
-			<%=form_tag("/list/#{@entity}",id:"searchForm", role:"form") do%>
+			<%=form_tag("/list/#{@entity}",id:"searchForm",class:"form-search" ,role:"form") do%>
 			<div class="input-group input-group-sm">
 				<input name="id" type="text" class="form-control" placeholder="Search For" value="<%=params[:id]%>">
 				<span class="input-group-addon" ><span class="glyphicon glyphicon-search" onclick="$('#searchform').submit()"> </span></span>
@@ -38,12 +38,12 @@
 					<td><span style="color: silver;font-size: 8px"><%= entity.id%></span>&nbsp;</td>
 					<%
 					@entity.to_info_keys.each{|k|
-					%><td><%= entity.send(k)%></td><%
+					%><td><%= entity.send(k) unless entity.id.nil?%></td><%
 					}
 					%>
 
-					<td width="140px"><span><%=form_tag("/show/#{@entity}/#{entity.id || ''}",class:"form-horizontal", role:"form") do%>
-						<button value="Edit" class="btn btn-default">
+					<td width="140px"><span><%=form_tag("/show/#{@entity}/#{entity.id || ''}",class:"form-inline", role:"form") do%>
+						<button value="Edit" class="btn btn-primary" type="button">
 							<%= entity.id.nil? ? "New" : "Edit"%>
 						</button> <% end %></span>
 						<a style="float: right;margin-top: -27px;display: <%= entity.id.nil? ? "none" : "block"%>" onclick="confirmAction('Delete this <%= @entity%>?','<%= entity.id%>');return false;" href="#" class="btn btn-danger btn-xs" >x</a>

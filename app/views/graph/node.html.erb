@@ -1,7 +1,7 @@
 <div class="panel panel-default" style="opacity: 1">
 	<div class="panel-heading">
 		Node
-		<button class="btn btn-default btn-sm" type="button" onclick="$('#renameNodeForm').toggle('fast');">
+		<button class="btn btn-default btn-primary btn-sm" type="button" onclick="$('#renameNodeForm').toggle('fast');">
 			<%= @node[:name]%>
 		</button>
 		<span class="glyphicon glyphicon-remove" style="float: right" onclick="closeForm()"></span>
@@ -17,7 +17,7 @@
 					OR Delete </label>
 			</div>
 			&nbsp;
-			<button id="renameORsubmitBTN" type="submit" class="btn btn-default" onclick="closeForm()">
+			<button id="renameORsubmitBTN" type="submit" class="btn btn-default btn-primary" onclick="closeForm()">
 				Rename
 			</button>
 		<%end%>

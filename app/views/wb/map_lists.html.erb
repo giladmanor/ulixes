@@ -25,7 +25,7 @@
 					<td><%= entity["ids"].length%></td>
 
 					<td width="140px"><span><%=form_tag("/wb/show_map_list/#{entity["id"] || ''}",class:"form-horizontal", role:"form") do%>
-						<button value="Edit" class="btn btn-default">
+						<button value="Edit" class="btn btn-default btn-primary">
 							<%= entity["id"].nil? ? "New" : "Edit"%>
 						</button> <% end %></span>
 						

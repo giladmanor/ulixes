@@ -20,10 +20,10 @@
 		<div class="panel-body">
 			<%=form_tag("/delete/#{@entity}",class:"form-inline", role:"form") do%>
 				<input type="hidden" name="id" id="lsd_confirm_id" />
-				<button onclick="abortAction();return false;" class="btn btn-default">
+				<button onclick="abortAction();return false;" class="btn btn-default btn-primary">
 					Abort
 				</button>
-				<button type="submit" class="btn btn-default">
+				<button type="submit" class="btn btn-default btn-primary">
 					Confirm
 				</button>
 			<% end %>

@@ -5,7 +5,7 @@
 		<%= @entity.name.pluralize%> <%= params[:galery]%>
 
 		<%=form_tag("/set/#{@entity}",style:"float: right", role:"form", enctype:"multipart/form-data") do%>
-		<button value="Edit" class="btn btn-default" style="float: right;margin-top: -7px">
+		<button value="Edit" class="btn btn-default btn-primary" style="float: right;margin-top: -7px">
 			<span class="glyphicon glyphicon-cloud-upload"></span> Upload
 		</button>
 		<input type="file" name="upload" style="float: right;margin-right: -89px;width: 91px;opacity: 0.01">
@@ -34,7 +34,7 @@
 		<div class="row">
 			<div class="col-sm-2 col-md-2">
 				<%=form_tag("/show/#{@entity}", role:"form") do%>
-				<button value="Edit" class="btn btn-default" >
+				<button value="Edit" class="btn btn-default btn-primary" >
 					<span class="glyphicon glyphicon-cloud-upload"></span> Upload
 				</button>
 				<% end %>

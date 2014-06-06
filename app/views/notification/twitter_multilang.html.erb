@@ -5,7 +5,7 @@
 
 	%>
 	<li class="list-group-item">
-		<button type="button" class="btn btn-default btn-xs pull-right" onclick="cnt.removeLanguage($('#notificationForm'),<%=i%>);return false;"><span class="glyphicon glyphicon-remove-circle"></span> Delete</button>
+		<button type="button" class="btn btn-default btn-primary btn-xs pull-right" onclick="cnt.removeLanguage($('#notificationForm'),<%=i%>);return false;"><span class="glyphicon glyphicon-remove-circle"></span> Delete</button>
 		Language: <span class="label label-primary"><%= @account.languages.find_by_code(lcl["lang"]).name%></span>
 		<input type="hidden" name="data[]lang" value="<%= lcl["lang"]%>"/>
 		<div class="form-group">
@@ -24,7 +24,7 @@
 		<div class="input-group">
 			<%= select_tag("language", options_for_select(@account.languages.map{|o| [o.name, o.code]},@account.conf["lang"]),class:"form-control") %>
 			<div class="input-group-btn">
-				<button type="button" class="btn btn-default" onclick="cnt.messageContentForm($('#notificationForm'));return false;">Add a Language</button>
+				<button type="button" class="btn btn-default btn-primary" onclick="cnt.messageContentForm($('#notificationForm'));return false;">Add a Language</button>
 			</div>
 		</div>
 	</li>

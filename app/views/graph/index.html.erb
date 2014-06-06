@@ -2,10 +2,10 @@
 
 <div class="btn-group" style="float: left;margin-top: -56px;z-index: 99999;">
 
-	<button type="button" class="btn btn-default" title="New Enttry Point" onclick="$('#newNodeForm').toggle('fast');$('#selectNodeForm').hide('fast')">
+	<button type="button" class="btn btn-default btn-primary" title="New Enttry Point" onclick="$('#newNodeForm').toggle('fast');$('#selectNodeForm').hide('fast')">
 		<span class="glyphicon glyphicon-star"></span>
 	</button>
-	<button type="button" class="btn btn-default" title="Select Other Entry point" onclick="$('#selectNodeForm').toggle('fast');$('#newNodeForm').hide('fast');">
+	<button type="button" class="btn btn-default btn-primary" title="Select Other Entry point" onclick="$('#selectNodeForm').toggle('fast');$('#newNodeForm').hide('fast');">
 		<span class="glyphicon glyphicon-list"></span>
 	</button>
 
@@ -32,7 +32,7 @@
 		<div class="form-group">
 			<%= select_tag("nodeB", options_for_select(@account.nodes.map{|c| [c.name,c.id]}),class:"form-control") %>
 		</div>
-		<button type="submit" class="btn btn-default" onclick="closeForm()">Create</button>
+		<button type="submit" class="btn btn-default btn-primary" onclick="closeForm()">Create</button>
 		<%end%>
 	</div>
 
