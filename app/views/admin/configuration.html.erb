@@ -1,167 +1,160 @@
-<div class="panel panel-default">
-	<div class="panel-heading">
-		Account Configuration
+<div class="form-panel">
+	<h4 class="mb"><i class="fa fa-angle-double-right"></i> Account Configuration </h4>
+	<%= form_tag("/admin/update_account", role:"form", enctype:"multipart/form-data", class:"form-horizontal style-form") do%>
+	<fieldset disabled>
+		<div class="form-group">
+			<label for="name" class="col-sm-3 control-label">Account Identifier</label>
+			<div class="col-sm-9">
+				<input  class="form-control" id="name" value="<%= @account.id%>" placeholder="Name">
+			</div>
+		</div>
+	</fieldset>
+	<div class="form-group">
+		<label for="name" class="col-sm-3 control-label">Account Name</label>
+		<div class="col-sm-9">
+			<input name="name" class="form-control" id="name" value="<%= @account.name%>" placeholder="Name">
+		</div>
 	</div>
-	<div class="panel-body">
-		<%= form_tag("/admin/update_account", role:"form", enctype:"multipart/form-data", class:"form-horizontal") do%>
-		<fieldset disabled>
-			<div class="form-group">
-				<label for="name" class="col-sm-3 control-label">Account Identifier</label>
-				<div class="col-sm-9">
-					<input  class="form-control" id="name" value="<%= @account.id%>" placeholder="Name">
-				</div>
-			</div>
-		</fieldset>
-		<div class="form-group">
-			<label for="name" class="col-sm-3 control-label">Account Name</label>
-			<div class="col-sm-9">
-				<input name="name" class="form-control" id="name" value="<%= @account.name%>" placeholder="Name">
-			</div>
+
+	<div class="form-group">
+		<label for="key" class="col-sm-3 control-label">Default Language</label>
+		<div class="col-sm-9">
+			<%= select_tag("conf[lang]", options_for_select(@account.languages.map{|o| [o.name, o.code]},@account.conf["lang"]),class:"form-control") %>
+			<span class="help-block">Define <a href="/list/language">supported languages</a> and Choose the default system language for notifications</span>
 		</div>
+	</div>
 
-		<div class="form-group">
-			<label for="key" class="col-sm-3 control-label">Default Language</label>
-			<div class="col-sm-9">
-				<%= select_tag("conf[lang]", options_for_select(@account.languages.map{|o| [o.name, o.code]},@account.conf["lang"]),class:"form-control") %>
-				<span class="help-block">Define <a href="/list/language">supported languages</a> and Choose the default system language for notifications</span>
-			</div>
+	<div class="form-group">
+		<label for="key" class="col-sm-3 control-label">Default User Entry Point</label>
+		<div class="col-sm-9">
+			<%= select_tag("conf[graph_entry_point]", options_for_select(@account.nodes.map{|o| [o.name, o.id]},@account.conf[:graph_entry_point]),class:"form-control") %>
+			<span class="help-block">Create a <a href="/graph/index">graph entry point</a> and Choose the default entry point for a newly registered user</span>
 		</div>
+	</div>
 
-		<div class="form-group">
-			<label for="key" class="col-sm-3 control-label">Default User Entry Point</label>
-			<div class="col-sm-9">
-				<%= select_tag("conf[graph_entry_point]", options_for_select(@account.nodes.map{|o| [o.name, o.id]},@account.conf[:graph_entry_point]),class:"form-control") %>
-				<span class="help-block">Create a <a href="/graph/index">graph entry point</a> and Choose the default entry point for a newly registered user</span>
-			</div>
-		</div>
+	<div class="form-group">
+		<label for="key" class="col-sm-3 control-label">API Keys</label>
+		<div class="col-sm-9">
+			<div class="panel panel-default">
 
-		<div class="form-group">
-			<label for="key" class="col-sm-3 control-label">API Keys</label>
-			<div class="col-sm-9">
-				<div class="panel panel-default">
+				<div class="panel-body">
+					<div class="form-group">
+						<label for="key" class="col-sm-3 control-label">Server API Key</label>
+						<div class="col-sm-8 input-group">
+							<input name="key" class="form-control" id="key" value="<%= @account.key%>" placeholder="API Key">
+							<span class="input-group-btn">
+								<button class="btn btn-warning" type="button"  onclick="AccountConfiguration.generate_key($('#key'),50)">
+									Generate Key
+								</button> </span>
+						</div>
+					</div>
 
-					<div class="panel-body">
-						<div class="form-group">
-							<label for="key" class="col-sm-3 control-label">Server API Key</label>
-							<div class="col-sm-9 input-group">
-								<input name="key" class="form-control" id="key" value="<%= @account.key%>" placeholder="API Key">
+					<div class="form-group">
+						<label for="client_key" class="col-sm-3 control-label">Client API Key</label>
+						<div class="col-sm-8 ">
+							Registering New Users to Ulixes
+							<div class="radio">
+								<label>
+									<input type="radio" name="conf[on_the_fly]" id="optionsRadios1" value="false" <%= @account.conf[:on_the_fly]=="true" ? "" : "checked" %>>
+									Only via Server call (Recommended for Loyalty and real rewarding) </label>
+							</div>
+							<div class="radio">
+								<label>
+									<input type="radio" name="conf[on_the_fly]" id="optionsRadios2" value="true" <%= @account.conf[:on_the_fly]=="true" ? "checked" : "" %> >
+									On the fly from the client (Recommended for tracking) </label>
+							</div>
+							<br />
+							<div class="input-group">
+								<input name="client_key" class="form-control" id="client_key" value="<%= @account.client_key%>" placeholder="API Client Key">
 								<span class="input-group-btn">
-									<button class="btn btn-default" type="button"  onclick="AccountConfiguration.generate_key($('#key'),50)">
+									<button class="btn btn-warning" type="button" onclick="AccountConfiguration.generate_key($('#client_key'),50)">
 										Generate Key
 									</button> </span>
 							</div>
 						</div>
-
-						<div class="form-group">
-							<label for="client_key" class="col-sm-3 control-label">Client API Key</label>
-							<div class="col-sm-9 ">
-								Registering New Users to Ulixes
-								<div class="radio">
-									<label>
-										<input type="radio" name="conf[on_the_fly]" id="optionsRadios1" value="false" <%= @account.conf[:on_the_fly]=="true" ? "" : "checked" %>>
-										Only via Server call (Recommended for Loyalty and real rewarding) </label>
-								</div>
-								<div class="radio">
-									<label>
-										<input type="radio" name="conf[on_the_fly]" id="optionsRadios2" value="true" <%= @account.conf[:on_the_fly]=="true" ? "checked" : "" %> >
-										On the fly from the client (Recommended for tracking) </label>
-								</div>
-								<br />
-								<div class="input-group">
-									<input name="client_key" class="form-control" id="client_key" value="<%= @account.client_key%>" placeholder="API Client Key">
-									<span class="input-group-btn">
-										<button class="btn btn-default" type="button" onclick="AccountConfiguration.generate_key($('#client_key'),50)">
-											Generate Key
-										</button> </span>
-								</div>
-							</div>
-						</div>
 					</div>
 				</div>
 			</div>
 		</div>
-		<div class="form-group">
-			<label for="key" class="col-sm-3 control-label">Callback Configuration</label>
-			<div class="col-sm-9">
-				<div class="panel panel-default">
-					<div class="panel-body">
-						<div class="form-group">
-							<label for="key" class="col-sm-3 control-label">Host Domains</label>
-							<div class="col-sm-9">
-								<input name="conf[host_domains]" class="form-control" id="client_key" value="<%= @account.conf[:host_domains]%>" placeholder="Comma Separated list of Host Domains">
-							</div>
+	</div>
+	<div class="form-group">
+		<label for="key" class="col-sm-3 control-label">Callback Configuration</label>
+		<div class="col-sm-9">
+			<div class="panel panel-default">
+				<div class="panel-body">
+					<div class="form-group">
+						<label for="key" class="col-sm-3 control-label">Host Domains</label>
+						<div class="col-sm-9">
+							<input name="conf[host_domains]" class="form-control" id="client_key" value="<%= @account.conf[:host_domains]%>" placeholder="Comma Separated list of Host Domains">
 						</div>
-						<hr />
-						<div class="form-group">
-							<label for="key" class="col-sm-3 control-label">Default Callback URL</label>
-							<div class="col-sm-9">
-								<input name="conf[callback_url]" class="form-control" id="client_key" value="<%= @account.conf[:callback_url]%>" placeholder="Full Url for Callbacks">
-								<span class="help-block">The URL to the system API controller, example: http://your_domain.com/api</span>
-							</div>
-						</div>
-						<div class="form-group">
-							<label for="key" class="col-sm-3 control-label">Callback Field Name</label>
-							<div class="col-sm-9">
-								<input name="conf[callback_key_name]" class="form-control" id="client_key" value="<%= @account.conf[:callback_key_name]%>" placeholder="API Key Field Name">
-								<span class="help-block">If your server uses a key authentication, enter the name of the field over witch to send the key</span>
-							</div>
-						</div>
-						<div class="form-group">
-							<label for="key" class="col-sm-3 control-label">Callback key</label>
-							<div class="col-sm-9">
-								<input name="conf[callback_key_value]" class="form-control" id="client_key" value="<%= @account.conf[:callback_key_value]%>" placeholder="API Key">
-								<span class="help-block">This should be some long string that your server expects for each API call</span>
-							</div>
-						</div>
-						<fieldset disabled>
-							<%
-							require 'socket'
-							host = UDPSocket.open {|s| s.connect("64.233.187.99", 1); s.addr.last}
-							
-							%>
-							
-							
-							<div class="form-group">
-								<label for="key" class="col-sm-3 control-label">IP of this Ulixes server:</label>
-								<div class="col-sm-9">
-									<input name="" class="form-control" id="client_key" value="<%= host%>" placeholder="API Key">
-									
-								</div>
-							</div>
-						</fieldset>
 					</div>
+
+					<div class="form-group">
+						<label for="key" class="col-sm-3 control-label">Default Callback URL</label>
+						<div class="col-sm-9">
+							<input name="conf[callback_url]" class="form-control" id="client_key" value="<%= @account.conf[:callback_url]%>" placeholder="Full Url for Callbacks">
+							<span class="help-block">The URL to the system API controller, example: http://your_domain.com/api</span>
+						</div>
+					</div>
+					<div class="form-group">
+						<label for="key" class="col-sm-3 control-label">Callback Field Name</label>
+						<div class="col-sm-9">
+							<input name="conf[callback_key_name]" class="form-control" id="client_key" value="<%= @account.conf[:callback_key_name]%>" placeholder="API Key Field Name">
+							<span class="help-block">If your server uses a key authentication, enter the name of the field over witch to send the key</span>
+						</div>
+					</div>
+					<div class="form-group">
+						<label for="key" class="col-sm-3 control-label">Callback key</label>
+						<div class="col-sm-9">
+							<input name="conf[callback_key_value]" class="form-control" id="client_key" value="<%= @account.conf[:callback_key_value]%>" placeholder="API Key">
+							<span class="help-block">This should be some long string that your server expects for each API call</span>
+						</div>
+					</div>
+					<fieldset disabled>
+						<%
+ 						require 'socket'
+						host = UDPSocket.open {|s| s.connect("64.233.187.99", 1); s.addr.last}
+
+						%>
+
+						<div class="form-group">
+							<label for="key" class="col-sm-3 control-label">IP of this Ulixes server:</label>
+							<div class="col-sm-9">
+								<input name="" class="form-control" id="client_key" value="<%= host%>" placeholder="API Key">
+
+							</div>
+						</div>
+					</fieldset>
 				</div>
 			</div>
-
 		</div>
 
-		<hr />
-		<div class="form-group">
-			<div class="col-sm-offset-3 col-sm-9">
-				<button type="submit" class="btn btn-default">
-					Save
+	</div>
+
+	<div class="form-group">
+		<div class="col-sm-offset-3 col-sm-9">
+			<button type="submit" class="btn btn-primary">
+				Save
+			</button>
+		</div>
+	</div>
+	<div class="form-group">
+		<label for="client_key" class="col-sm-3 control-label">Generate Code</label>
+		<div class="col-sm-9 ">
+			<div class="btn-group">
+				<button type="button" class="btn btn-theme03" onclick="AccountConfiguration.ulixes_tracker()">
+					Ulixes Tracker Cleint (JS)
+				</button>
+				<button type="button" class="btn btn-theme03" onclick="AccountConfiguration.ulixes_conf()">
+					Ulixes Server Conf (PHP)
+				</button>
+				<button type="button" class="btn btn-theme03" onclick="AccountConfiguration.ulixes_client()">
+					Ulixes Client (JS)
 				</button>
 			</div>
+			<textarea id="code_generator_result" class="form-control" rows="3"></textarea>
 		</div>
-		<hr />
-		<div class="form-group">
-			<label for="client_key" class="col-sm-3 control-label">Generate Code</label>
-			<div class="col-sm-9 ">
-				<div class="btn-group">
-					<button type="button" class="btn btn-default" onclick="AccountConfiguration.ulixes_tracker()">
-						Ulixes Tracker Cleint (JS)
-					</button>
-					<button type="button" class="btn btn-default" onclick="AccountConfiguration.ulixes_conf()">
-						Ulixes Server Conf (PHP)
-					</button>
-					<button type="button" class="btn btn-default" onclick="AccountConfiguration.ulixes_client()">
-						Ulixes Client (JS)
-					</button>
-				</div>
-				<textarea id="code_generator_result" class="form-control" rows="3"></textarea>
-			</div>
-		</div>
-
-		<%end%>
 	</div>
+
+	<%end%>
 </div>
