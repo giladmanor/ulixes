@@ -1,33 +1,41 @@
 <script type="text/javascript">
 	function confirmAction(q, src) {
-		$('#lsd_confirmationBox').show('slow');
+		$('#lsd_confirmationBox').modal('show');
 		$('#lsd_confirmBoxQuestion').text(q);
 		$('#lsd_confirm_id').attr('value', src);
 
 	}
 
 	function abortAction() {
-		$('#lsd_confirmationBox').hide('slow');
+		$('#lsd_confirmationBox').modal('hide');
 	}
 
 </script>
 
-<div id="lsd_confirmationBox" style="text-align: center ;display: none;float: right;padding: 10px" class="lsd_confirmBox">
-	<div  class="panel panel-default">
-		<div class="panel-heading">
-			You are about to <span id="lsd_confirmBoxQuestion"></span>
-		</div>
-		<div class="panel-body">
-			<%=form_tag("/delete/#{@entity}",class:"form-inline", role:"form") do%>
+<div id="lsd_confirmationBox" class="modal fade"  tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="position: absolute">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+					&times;
+				</button>
+				<h4 class="modal-title" id="myModalLabel">Confirm Action</h4>
+			</div>
+			<div class="modal-body">
+				You are about to <span id="lsd_confirmBoxQuestion"></span>
+			</div>
+			<div class="modal-footer">
+				<%=form_tag("/delete/#{@entity}",class:"form-inline", role:"form") do%>
+				<button type="button" class="btn btn-default" data-dismiss="modal" onclick="abortAction();return false;">
+					Discard
+				</button>
+				
 				<input type="hidden" name="id" id="lsd_confirm_id" />
-				<button onclick="abortAction();return false;" class="btn btn-default">
-					Abort
+				<button type="submit" class="btn btn-danger">
+					Confirm changes
 				</button>
-				<button type="submit" class="btn btn-default">
-					Confirm
-				</button>
-			<% end %>
+				<% end %>
+			</div>
 		</div>
 	</div>
-
-</div>
+</div> 
