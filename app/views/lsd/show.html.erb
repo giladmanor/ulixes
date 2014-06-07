@@ -3,11 +3,10 @@
   columns = @entity.column_names-["id","account_id","created_at","updated_at"]
 
 %>
-<div class="panel panel-default">
-	<div class="panel-heading">
-		<%= params[:id].present? ? "Editing" : "Creating"%> <%= @entity.name%>
-	</div>
-	<div class="panel-body">
+<div class="form-panel">
+	<h4 class="mb"><i class="fa fa-angle-double-right"></i> <%= params[:id].present? ? "Editing" : "Creating"%> <%= @entity.name%> </h4>
+	
+	<div >
 
 		<%= form_tag("/set/#{@entity}", role:"form", enctype:"multipart/form-data") do%>
 		<input type="hidden" name="id" value="<%= params[:id]%>" />
