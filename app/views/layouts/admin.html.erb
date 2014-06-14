@@ -1,103 +1,130 @@
 <!DOCTYPE html>
 <html>
 	<head>
-		<title>Ulixes</title>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<meta name="description" content="">
+		<meta name="author" content="Lazy eye developer">
+		<link rel="shortcut icon" href="/favicon.ico">
+		<title>Ulixes <%= @account.name%></title>
+
 		<!-- Bootstrap core JavaScript -->
 		<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js" type="text/javascript" charset="utf-8"></script>
 		<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.9.2/jquery-ui.min.js" type="text/javascript" charset="utf-8"></script>
 
-		<!-- Latest compiled and minified CSS -->
-		<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap.min.css">
-
-		<!-- Optional theme -->
-		<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap-theme.min.css">
-
 		<!-- Latest compiled and minified JavaScript -->
 		<%= javascript_include_tag "application", "data-turbolinks-track" => true %>
-		
+
 		<%= stylesheet_link_tag    "application", media: "all", "data-turbolinks-track" => true %>
 		<%= csrf_meta_tags %>
+		<link href="/assets/css/font-awesome.css" rel="stylesheet" />
+
+		<!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+		<!--[if lt IE 9]>
+		<script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+		<script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+		<![endif]-->
 	</head>
 
- <body>
+	<body>
 
-    <div id="wrapper">
+		<section id="container" >
+			<!-- **********************************************************************************************************************************************************
+			TOP BAR CONTENT & NOTIFICATIONS
+			*********************************************************************************************************************************************************** -->
+			<!--header start-->
+			<header class="header black-bg">
+				<div class="sidebar-toggle-box">
+					<div class="fa fa-bars tooltips" data-placement="right" data-original-title="Toggle Navigation"></div>
+				</div>
+				<!--logo start-->
+				<a href="/admin" class="logo"><b>ULIXES.<span>IO</span></b></a>
+				<!--logo end-->
 
-      <!-- Sidebar -->
-      <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
-        <!-- Brand and toggle get grouped for better mobile display -->
-        <div class="navbar-header">
-          <a class="navbar-brand" ><%= @account.name || "Ulixes Admin"%> </a>
-        </div>
+				<div class="top-menu">
+					<ul class="nav pull-right top-menu">
+						<li>
+							<a class="logout" href="/admin/logout">Logout - <b><%= @user.login.upcase%></b></a>
+						</li>
+					</ul>
+				</div>
+			</header>
+			<!--header end-->
 
-        <!-- Collect the nav links, forms, and other content for toggling -->
-        <div class="collapse navbar-collapse navbar-ex1-collapse">
-          <ul class="nav navbar-nav side-nav">
-          	
-          	
-          	<%
-			current_location = request.path_info.split("/").take(3).join("/")
-			@user.role.lock.each{|sm|
-				menu_active = sm[:items].map{|m| m[:uri]}.include?(current_location) ? "active open" : ""
-				%>
-				<li id="menu_<%=sm[:name].hash%>" class="dropdown <%= menu_active%>">
-					<a href="#" class="dropdown-toggle " data-toggle="dropdown"><i class="<%=sm[:icon]%>"></i> <%=sm[:name]%> <b class="caret"></b></a>
-					<ul class="dropdown-menu ">
-					<%
-					sm[:items].each{|m|
-						%>
-						<li><a onclick="localStorage.setItem('active_menu', '<%=sm[:name].hash%>')" href="<%="#{m[:uri]}"%>"><%=m[:name]%></a></li>
+			<!-- **********************************************************************************************************************************************************
+			MAIN SIDEBAR MENU
+			*********************************************************************************************************************************************************** -->
+			<!--sidebar start-->
+			<aside>
+				<div id="sidebar"  class="nav-collapse ">
+					<!-- sidebar menu start-->
+					<ul class="sidebar-menu" id="nav-accordion">
+						<li class="mt">
+							<a class="" href="/admin"> <i class="fa fa-dashboard"></i> <span><%= @account.name%></span> </a>
+						</li>
 						<%
-						}
-					%>	
-				</ul>
-				
-				<%
-			}
-			
-			%>
-          	
-          </ul>
+						current_location = request.path_info.split("/").take(3).join("/")
+						@user.role.lock.each{|sm|
+						menu_active = sm[:items].map{|m| m[:uri]}.include?(current_location) ? "active" : ""
+						%>
+						<li id="menu_<%= sm[:name].hash%>" class="sub-menu dcjq-parent-li">
+							<a href="javascript:;" class="dcjq-parent <%= menu_active%>"> <i class="fa fa-desktop"></i> <span><%= sm[:name]%></span> </a>
 
-<script>
-	$('#menu_'+localStorage.getItem('active_menu')).addClass('active open');
-	console.log(localStorage.getItem('active_menu'));
-</script>
+							<ul class="sub">
+								<%
+								sm[:items].each{|m|
+								%>
+								<li>
+									<a onclick="localStorage.setItem('active_menu', '<%= sm[:name].hash%>')" href="<%= "#{m[:uri]}"%>"><%= m[:name]%></a>
+								</li>
+								<%
+								}
+								%>
+							</ul>
 
-          <ul class="nav navbar-nav navbar-right navbar-user">
-            
-            <!-- <li class="dropdown alerts-dropdown">
-              <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-bell"></i> System Alerts <span class="badge">3</span> <b class="caret"></b></a>
-              <ul class="dropdown-menu">
-                <li><a href="#">Default <span class="label label-default">Default</span></a></li>
-                <li><a href="#">Primary <span class="label label-primary">Primary</span></a></li>
-                <li><a href="#">Success <span class="label label-success">Success</span></a></li>
-                <li><a href="#">Info <span class="label label-info">Info</span></a></li>
-                <li><a href="#">Warning <span class="label label-warning">Warning</span></a></li>
-                <li><a href="#">Danger <span class="label label-danger">Danger</span></a></li>
-                <li class="divider"></li>
-                <li><a href="#">View All</a></li>
-              </ul>
-            </li> -->
-            <li class="dropdown user-dropdown">
-              <a href="#" class="dropdown-toggle lll" data-toggle="dropdown"><i class="fa fa-user"></i> Logged in as <b><%=@user.login.upcase%></b> <b class="caret"></b></a>
-              <ul class="dropdown-menu">
-                <li><a href="/admin/logout"><i class="fa fa-power-off"></i> Log Out</a></li>
-              </ul>
-            </li>
-          </ul>
-        </div><!-- /.navbar-collapse -->
-      </nav>
+							<%
+							}
 
-      <div id="page-wrapper">
-		<%= yield %>
-      </div><!-- /#page-wrapper -->
-    </div><!-- /#wrapper -->
+							%>
 
-    
-    
-    <!-- Page Specific Plugins -->
-    
-    
-  </body>
+					</ul>
+					<!-- sidebar menu end-->
+				</div>
+			</aside>
+			<!--sidebar end-->
+
+			<!-- **********************************************************************************************************************************************************
+			MAIN CONTENT
+			*********************************************************************************************************************************************************** -->
+			<!--main content start-->
+			<section id="main-content">
+				<section class="wrapper">
+
+					<%= yield %>
+
+				</section>
+			</section>
+
+			<!--main content end-->
+			<!--footer start-->
+
+			<!--footer end-->
+		</section>
+		<script class="include" type="text/javascript" src="/assets/jquery.dcjqaccordion.2.7.js"></script>
+		<script src="/assets/jquery.scrollTo.min.js"></script>
+		<script src="/assets/jquery.nicescroll.js" type="text/javascript"></script>
+		<script src="/assets/jquery.sparkline.js"></script>
+
+		<script src="/assets/common-scripts.js"></script>
+
+		<script type="text/javascript" src="/assets/gritter/js/jquery.gritter.js"></script>
+		<script type="text/javascript" src="/assets/gritter-conf.js"></script>
+
+		<!-- Page Specific Plugins -->
+		<script>
+			$('#menu_' + localStorage.getItem('active_menu')).addClass('active');
+			console.log(localStorage.getItem('active_menu'));
+		</script>
+
+	</body>
 </html>
