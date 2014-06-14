@@ -1,7 +1,9 @@
 <%= render "confirmation_box"%>
 <% @entities<<@entity.new%>
-<div class="panel panel-default">
-	<div class="panel-heading">
+<br />
+<div class="content-panel">
+	<h4>
+		<i class="fa fa-angle-double-right"></i>
 		<%= @entity.name.pluralize%>
 		
 		<div class="pull-right col-md-3" style="margin-top: -4px">
@@ -14,8 +16,8 @@
 			<%end%>
 		</div>
 		<span class="label label-default pull-right ">Showing <%=(@entities.size)-1%> of <%=@result_size%> found</span>
-	</div>
-	<div class="panel-body">
+	</h4>
+	<div >
 		<table class="table table-striped">
 
 			<thead>
@@ -26,7 +28,7 @@
 					%><th><%= k.to_s.humanize%></th><%
 					}
 					%>
-					<th>Actions</th>
+					<th></th>
 				</tr>
 			</thead>
 			<tbody>
@@ -43,10 +45,19 @@
 					%>
 
 					<td width="140px"><span><%=form_tag("/show/#{@entity}/#{entity.id || ''}",class:"form-horizontal", role:"form") do%>
-						<button value="Edit" class="btn btn-default">
-							<%= entity.id.nil? ? "New" : "Edit"%>
-						</button> <% end %></span>
-						<a style="float: right;margin-top: -27px;display: <%= entity.id.nil? ? "none" : "block"%>" onclick="confirmAction('Delete this <%= @entity%>?','<%= entity.id%>');return false;" href="#" class="btn btn-danger btn-xs" >x</a>
+						<button value="Edit" class="btn <%= entity.id.nil? ? "btn-primary" : "btn-default" %>">
+							<%= entity.id.nil? ? "New" : "Edit" %>
+						</button> 
+						<% end %></span>
+						<%
+						unless entity.id.nil? 
+						%>
+						<a style="float: right;margin-top: -27px;" onclick="confirmAction('Delete this <%= @entity%>?','<%= entity.id%>');return false;" href="#" class="btn btn-danger btn-xs" ><i class="fa fa-trash-o"></i></i></a>
+						<%
+						end
+						%>
+						
+						
 					</td>
 
 				</tr>
