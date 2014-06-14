@@ -1,47 +1,67 @@
 <!DOCTYPE html>
-<html>
-	<head>
-		<title>Ulixes</title>
-		<%= stylesheet_link_tag    "application", media: "all", "data-turbolinks-track" => true %>
-		<%= javascript_include_tag "application", "data-turbolinks-track" => true %>
-		<%= csrf_meta_tags %>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="o/favicon.ico">
 
-		<!-- Latest compiled and minified CSS -->
-		<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap.min.css">
+    <title>Ulixes</title>
 
-		<!-- Optional theme -->
-		<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap-theme.min.css">
+    <!-- Bootstrap core CSS -->
+    <%= stylesheet_link_tag    "application", media: "all", "data-turbolinks-track" => true %>
+	<%= javascript_include_tag "application", "data-turbolinks-track" => true %>
+	<%= csrf_meta_tags %>
+	<link href="/assets/css/font-awesome.css" rel="stylesheet" />
 
-		<!-- Latest compiled and minified JavaScript -->
-		<script src="//netdna.bootstrapcdn.com/bootstrap/3.0.2/js/bootstrap.min.js"></script>
-	</head>
-	
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+      <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+  </head>
 
-	<body style="background-image: url(/assets/logo_large.png); background-repeat:no-repeat;background-attachment:fixed;background-position:right bottom; ">
+  <body>
 
-		<h1 class="text-right text-muted lll" style="width: 483px;margin-top: 20%;margin-left: 20%;">Ulixes Admin</h1>
-		<div class="panel panel-default " style="width: 483px;margin-left: 20%;">
+      <!-- **********************************************************************************************************************************************************
+      MAIN CONTENT
+      *********************************************************************************************************************************************************** -->
 
-			<div class="panel-body">
+	  <div id="login-page">
+	  	<div class="container">
+	  	
+		      
+		      <%= form_tag("/admin/login",class:"form-login", role:"form") do%>
+		      	<h2 class="form-login-heading">Sign in to Ulixes Admin</h2>
 
-				<%= form_tag("/admin/login",class:"form-inline", role:"form") do%>
-
-				<div class="form-group">
-					<label class="sr-only" for="exampleInputEmail2">Email address</label>
-					<input name="login" type="login" class="form-control" id="exampleInputEmail2" placeholder="Enter email">
-				</div>
-				<div class="form-group">
-					<label class="sr-only" for="exampleInputPassword2">Password</label>
+				<div class="login-wrap">
+					<input name="login" type="login" class="form-control" id="exampleInputEmail2" placeholder="Enter email" autofocus>
+					<br />
 					<input name="password" type="password" class="form-control" id="exampleInputPassword2" placeholder="Password">
+					<br />
+					<button class="btn btn-theme btn-block" href="index.html" type="submit"><i class="fa fa-lock"></i> SIGN IN</button>
+					
 				</div>
 
-				<button type="submit" class="btn btn-default">
-					<span class="glyphicon glyphicon-fire"></span> Sign in
-				</button>
+				
 				<% end %>
-			</div>
-		</div>
-		<h2 class="text-right text-muted lll" style="width: 483px;margin-left: 35%;">The Little Engine That Can</h2>
-		
-	</body>
+		      
+		      	  	
+	  	
+	  	</div>
+	  </div>
+
+    <!-- js placed at the end of the document so the pages load faster -->
+    <script src="/assets/jquery.js"></script>
+    <script src="/assets/bootstrap.min.js"></script>
+
+    <!--BACKSTRETCH-->
+    <!-- You can use an image of whatever size. This script will stretch to fit in any screen size.-->
+    <script type="text/javascript" src="/assets/jquery.backstretch.min.js"></script>
+    <script>
+        $.backstretch("/assets/login-bg.jpg", {speed: 500});
+    </script>
+
+
+  </body>
 </html>
+
