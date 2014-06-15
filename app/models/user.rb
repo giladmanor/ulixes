@@ -121,6 +121,8 @@ class User < ActiveRecord::Base
   def announce announcement_code
     notification = self.account.notifications.find_by_name announcement_code
     un = UserNotification.new({:data=>notification.reduce(self), :notification_id=>notification.id})
+    un.save
+    un.data["message"] = un.data["message"].gsub("[:NOTIFICATION_ID]",un.id.to_s)
     self.user_notifications << un
   end
 
