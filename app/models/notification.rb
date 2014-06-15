@@ -18,11 +18,27 @@ class Notification < ActiveRecord::Base
   
   def reduce(user)
     message = message_by_lang(user.local) 
+    if self.format == "cta"
+      message = cta_wrapper.gsub("[:NOTIFICATION_ID]",self.id.to_s).gsub("[:MESSAGE]",message)
+    end
+    
+    message
     #TODO: embed dynamic data
   end
   
   def message_by_lang(lang)
     self.data.select{|m| m["lang"]==lang}.first || self.data.first
+  end
+  
+  
+  def cta_wrapper
+    res = <<MESSAGE_END
+<form accept-charset="UTF-8" action="" class="form" method="post" onsubmit="ulixes.set_response($(this));return false;" role="form"> 
+<input type="hidden" name="notification_id" value="[:NOTIFICATION_ID]"/>
+[:MESSAGE]
+</form>
+MESSAGE_END
+    
   end
   
 end

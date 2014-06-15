@@ -48,6 +48,12 @@ class ApiController < ApplicationController
     render :json=> params[:with_info].present? ? @user.spill : SUCCESS
   end
   
+  def cta
+    un = @user.read_message(params[:data][:notification_id])
+    @user.resolve_event("_CTA::#{params[:data][:notification_id]}",1)
+    render :json=> params[:with_info].present? ? @user.spill : SUCCESS
+  end
+  
   private # private # private # private # private # private # private # private # private # private # 
   
   # FILTER
