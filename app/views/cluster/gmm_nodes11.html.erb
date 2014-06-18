@@ -1,0 +1,235 @@
+<script src="http://d3js.org/d3.v3.min.js"></script>
+<div id="persona_insight" class="pull-right panel panel-default" >
+	
+</div>
+<div class="graphGoesHere"></div>
+
+<div class="panel panel-default">
+	<div class="panel-heading">
+		Homogeneous Groups Spread within Marketing flow
+
+	</div>
+	<div class="panel-body">
+		<table class="table table-striped">
+
+			<thead>
+				<tr>
+					<th width="10px"></th>
+					<th>Name</th>
+					<th>Population</th>
+					<%
+					@paragons.reject{|p| @users[p].nil?}.each.with_index{|p,i|
+						%>
+						<th><%= @users[p].nil? ? "Paragon#{i}" : "User #{@users[p].uid}"%></th>
+						<%
+					}
+					%>
+					
+					
+				</tr>
+			</thead>
+			<tbody>
+				<%
+				@nodes.each{|node|
+				%>
+
+				<tr>
+					<td><span style="color: silver;font-size: 8px" ><%= node.id%></span>&nbsp;</td>
+					<td><%= node.name%></td>
+					<td><%= node.users.size%></td>
+					<%
+					@paragons.reject{|p| @users[p].nil?}.each{|p|
+						%>
+						<td><%= @res[node.id][p]%></td>
+						<%
+					}
+					%>
+					
+				</tr>
+				<%
+				}
+				%>
+
+			</tbody>
+		</table>
+	</div>
+</div>
+
+
+
+<style>
+	circle {
+		fill: #3CB371;
+		fill-opacity: .25;
+		stroke: #2E8B57;
+		stroke-width: 1px;
+	}
+
+	.leaf circle {
+		fill: #FFD700;
+		fill-opacity: 0.5;
+	}
+
+	text {
+		font: 12px sans-serif;
+	}
+</style>
+
+
+<script>
+	LoaderAnimation.show("Calculating");
+	var diameter = 600, format = d3.format(",d");
+
+	var pack = d3.layout.pack().size([diameter - 4, diameter - 4]).value(function(d) {
+		return d.size;
+	});
+
+	var svg = d3.select(".graphGoesHere").append("svg").attr("width", diameter).attr("height", diameter).append("g").attr("transform", "translate(2,2)");
+	
+	
+	var get = function(entity,data,successFunction) {
+		console.log(">>>>>",data);
+		$.ajax({
+			url : "/cluster/"+entity,
+			data : data
+			//dataType : "JSON" // you want a difference between normal and ajax-calls, and json is standard
+		}).success(function(json) {
+			successFunction(json);
+		});
+	};
+	
+	
+	var showPersonaDetails = function(data){
+		console.log(">>>>>",data);
+		//persona_insight
+		vector = {}
+		for (var k in data.vector){
+			if(k!=""){
+				vector[k] = data.vector[k];
+			}
+			
+		}
+		get("persona_insight",{name:data.name, vector:vector},function(d){
+			$("#persona_insight").html(d);
+		});
+	}
+
+	var draw = function(root) {
+		LoaderAnimation.hide();
+		var node = svg.datum(root).selectAll(".node").data(pack.nodes).enter().append("g").attr("class", function(d) {
+			return d.children ? "node" : "leaf node";
+		}).attr("transform", function(d) {
+			return "translate(" + d.x + "," + d.y + ")";
+		});
+
+		node.append("title").text(function(d) {
+			return d.name + (d.size ? "" : ": " + format(d.size));
+		});
+
+		node.append("circle").attr("r", function(d) {
+			return d.r;
+		});
+
+		node.filter(function(d) {
+			return !d.children;
+		}).append("text").attr("dy", ".3em").style("text-anchor", "middle").text(function(d) {
+			return d.name.substring(0, d.r / 3);
+		});
+		node.filter(function(d) {
+			return d.children;
+		}).append("text").attr("dy", function(d){
+			return -d.r+18+"px";
+		})
+			.style("text-anchor", "middle")
+			.style("font-size", "large")
+			.text(function(d) {
+			return d.name.substring(0, d.r / 3);
+		});
+		
+		node.filter(function(d) {
+			return d.children;
+		}).on("click", function(d) {
+	    	window.location=d.url;
+		});
+		
+		node.filter(function(d) {
+			return !d.children;
+		}).on("click", function(data) {
+	    	
+	    	//clear all nodes
+	    	node.filter(function(nodes) {
+				return !nodes.children;
+			}).select("circle").style({"fill-opacity":'0.5'}).style({"fill":'#FFD700'});
+	    	
+	    	//paint nodes belonging to paragon
+	    	node.filter(function(nodes) {
+				return !nodes.children && nodes.name == data.name;
+			}).select("circle").transition()        
+                 .duration(400).style({"fill-opacity":'1'}).style({"fill":'#99D777'});
+	    	
+	    	
+	    	showPersonaDetails(data);
+		});
+		
+		
+		node.filter(function(d) {
+			return !d.children;
+		}).on("mouseover", function(data) {
+	    	var nodeSelection = node.filter(function(d) {
+				return d.name == data.name;
+			}).select("circle").transition()        
+                .duration(400).style({"fill-opacity":'1'}).style({"fill":'#99D777'});
+    		
+		});
+		node.filter(function(d) {
+			return !d.children;
+		}).on("mouseout", function(data) {
+	    	var nodeSelection = node.filter(function(d) {
+				return d.name == data.name;
+			}).select("circle").transition()        
+                .duration(400).style({"fill-opacity":'0.5'}).style({"fill":'#FFD700'});
+    		
+		});
+		
+	};
+<%
+g = {
+		:name=>"Population",
+		:url=>"/cluster/list_nodes",
+		:size=>@account.users.size, 
+		:children=>@account.nodes.select{|n| n.users.size>0}.sort{|a,b| b.users.size<=>a.users.size}.map{|n| 
+				{
+					:name=>n.name,
+					:url=>"/cluster/node/#{n.id}",
+					:size=>n.users.size,
+					:children=>@paragons.select{|p| !@users[p].nil? && @res[n.id][p]>0}
+						.sort{|a,b| @res[n.id][b]<=>@res[n.id][a]}
+						.map{|p| {
+							:name=> "#{@users[p].uid}",
+							:url=>"/cluster/paragon/#{@users[p].uid}", 
+							:size=>@res[n.id][p],
+							:children=>[],
+							:vector=>p 
+							}
+						}
+				}
+		}
+	}
+
+%>
+
+
+
+	d3.select(self.frameElement).style("height", diameter + "px");
+	draw(
+		<%= raw(g.to_json)%>
+	);
+	
+
+</script>
+
+
+
+
+
+

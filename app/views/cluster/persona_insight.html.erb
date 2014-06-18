@@ -1,31 +1,51 @@
-<div class="panel-heading" >
-	Persona Architype <strong><a href="/cluster/paragon/<%= params[:name]%>"><%= params[:name]%></a></strong>
-</div>
-<div class="panel-body" style="width: 510px">
-	<ul class="list-group">
-		<%
-		@populations.each{|p|
-			%>
-			<li class="list-group-item">
-				<%=p[:name]%> ~ <%=p[:size]%> 
-			</li>	
-			<%
-		}
+<div class="donut-main">
+	<h4>PERSONA <strong><a href="/cluster/paragon/<%= params[:name]%>"><%= params[:name]%></a></strong> ACTIONS & PROGRESS</h4>
+	<div id="vector_graph"></div>
+	<h4>SPREAD IN MARKETING FLOW</h4>
+	<%
+	@populations.each{|p|
 		%>
+		<div class="desc">
+		  	<div class="thumb">
+		  		<span class="badge bg-theme"><i class="fa fa-clock-o"></i></span>
+		  	</div>
+		  	<div class="details">
+		  		<p><muted><%=p[:name]%></muted><br/>
+		  		   <%=p[:size]%><br/>
+		  		</p>
+		  	</div>
+		  </div>
 		
-		
-		<li class="list-group-item">
-			Closest Node Median to this Persona is <strong><%= @nodes.first.name%></strong><br />
-			In order of similarity: <strong><%= @nodes.map{|n| n.name}.join(", ")%></strong>
-
-		</li>
-		<li class="list-group-item">
-			<div id="vector_graph"></div>
-
-		</li>
-	</ul>
-
+		<%
+	}
+	%>
+	<h4>PROXIMITY TO NODE MEDIANS</h4>
+	<div class="desc">
+		  	<div class="thumb">
+		  		<span class="badge bg-theme"><i class="fa fa-clock-o"></i></span>
+		  	</div>
+		  	<div class="details">
+		  		<p><muted>Closest Node Median to this Persona is</muted> <br />
+		  			<strong><%= @nodes.first.name%></strong>
+			
+		  		</p>
+		  	</div>
+		  </div>
+	<div class="desc">
+		  	<div class="thumb">
+		  		<span class="badge bg-theme"><i class="fa fa-clock-o"></i></span>
+		  	</div>
+		  	<div class="details">
+		  		<p><muted>In order of similarity:</muted><br/>
+		  		    <strong><%= @nodes.map{|n| n.name}.join(", ")%></strong><br/>
+		  		</p>
+		  	</div>
+		  </div>
 </div>
+
+
+
+
 
 <script>
 function vectorPie(data) {// Draw Bagel for activities
