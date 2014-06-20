@@ -50,7 +50,7 @@ class ApiController < ApplicationController
   
   def cta
     un = @user.read_message(params[:notification_id])
-    @user.resolve_event("_CTA::#{params[:notification_id]}","1")
+    @user.resolve_event("_CTA::#{un.notification.id}","1")
     render :json=> params[:with_info].present? ? @user.spill : SUCCESS
   end
   

@@ -28,6 +28,7 @@ class User < ActiveRecord::Base
     un = self.user_notifications.find(id)
     un.read = Time.now
     un.save
+    un
   end
 
   def node_info
