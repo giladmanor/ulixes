@@ -3,16 +3,14 @@
 	<div id="vector_graph"></div>
 	<h4>SPREAD IN MARKETING FLOW</h4>
 	<%
-	@populations.each{|p|
+	@vector.reject{|k,v| v==0}.each{|k,v|
 		%>
 		<div class="desc">
 		  	<div class="thumb">
-		  		<span class="badge bg-theme"><i class="fa fa-clock-o"></i></span>
+		  		<span class="badge bg-theme"> <%=k%> </span>
 		  	</div>
 		  	<div class="details">
-		  		<p><muted><%=p[:name]%></muted><br/>
-		  		   <%=p[:size]%><br/>
-		  		</p>
+		  		<p><%=v.to_i%></p>
 		  	</div>
 		  </div>
 		
@@ -51,7 +49,7 @@
 function vectorPie(data) {// Draw Bagel for activities
 	console.log("draw D3:::", data);
 	$("#vector_graph").text("");
-	var width = 200, height = 200, radius = Math.min(width, height) / 2;
+	var width = 150, height = 150, radius = Math.min(width, height) / 2;
 	var color = d3.scale.category20();
 	//d3.scale.ordinal().range(["#98abc5", "#8a89a6", "#7b6888", "#6b486b", "#a05d56", "#d0743c", "#ff8c00"]);
 	var arc = d3.svg.arc().outerRadius(radius - 20).innerRadius(radius - 50);
