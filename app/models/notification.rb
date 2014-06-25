@@ -32,7 +32,7 @@ class Notification < ActiveRecord::Base
   
   def cta_wrapper
     res = <<MESSAGE_END
-<form accept-charset="UTF-8" action="" class="form" method="post" onsubmit="try { Ulixes.set_response($(this)); }catch(err){console.log(err);};return false;" role="form"> 
+<form accept-charset="UTF-8" action="" class="form" method="post" onsubmit="try { ulixes.set_response($(this)); }catch(err){console.log(err);};return false;" role="form"> 
 <input type="hidden" name="notification_id" value="[:NOTIFICATION_ID]"/>
 [:MESSAGE]
 </form>
