@@ -34,5 +34,5 @@ circle {
 text {
   font: 14px sans-serif;
   pointer-events: none;
-  text-shadow: 0 2px 0 #fff, 2px 0 0 #fff, 0 -1px 0 #fff, -1px 0 0 #fff;
+  
 }
