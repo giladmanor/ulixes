@@ -113,6 +113,7 @@ class GraphController < AdminController
     value_type = {"with Value"=>operands, "with Code"=>regexp}
     { 
       Rule::IF_USER_EVENT=>value_type,
+      Rule::IF_USER_EVENT_FRQ=>value_type,
       Rule::IF_USER_SCALE=>scales,
       Rule::IF_USER_HAS_BADGE=>badges,
       Rule::UNLESS_USER_HAS_BADGE=>badges

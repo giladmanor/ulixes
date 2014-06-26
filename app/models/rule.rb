@@ -52,6 +52,7 @@ class Rule < ActiveRecord::Base
   #------------------------------------------------------------------------------
   
   IF_USER_EVENT = "if User Event"
+  IF_USER_EVENT_FRQ = "User Event Frequency"
   IF_USER_SCALE = "if User Scale"
   IF_USER_HAS_BADGE = "if User has Badge"
   UNLESS_USER_HAS_BADGE = "unless User has Badge"
@@ -64,6 +65,8 @@ class Rule < ActiveRecord::Base
     case line.first
       when IF_USER_EVENT
         resolve_event_condition(line)
+      when IF_USER_EVENT_FRQ
+        resolve_event_frequency_condition(line)
       when IF_USER_SCALE
         resolve_scale_condition(line)
       when IF_USER_HAS_BADGE,UNLESS_USER_HAS_BADGE 
@@ -72,6 +75,15 @@ class Rule < ActiveRecord::Base
   end
   
   def self.resolve_event_condition(line)
+    case line[1]
+      when "with Value"
+        "(last_event.value #{OPERANDS[line[2]]} #{line.last})"
+      when "with Code"
+        "(last_event.code#{REGEXP[line[2]]}('#{line.last}'))"
+    end
+  end
+  
+  def self.resolve_event_frequency_condition(line)
     case line[1]
       when "with Value"
         "(last_event.value #{OPERANDS[line[2]]} #{line.last})"

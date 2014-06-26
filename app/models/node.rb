@@ -21,6 +21,10 @@ class Node < ActiveRecord::Base
     }
     puts "-"*50
   end
+  
+  def count_events(user,filter)
+    
+  end
 
   def do_bidding
     puts "#### DO BIDDING ####"
