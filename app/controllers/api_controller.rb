@@ -49,12 +49,22 @@ class ApiController < ApplicationController
   end
   
   def cta
+    logger.debug "#"*150
     un = @user.read_message(params[:notification_id])
-    @user.resolve_event("_CTA::#{un.notification.id}","1")
+    @user.resolve_event("_CTA::#{un.notification.id}","1", clean_up(params))
     render :json=> params[:with_info].present? ? @user.spill : SUCCESS
   end
   
   private # private # private # private # private # private # private # private # private # private # 
+  
+  def clean_up(params)
+    res = {}
+    params.each{|k,v|
+      res[k]=v unless ["a_id","k","action","controller","uuid","with_info", "notification_id"].include?(k)
+    }
+    res
+  end
+  
   
   # FILTER
   def auth_filter

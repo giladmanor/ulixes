@@ -80,9 +80,9 @@ class User < ActiveRecord::Base
     res
   end
 
-  def resolve_event(code,value)
+  def resolve_event(code,value, data=nil)
     unless code.nil? || code.empty? || value.nil? || value.empty?
-      last_event = Event.create(:code=>code, :value=>value)
+      last_event = Event.create(:code=>code, :value=>value, :data=>data)
       self.events << last_event
       self.node.nil? ? nil : self.node.evaluate(self,last_event)
     end

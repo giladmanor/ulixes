@@ -43,5 +43,19 @@ class NotificationController < AdminController
     redirect_to "/#{view}/Notification/#{view==:list ? "" : entity.id}"#:action=>view, :entity=>Notification, :info=>@info, :error=>@error, :id=>entity.id
   end
   
+  def cta_report
+    @events = []
+    @fields = []
+    if params[:cta].present?
+      code = "_CTA::#{params[:cta]}"
+      @events = Event.where(:user_id=>@account.users).where(:code=>code)
+      @fields = @events.last.data.keys unless @events.empty?
+    end
+    logger.debug "$"*30
+    logger.debug @events.first
+    logger.debug @fields
+    logger.debug "$"*30
+  end
+  
   
 end
