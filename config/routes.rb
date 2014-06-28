@@ -7,8 +7,8 @@ Ulixes::Application.routes.draw do
   
   get 'batch(/:action(/:id))' , :controller=>:batch
   
-  post 'admin(/:action)' , :controller=>:admin
-  get 'admin(/:action)' , :controller=>:admin
+  post 'admin(/:action(/:id))' , :controller=>:admin
+  get 'admin(/:action(/:id))' , :controller=>:admin
   get 'config' , :controller=>:admin, :action=>:configuration
   get 'creator' , :controller=>:admin, :action=>:creator
   

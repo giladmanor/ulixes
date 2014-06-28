@@ -1,6 +1,6 @@
 <%
 if params[:id].present?
-	user = @account.users.find params[:id]
+	user = @account.users.find_by_uid params[:id]
 	uuid = user.uid
 else
 	uuid=""
@@ -36,10 +36,11 @@ end
 				<h5>Actions</h5>
 			</div>
 			<div class="actionChartGoesHere" ></div>
+			<div class="white-header">
+				<h5>&nbsp;</h5>
+			</div>
+			<h3><div class=" ulixes-actions" style="line-height: 35px;"></div></h3>	
 			<footer>
-				<div class="">
-				<h3><div class=" ulixes-actions"></div></h3>	
-				</div>
 				
 				<br />
 			</footer>
@@ -195,12 +196,12 @@ function message(id,data){
 var testerDataHandler = function(data, server) {
 	$(".ulixes-node").text(data.node.name);
 
-	$(".ulixes-badge").text("");
+	$(".ulixes-badge").text("None");
 	data.badges.map(function(k) {
 		$(".ulixes-badge").append("<li><img height='60' class='img-circle' width='60' src='" + k.icon + "' title='" + k.name + "'> <span class='badge'>" + k.name + "</span></li>");
 	});
 	
-	$(".ulixes-actions").text("");
+	$(".ulixes-actions").text("None");
 	data.actions.map(function(k) {
 		$(".ulixes-actions").append("<span class='label label-primary'>" + k.name +" : "+ k.value +"</span>   ");
 	});
@@ -231,5 +232,10 @@ var testerDataHandler = function(data, server) {
 		k : "<%= @account.key%>",
 		session:false
 	},testerDataHandler);
+
+
+$(document).ready(function() {
+	cnt.open($('#uuid').val());
+})
 
 </script>
