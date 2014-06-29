@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140615070401) do
+ActiveRecord::Schema.define(version: 20140629154447) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -210,9 +210,11 @@ ActiveRecord::Schema.define(version: 20140615070401) do
     t.datetime "updated_at"
     t.integer  "node_id"
     t.string   "local"
+    t.integer  "cluster_id"
   end
 
   add_index "users", ["account_id"], name: "index_users_on_account_id", using: :btree
+  add_index "users", ["cluster_id"], name: "user_in_cluster", using: :btree
   add_index "users", ["role_id"], name: "index_users_on_role_id", using: :btree
 
   create_table "zero_sum_game_users", force: true do |t|

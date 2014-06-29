@@ -1,7 +1,7 @@
 # Delayed Job Initializer
 
 Delayed::Worker.destroy_failed_jobs = false
-Delayed::Worker.sleep_delay = 2
+Delayed::Worker.sleep_delay = 20
 Delayed::Worker.max_attempts = 5
 Delayed::Worker.max_run_time = 4.hour
 Delayed::Worker.delay_jobs = !Rails.env.test?

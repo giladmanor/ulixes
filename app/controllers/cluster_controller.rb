@@ -50,7 +50,7 @@ class ClusterController < AdminController
     
   def gmm_nodes
     @res = {}
-    @paragons = @account.gmm_paragons true
+    @paragons = @account.gmm_paragons
     @nodes = @account.nodes
     @users = {}
     

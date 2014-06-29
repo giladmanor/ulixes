@@ -50,6 +50,35 @@ class Account < ActiveRecord::Base
     }
   end
   
+  def gmm_clusters
+    self.clusters.clear
+    s = Sparse.new(self.gmm_dimentions)
+    self.users.find_each{|user|
+      s<<user.vector 
+    }
+    
+    p = s.initiate
+    pp=[]
+    6.times{|i|
+      p "-"*20 + i.to_s
+      pp = s.vote(p)
+      p = pp
+    }
+    s.paragon_vector_hash(pp).uniq.each{|v|
+      self.clusters << Cluster.new(:vector=>v)  
+    }
+    
+  end
+  
+  def gmm_clusters_populate
+    cluster_list = self.clusters.map{|cluster| cluster}
+    self.users.find_each{|u|
+      p = cluster_list.min{|c| u.distance(c.vector)}
+      p.users << u
+    } 
+    
+  end
+  
   def gmm_paragons(force=false)
     if self.conf[:paragons].nil? || force
       s = Sparse.new(self.gmm_dimentions)
@@ -65,7 +94,7 @@ class Account < ActiveRecord::Base
         p = pp
       }
       self.conf[:paragons_population] = s.paragon_population(pp)
-      self.conf[:paragons] = s.paragon_vector_hash(pp)
+      self.conf[:paragons] = s.paragon_vector_hash(pp).uniq
       self.save  
     end
     p "-"*20

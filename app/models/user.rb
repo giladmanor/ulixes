@@ -5,6 +5,7 @@ class User < ActiveRecord::Base
   belongs_to :account
   belongs_to :node
   belongs_to :role
+  belongs_to :cluster
 
   has_many :events, -> { where flag: false}
   has_many :flags, -> { where flag: true}, class_name:"Event"
@@ -58,9 +59,8 @@ class User < ActiveRecord::Base
   end
 
   def self.distance(v1,v2)
-    v=v1.merge(v2){|k,vv1,vv2| ((vv1||0)-(vv2||0))**2}
     sum = 0
-    v.values.each{|vv| sum+=vv}
+    v1.merge(v2){|k,vv1,vv2| sum +=((vv1||0)-(vv2||0))**2}
     Math.sqrt(sum)
   end
 

@@ -37,7 +37,7 @@ end
 # gem 'bcrypt-ruby', '~> 3.0.0'
 
 # Use unicorn as the app server
-# gem 'unicorn'
+#gem 'unicorn'
 
 # Use Capistrano for deployment
 # gem 'capistrano', group: :development
@@ -48,5 +48,11 @@ gem 'acts_as_tree'
 gem 'quiet_assets', :group => :development
 #gem "strong_parameters"
 
+
+#####################################
 gem 'delayed_job_active_record'
 gem "daemons"
+
+#to use delayed job::::
+# rails g delayed_job:active_record
+# rake db:migrate
