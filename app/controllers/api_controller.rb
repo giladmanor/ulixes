@@ -68,16 +68,23 @@ class ApiController < ApplicationController
   
   # FILTER
   def auth_filter
-    unless params[:uuid].nil?
+    logger.debug ["----",request.remote_ip,"----"].join("|")
+    
+    if params[:a_id].present?
       @account = Account.find(params[:a_id])
       unless params[:k]==@account.key || params[:k]==@account.client_key
         render :file => 'public/404.html', :status => :not_found, :layout => false
         return false
       end
-      @user = @account.find_user(params[:uuid])
+      @user = @account.find_user(params[:uuid] || session[:uuid] || request.remote_ip)
     else
-      @user = User.find(session[:uuid])
-      @account = @user.account
+      logger.warn "X"*40
+      logger.warn "reject user from #{request.remote_ip}"
+      logger.warn "X"*40
+      render :file => 'public/404.html', :status => :not_found, :layout => false
+      return false
+      # @user = User.find(session[:uuid] )
+      # @account = @user.account
     end
   end
   
