@@ -39,6 +39,11 @@ var NotificationController = function(options) {
 		window.location = "/list/Notification";
 	};
 	
+	this.showPreview = function(q) {
+		$('#previewBox').modal('show');
+		console.log("preview: ",q);
+		$('#previewContent').html(q);
+	};	
 	////////////////////////////////////////////////////////////
 	
 	var get = function(action,data,successFunction) {

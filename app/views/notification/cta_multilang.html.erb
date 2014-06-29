@@ -1,3 +1,13 @@
+<script type="text/javascript">
+	
+
+	function abortAction() {
+		$('#previewBox').modal('hide');
+	}
+
+</script>
+
+
 <ul class="list-group">
 	<%
 	i=0
@@ -13,14 +23,12 @@
 			<input name="data[]title" class="form-control" value="<%= lcl["title"]%>">
 		</div>
 		<div class="form-group">
-			<label for="name">Message</label>
-			<textarea name="data[]message" class="form-control " rows="3"><%= lcl["message"]%></textarea>
+			<button type="button" class="btn btn-theme pull-right" onclick="cnt.showPreview($('#message_html').val());return false;">Preview</button>
+			<label for="name">HTML Message</label>
+			<textarea id="message_html" name="data[]message" class="form-control " rows="5"><%= lcl["message"]%></textarea>
+			
 		</div>
-		<div class="form-group">
-			<label for="name">Actions</label>
-			<textarea name="data[]actions" class="form-control" name="editor1" rows="3"><%= lcl["actions"]%></textarea>
-			<span class="help-block">[{:caption=>"Button Caption", :code=>"Code", :value=>"Numeric Value"}]</span>
-		</div>
+		
 	</li>
 
 	<%
@@ -40,3 +48,23 @@
 </ul>
 
 <script src="/ckeditor/ckeditor.js"></script>
+
+
+
+
+<div id="previewBox" class="modal fade"  tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="position: absolute">
+	<div class="modal-dialog" style="margin-left: 0px">
+		<div class="modal-content" style="width: 377px">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+					&times;
+				</button>
+				<h4 class="modal-title" id="myModalLabel">Message Preview</h4>
+			</div>
+			<div class="modal-body" id="previewContent">
+				
+			</div>
+			
+		</div>
+	</div>
+</div> 
