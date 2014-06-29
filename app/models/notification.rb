@@ -1,11 +1,15 @@
 class Notification < ActiveRecord::Base
   belongs_to :account
   validates_uniqueness_of :name, :scope => [:account_id], :message => "Name taken"
-  to_info :name, :format, :multilang
+  to_info :name, :format_type, :multilang
   serialize :data, Array
   
   def format_types
     [["Web Message",:web],["Video Message",:video],["Call To Action",:cta],["Mail Message",:email],["SMS",:sms],["Twitter",:twitter]]
+  end
+  
+  def format_type
+    format_types.select{|ft| ft[1].to_s==self.format}.first.first unless self.format.nil?
   end
   
   def format_label

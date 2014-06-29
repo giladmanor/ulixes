@@ -76,6 +76,7 @@ class ApiController < ApplicationController
         render :file => 'public/404.html', :status => :not_found, :layout => false
         return false
       end
+      logger.debug "!"*50 unless params[:uuid].present? && session[:uuid].nil?
       @user = @account.find_user(params[:uuid] || session[:uuid] || request.remote_ip)
     else
       logger.warn "X"*40
