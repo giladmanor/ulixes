@@ -60,7 +60,8 @@ class User < ActiveRecord::Base
 
   def self.distance(v1,v2)
     sum = 0
-    v1.merge(v2){|k,vv1,vv2| sum +=((vv1||0)-(vv2||0))**2}
+    v = v1.merge(v2){|k,vv1,vv2| ((vv1||0)-(vv2||0))}
+    v.values.each{|v| sum+=v**2}
     Math.sqrt(sum)
   end
 

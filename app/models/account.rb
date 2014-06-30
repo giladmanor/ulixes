@@ -73,10 +73,11 @@ class Account < ActiveRecord::Base
   def gmm_clusters_populate
     cluster_list = self.clusters.map{|cluster| cluster}
     self.users.find_each{|u|
-      p = cluster_list.min{|c| u.distance(c.vector)}
+      v = cluster_list.map{|c| u.distance(c.vector)}
+      p = cluster_list[v.index(v.min)]
       p.users << u
     } 
-    
+    self.clusters.delete_if{|c| c.users.size==0}
   end
   
   def gmm_paragons(force=false)
