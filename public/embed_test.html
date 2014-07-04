@@ -13,13 +13,37 @@
     
   </head>
   <body style="background-color: blue">
-    <div style="margin-left: 10%;margin-top: 10%">
-    	<iframe id="dadaFrame" name="dadaFrame" src="http://162.243.11.7:8000/e/12" width="450px" height="350px" frameborder="1" allowfullscreen webkitallowfullscreen mozallowfullscreen></iframe>
+    <div class="anc" style="margin-left: 10%;margin-top: 10%;width: 350px;">
+    	<img style="width: 100%" src="/repository/Badge/12.jpg" />
+    	<div id="ovr" class="overr" style="background-color: black;opacity: 0.2;height: 100%;width: 100%;float: left;top: 0;position: relative">&nbsp;</div>
     		
     </div>
     
   </body>
 </html>
 <script>
-	$(document.body).css("background-color", "black");
+	$(document.body).css("background-color", "white");
+	
+	$(document).ready(function(){
+		
+		$('.anc').each(function(i){
+			var h=$(this).height();
+			console.log(h);
+			var ovr = $(this).find('.overr').first();
+			console.log($(ovr));
+			ovr.css("margin-top",-h+"px");
+			ovr.css("height",h+"px");
+		});
+		
+		
+		// var h = $('#anc').height();
+// 		
+		// console.log(h);
+		// $('#ovr').css("margin-top",-h+"px");
+		// $('#ovr').css("height",h+"px");
+// 		
+		// console.log($('#anc').closest('div.overr'));
+		
+	});
+	
 </script>
