@@ -15,7 +15,7 @@
   <body style="background-color: blue">
     <div class="anc" style="margin-left: 10%;margin-top: 10%;width: 350px;">
     	<img style="width: 100%" src="/repository/Badge/12.jpg" />
-    	<div id="ovr" class="overr" style="background-color: black;opacity: 0.2;height: 100%;width: 100%;float: left;top: 0;position: relative">&nbsp;</div>
+    	<div id="ovr" class="overr" style="background-color: black;opacity: 0.6;height: 100%;width: 100%;float: left;top: 0;position: relative">&nbsp;</div>
     		
     </div>
     
@@ -32,7 +32,7 @@
 			var ovr = $(this).find('.overr').first();
 			console.log($(ovr));
 			ovr.css("margin-top",-h+"px");
-			ovr.css("height",h+"px");
+			ovr.css("height",(h-5)+"px");
 		});
 		
 		
