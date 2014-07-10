@@ -201,7 +201,7 @@ var testerDataHandler = function(data, server) {
 		$(".ulixes-badge").append("<li><img height='60' class='img-circle' width='60' src='" + k.icon + "' title='" + k.name + "'> <span class='badge'>" + k.name + "</span></li>");
 	});
 	
-	$(".ulixes-actions").text("None");
+	$(".ulixes-actions").text("");
 	data.actions.map(function(k) {
 		$(".ulixes-actions").append("<span class='label label-primary'>" + k.name +" : "+ k.value +"</span>   ");
 	});

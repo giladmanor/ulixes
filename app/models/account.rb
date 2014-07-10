@@ -77,7 +77,13 @@ class Account < ActiveRecord::Base
       p = cluster_list[v.index(v.min)]
       p.users << u
     } 
-    self.clusters.delete_if{|c| c.users.size==0}
+    to_delete = []
+    self.clusters.each{|c| 
+      if c.users.size==0
+        to_delete << c
+      end
+    }
+    self.clusters.delete(to_delete)
   end
   
   def gmm_paragons(force=false)

@@ -1,6 +1,21 @@
 class ClusterController < AdminController
   
   
+  def list
+    if @account.clusters.empty?
+      @account.gmm_clusters
+      @account.gmm_clusters_populate
+    end
+    @clusters = @account.clusters
+  end
+  
+  
+  
+  
+  
+  
+  
+  
   def list_nodes
     @nodes = @account.nodes
     

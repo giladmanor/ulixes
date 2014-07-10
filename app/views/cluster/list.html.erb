@@ -1,0 +1,53 @@
+<div class="row">
+	<div class="col-lg-3 main-chart">
+
+		<div class="content-panel">
+
+			<table class="table table-hover">
+				<h4><i class="fa fa-angle-right"></i> Homogeneous Groups (Clusters)</h4>
+				<h4>
+				<div class="btn-group">
+					<button type="button" class="btn btn-theme">
+						Recalculate
+					</button>
+					<button type="button" class="btn btn-theme">
+						Repopulate
+					</button>
+					
+				</div></h4>
+				<thead>
+					<tr>
+						<th width="10px"></th>
+						<th>Persona</th>
+						<th>Population</th>
+						<th></th>
+
+					</tr>
+				</thead>
+				<tbody>
+					<%
+					@clusters.each{|cluster|
+					%>
+
+					<tr>
+						<td><span style="color: silver;font-size: 8px" ><%= cluster.id%></span>&nbsp;</td>
+						<td></td>
+						<td><%= cluster.users.size%></td>
+						<td><i class="fa fa-info"></i></td>
+					</tr>
+					<%
+					}
+					%>
+
+				</tbody>
+			</table>
+
+		</div>
+
+	</div>
+
+	<div id="persona_insight" class="col-lg-4 ds">
+		XXX
+	</div>
+
+</div>
