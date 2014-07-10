@@ -1,24 +1,37 @@
 class ClusterController < AdminController
   
-  
   def list
-    if @account.clusters.empty?
-      @account.gmm_clusters
-      @account.gmm_clusters_populate
+    if @account.clusters.empty? || params[:force].present?
+      @account.gmm_clusters if ["clusters"].include?(params[:force])
+      @account.gmm_clusters_populate if ["population"].include?(params[:force])
     end
-    @clusters = @account.clusters
+    @clusters = @account.clusters.sort{|a,b| b.users.size<=>a.users.size}
   end
-  
-  
-  
-  
-  
-  
-  
+
+  def insight
+    cluster = @account.clusters.find params[:id]
+    @vector = cluster.vector
+    @nodes = @account.nodes.sort{|a,b| User.distance(b.vector,@vector)<=>User.distance(a.vector,@vector)}
+    @paragons = @account.clusters
+    @users = cluster.users.sort{|a,b| User.distance(a.vector,@vector)<=>User.distance(b.vector,@vector)}
+    
+    render :layout=>false
+  end
+
+
+
+
+
+
+
+
+
+
+
+
   
   def list_nodes
     @nodes = @account.nodes
-    
   end
   
   def node
