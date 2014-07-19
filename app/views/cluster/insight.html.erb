@@ -4,27 +4,28 @@
 	
 	<div class="desc">
 		<div class="thumb">
-			<span class="badge bg-theme"> <%= @users.first.uid%> </span>
+			<span class="badge bg-theme">Closest to Persona </span>
 		</div>
 		<div class="details">
 			<p>
-				Closest to Persona <%= User.distance(@users.first.vector,@vector)%>
+				 <br /><%= @users.first.uid%><br /><%= User.distance(@users.first.vector,@vector)%>
+				 
 			</p>
 		</div>
 	</div>
 	<div class="desc">
 		<div class="thumb">
-			<span class="badge bg-theme"> <%= @users.last.uid%> </span>
+			<span class="badge bg-theme"> Furthest from Persona </span>
 		</div>
 		<div class="details">
 			<p>
-				Furthest from Persona <%= User.distance(@users.last.vector,@vector)%>
+				 <br /><%= @users.last.uid%><br /><%= User.distance(@users.last.vector,@vector)%>
 			</p>
 		</div>
 	</div>
 	<h4>SPREAD IN MARKETING FLOW</h4>
 	<%
-	@vector.reject{|k,v| v==0}.each{|k,v|
+	@users.first.vector.select{|k,v| k.start_with?("_") && v>0}.each{|k,v|
 		%>
 		<div class="desc">
 		  	<div class="thumb">

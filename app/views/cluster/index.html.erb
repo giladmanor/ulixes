@@ -1,0 +1,79 @@
+<script src="http://d3js.org/d3.v3.min.js"></script>
+<div class="row">
+	<div class="col-lg-3 main-chart">
+
+		<div class="content-panel">
+			<h4><i class="fa fa-angle-right"></i> Homogeneous Groups (Clusters)</h4>
+			<h4>
+			<div class="btn-group ">
+				<%= form_tag("/cluster/batch", role:"form") do%>
+				<button type="submit" name="force" value="vectorize" type="button" class="btn btn-theme">
+					Vectorize Users
+				</button>
+				<button type="submit" name="force" value="clusters" type="button" class="btn btn-theme">
+					Re Cluster
+				</button>
+				<button type="submit" name="force" value="population" type="button" class="btn btn-theme">
+					Re Populate
+				</button>
+				<%end%>
+			</div></h4>
+			<div style="overflow: auto;height: 100%">
+				<table class="table table-hover">
+
+					<thead>
+						<tr>
+							<th width="10px"></th>
+							<th>Persona</th>
+							<th>Population</th>
+							<th></th>
+
+						</tr>
+					</thead>
+
+					<tbody id="cluster_list">
+
+					</tbody>
+
+				</table>
+			</div>
+		</div>
+
+	</div>
+
+	<div id="persona_insight" class="col-lg-4 ds">
+
+	</div>
+
+</div>
+
+<script>
+	var get = function(entity, data, successFunction) {
+		console.log(">>>>>", data);
+		$.ajax({
+			url : "/cluster/" + entity,
+			data : data
+			//dataType : "JSON" // you want a difference between normal and ajax-calls, and json is standard
+		}).success(function(json) {
+			successFunction(json);
+		});
+	};
+
+	var showPersonaDetails = function(id) {
+		get("insight", {
+			id : id
+		}, function(d) {
+			$("#persona_insight").html(d);
+		});
+	}
+	var getClusterList = function() {
+		get("list", {}, function(d) {
+			$("#cluster_list").html(d);
+		});
+	};
+
+	getClusterList();
+	
+
+</script>
+

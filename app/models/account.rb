@@ -22,6 +22,7 @@ class Account < ActiveRecord::Base
   end
   
   
+  
   def vector_file(n)
     out = File.open("#{n}.txt","wb" )
     self.users.each{|u| 

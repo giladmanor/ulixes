@@ -1,11 +1,20 @@
 class ClusterController < AdminController
   
+  
+  def index
+     
+  end
+  
   def list
-    if @account.clusters.empty? || params[:force].present?
-      @account.gmm_clusters if ["clusters"].include?(params[:force])
-      @account.gmm_clusters_populate if ["population"].include?(params[:force])
-    end
     @clusters = @account.clusters.sort{|a,b| b.users.size<=>a.users.size}
+    render :layout=>false
+  end
+  
+  def batch
+    @account.user_vectorization.delay if ["vectorize"].include?(params[:force])
+    @account.gmm_clusters.delay if ["clusters"].include?(params[:force])
+    @account.gmm_clusters_populate.delay if ["population"].include?(params[:force])
+    render :json => {:ok=>true}
   end
 
   def insight
