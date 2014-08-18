@@ -1,0 +1,16 @@
+# Data source importer config
+
+datasource_name:
+  driver: tds
+  connection:
+    user: gilad
+    password: manor
+    host: server.name
+    other: stuff
+  frequency: every 1 hour
+  field_set:
+    a: option1
+    b: option2
+    c: option3
+
+
