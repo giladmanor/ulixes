@@ -1,11 +1,22 @@
 class Notification < ActiveRecord::Base
   belongs_to :account
   validates_uniqueness_of :name, :scope => [:account_id], :message => "Name taken"
-  to_info :name, :format_type, :multilang
+  to_info :name, :format_type, :multilang, :frequency
   serialize :data, Array
+  serialize :event_handlers, Hash
+  serialize :bank_policy, Array
+  serialize :vector, Hash
+  
+  
+  def can_send?(user_notification)
+    return true if self.frequency.nil?
+    return !user_notification.nil? if self.frequency=="once"
+    f = eval self.frequency
+    !user_notification.read.nil? && (Time.now - user_notification.read > f) 
+  end
   
   def format_types
-    [["Web Message",:web],["Video Message",:video],["Call To Action",:cta],["Mail Message",:email],["SMS",:sms],["Twitter",:twitter]]
+    [["Notification Bank",:bank],["Web Message",:web],["Video Message",:video],["Call To Action",:cta],["Mail Message",:email],["SMS",:sms],["Twitter",:twitter]]
   end
   
   def format_type

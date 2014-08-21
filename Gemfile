@@ -56,3 +56,7 @@ gem "daemons"
 #to use delayed job::::
 # rails g delayed_job:active_record
 # rake db:migrate
+
+
+
+gem 'tiny_tds'

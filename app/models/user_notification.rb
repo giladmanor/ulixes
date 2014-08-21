@@ -6,6 +6,22 @@ class UserNotification < ActiveRecord::Base
   
   to_info :notification_title, :sent
   
+  
+  def self.make(user,notification)
+    former = user.user_notifications.where(:notification_id=>notification.id).last
+    
+    if notification.can_send?(former)
+      un = UserNotification.create({:data=>notification.reduce(user), :notification_id=>notification.id})
+      un.data["message"] = un.data["message"].gsub("[:NOTIFICATION_ID]",un.id.to_s)
+      user.user_notifications << un
+    end
+    
+  end
+  
+  
+  
+  
+  
   def to_data
     {
       :id=>self.id,

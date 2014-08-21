@@ -1,7 +1,8 @@
 class Importer
   
-  def imp
+  def yml(account)
     @config = YAML.load_file("#{Rails.root}/config/import_config.yml")
+    @account = account
   end
   
   def init
@@ -14,18 +15,27 @@ class Importer
   end
   
   
-  def get_result_set(driver, connData)
-    puts driver
-    puts connData
+  def get_result_set(driver, conn_data, query)
+    conn =  conn_data.inject({}){|memo,(k,v)| memo[k.to_sym] = v; memo}
+    client = TinyTds::Client.new(conn) if driver == "sqlserver" 
+    client.execute(query)
   end
   
   def process(result_set,conversion_map,uid_field)
+    
     result_set.each{|row|
       uid = row[uid_field]
-      user = @account.find_user(uid)
-      conversion_map.each{|code|
-        value = row[code]
-        user.resolve_event(code,value)
+      user = @account.find_user(uid.to_s)
+      
+      conversion_map.each{|k,v|
+        if v=="dim"
+          puts "resolve dim #{row[k]}"
+          user.resolve_event(row[k].strip,"1")
+        elsif v=="val"
+          puts "resolve val #{k} #{row[k]}"
+          user.resolve_event(k,row[k].to_s.strip)
+        end
+        
       }
     }
   end

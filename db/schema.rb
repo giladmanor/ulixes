@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140629154447) do
+ActiveRecord::Schema.define(version: 20140821113028) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -123,6 +123,10 @@ ActiveRecord::Schema.define(version: 20140629154447) do
     t.datetime "updated_at"
     t.boolean  "multilang"
     t.string   "format"
+    t.string   "frequency"
+    t.text     "event_handlers"
+    t.text     "bank_policy"
+    t.text     "vector"
   end
 
   add_index "notifications", ["account_id"], name: "index_notifications_on_account_id", using: :btree
