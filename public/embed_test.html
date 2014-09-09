@@ -1,49 +1,20 @@
-<!doctype html>
-<html ng-app="hvApp">
-  <head>
-    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-    <title>EmbedTest</title>
-    
+<style>
 
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    
+.chart div {
+  font: 10px sans-serif;
+  background-color: steelblue;
+  text-align: right;
+  padding: 3px;
+  margin: 1px;
+  color: white;
+}
 
-    <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,300' rel='stylesheet' type='text/css'>
-
-    
-  </head>
-  <body style="background-color: blue">
-    <div class="anc" style="margin-left: 10%;margin-top: 10%;width: 350px;">
-    	<img style="width: 100%" src="/repository/Badge/12.jpg" />
-    	<div id="ovr" class="overr" style="background-color: black;opacity: 0.6;height: 100%;width: 100%;float: left;top: 0;position: relative">&nbsp;</div>
-    		
-    </div>
-    
-  </body>
-</html>
-<script>
-	$(document.body).css("background-color", "white");
-	
-	$(document).ready(function(){
-		
-		$('.anc').each(function(i){
-			var h=$(this).height();
-			console.log(h);
-			var ovr = $(this).find('.overr').first();
-			console.log($(ovr));
-			ovr.css("margin-top",-h+"px");
-			ovr.css("height",(h-5)+"px");
-		});
-		
-		
-		// var h = $('#anc').height();
-// 		
-		// console.log(h);
-		// $('#ovr').css("margin-top",-h+"px");
-		// $('#ovr').css("height",h+"px");
-// 		
-		// console.log($('#anc').closest('div.overr'));
-		
-	});
-	
-</script>
+</style>
+<div class="chart">
+  <div style="width: 40px;">4</div>
+  <div style="width: 80px;">8</div>
+  <div style="width: 150px;">15</div>
+  <div style="width: 160px;">16</div>
+  <div style="width: 230px;">23</div>
+  <div style="width: 420px;">42</div>
+</div>

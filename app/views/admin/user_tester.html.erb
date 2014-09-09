@@ -7,7 +7,28 @@ else
 end
 
 %>
+<style>
 
+.chart div {
+  font: 10px sans-serif;
+  background-color: steelblue;
+  text-align: right;
+  padding: 3px;
+  margin: 1px;
+  color: white;
+  
+}
+.chart span {
+  font: 10px sans-serif;
+  text-align: right;
+  padding: 3px;
+  margin: 1px;
+  color: black;
+  
+  
+}
+
+</style>
 
 <script src="/d3.min.js"></script>
 <div class="row">
@@ -35,15 +56,10 @@ end
 			<div class="white-header">
 				<h5>Actions</h5>
 			</div>
-			<div class="actionChartGoesHere" ></div>
-			<div class="white-header">
-				<h5>&nbsp;</h5>
-			</div>
-			<h3><div class=" ulixes-actions" style="line-height: 35px;"></div></h3>	
-			<footer>
+			<div class="chart ulixes-actions" style="line-height: 35px;"></div>
+			
 				
-				<br />
-			</footer>
+			
 		</div>
 		
 		
@@ -203,7 +219,7 @@ var testerDataHandler = function(data, server) {
 	
 	$(".ulixes-actions").text("");
 	data.actions.map(function(k) {
-		$(".ulixes-actions").append("<span class='label label-primary'>" + k.name +" : "+ k.value +"</span>   ");
+		$(".ulixes-actions").append("<div style='width: "+k.value+"px;'><span>"+k.name+"</span>"+k.value+"</div>");
 	});
 	
 	$('.ulixes-announcements').text("");
