@@ -25,11 +25,30 @@ class User < ActiveRecord::Base
     self.save
   end
 
-  def read_message(id)
+  def respond_to_notification(id,params=nil)
     un = self.user_notifications.find(id)
     un.read = Time.now
     un.save
+    
+    if un.notification.format=="cta" && !params.nil?
+      logger.debug "Processing CTA:::"
+      self.resolve_event("_CTA::#{un.notification.id}","1", params)
+      params.merge({"uid"=>self.id})
+      logger.debug "  event handlers on Notification"
+      un.notification.event_handlers.each{|k,v|
+        begin 
+          logger.debug "  evaluating #{v} for #{params.inspect}"
+          eval v
+        rescue Exception=>e 
+          logger.debug e.inspect
+        end
+      }
+    end
     un
+  end
+  
+  def responded_to?(notification)
+    self.events.where(:code=>"_CTA::#{notification.id}").size>0
   end
 
   def node_info

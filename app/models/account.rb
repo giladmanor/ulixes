@@ -21,6 +21,10 @@ class Account < ActiveRecord::Base
     user
   end
   
+  def compile
+    self.nodes.each{|node| node.compile}
+    self.edges.each{|edge| edge.compile}
+  end
   
   
   def vector_file(n)

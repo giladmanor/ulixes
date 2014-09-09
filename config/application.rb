@@ -25,5 +25,7 @@ module Ulixes
       'Access-Control-Allow-Origin' => '*',
       'Access-Control-Request-Method' => '*'
     }
+    # models sub directories auto load:::
+    config.autoload_paths += Dir[Rails.root.join('app', 'models', '{**}')]
   end
 end

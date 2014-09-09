@@ -9,10 +9,10 @@ class Notification < ActiveRecord::Base
   
   
   def can_send?(user_notification)
-    return true if self.frequency.nil?
+    return true if self.frequency.nil? || user_notification.nil?
     return !user_notification.nil? if self.frequency=="once"
     f = eval self.frequency
-    !user_notification.read.nil? && (Time.now - user_notification.read > f) 
+    !user_notification.read.nil? && !(self.single_response && user_notification.user.responded_to?(self)) && (Time.now - user_notification.read > f) 
   end
   
   def format_types
@@ -47,7 +47,7 @@ class Notification < ActiveRecord::Base
   
   def cta_wrapper
     res = <<MESSAGE_END
-<form accept-charset="UTF-8" action="" class="form" method="post" onsubmit="try { console.log(ulixes);ulixes.set_response($(this)); }catch(err){console.log(err);};return false;" role="form"> 
+<form style="height:100%" accept-charset="UTF-8" action="" class="form" method="post" onsubmit="try { console.log(ulixes);ulixes.set_response($(this)); }catch(err){console.log(err);};return false;" role="form"> 
 <input type="hidden" name="notification_id" value="[:NOTIFICATION_ID]"/>
 [:MESSAGE]
 </form>

@@ -12,11 +12,13 @@ class Rule < ActiveRecord::Base
   def relate_to_node(node_id)
     self.edge_id = nil
     self.node_id = node_id
+    self.node.compile
   end
   
   def relate_to_edge(edge_id)
     self.edge_id = edge_id
-    self.node_id = self.account.edges.find(edge_id).source_id 
+    self.node_id = self.account.edges.find(edge_id).source_id
+    self.edge.compile 
   end  
   
   def nice_display

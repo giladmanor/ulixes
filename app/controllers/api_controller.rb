@@ -44,14 +44,13 @@ class ApiController < ApplicationController
   end
   
   def read
-    un = @user.read_message(params[:id])
+    un = @user.respond_to_notification(params[:id])
     render :json=> params[:with_info].present? ? @user.spill : SUCCESS
   end
   
   def cta
     logger.debug "#"*150
-    un = @user.read_message(params[:notification_id])
-    @user.resolve_event("_CTA::#{un.notification.id}","1", clean_up(params))
+    un = @user.respond_to_notification(params[:notification_id],clean_up(params))
     render :json=> params[:with_info].present? ? @user.spill : SUCCESS
   end
   

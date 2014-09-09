@@ -64,13 +64,15 @@ class GraphController < AdminController
   end
 
   def set_rule
+    logger.debug "#"*40
     rule = params[:id].present? ? @account.rules.find(params[:id]) : Rule.create(:account_id=>@account.id)
     
     rule.requirement = params[:requirement].reject{|cnd| cnd==""}
     rule.demand = params[:demand].reject{|dmd| dmd==""}
+    logger.debug "#"*40
     rule.relate_to_node(params[:node_id]) if params[:node_id].present?
     rule.relate_to_edge(params[:edge_id]) if params[:edge_id].present?
-    
+    logger.debug "#"*40
     if rule.requirement.empty? 
       rule.destroy
     else

@@ -23,6 +23,31 @@ var Ulixes = function(server, auth, dataHandler) {
 			with_info : true
 		});
 	};
+	
+	this.set_response = function(formDOM){
+		var valuesToSubmit = formToObject(formDOM);
+		$.extend(valuesToSubmit, {with_info : true});
+		console.log("CTS>>>" );
+		send("cta", valuesToSubmit);
+		console.log("<<<CTS" );
+		
+	};
+	
+	var formToObject = function(formDom){
+		var o = {};
+	    var a = formDom.serializeArray();
+	    $.each(a, function() {
+	        if (o[this.name] !== undefined) {
+	            if (!o[this.name].push) {
+	                o[this.name] = [o[this.name]];
+	            }
+	            o[this.name].push(this.value || '');
+	        } else {
+	            o[this.name] = this.value || '';
+	        }
+	    });
+	    return o;
+	};
 
 	var send = function(action, data) {
 		$.extend(data, self.auth);

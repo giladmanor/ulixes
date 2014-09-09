@@ -60,3 +60,4 @@ gem "daemons"
 
 
 gem 'tiny_tds'
+gem 'mailchimp-api', require: 'mailchimp'

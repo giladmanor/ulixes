@@ -43,6 +43,19 @@
 			<label for="frequency">Frequency</label>
 			<input name="frequency" type="text" class="form-control" id="frequency" placeholder="e.g. 1.day or once" value="<%= @notification.frequency%>">
 		</div>
+		
+		<div class="form-group">
+			<label for="single_response">Allow Only One Response?</label>
+			<input name="single_response" type="checkbox" class="form-control" id="single_response" style="width: 100px;" <%= @notification.single_response ? "checked" : ""%>>
+		</div>
+		
+		<div class="form-group">
+			<label for="event_handlers">Event Handlers</label>
+			<input name="event_handlers" type="text" class="form-control" id="event_handlers" placeholder="e.g. 1.day or once" value="<%= @notification.event_handlers%>">
+		</div>
+		
+		
+		
 
 		<p>
 			<button type="submit" class="btn btn-primary" onclick="cnt.save($('#notificationForm'));return false;">

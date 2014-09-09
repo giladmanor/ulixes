@@ -11,15 +11,17 @@ class Node < ActiveRecord::Base
     self.rules
   end
 
+  def compile
+    self.code_cache = self.rules.map{|r| r.to_code}.join("\n")
+    self.save
+    logger.debug "# Node #{self.id} Compiled #"
+  end
+  
   def evaluate(user,last_event)
-    puts "-"*50
-    code = self.rules.map{|r| r.to_code}.join("\n")
-    puts code
-    eval code
+    eval code_cache || "false"
     self.edges.each{|e|
       return if e.evaluate(user,last_event)
     }
-    puts "-"*50
   end
   
   def count_events(user,filter)
