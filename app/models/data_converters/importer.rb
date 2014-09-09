@@ -1,7 +1,7 @@
 class Importer
   
   def yml(account)
-    @config = YAML.load_file("#{Rails.root}/config/import_config.yml")
+    @config = YAML.load_file("#{Rails.root}/config/import_config.yml.ignore")
     @account = account
   end
   
