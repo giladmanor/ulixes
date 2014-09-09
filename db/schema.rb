@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140821113028) do
+ActiveRecord::Schema.define(version: 20140909085542) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -72,6 +72,7 @@ ActiveRecord::Schema.define(version: 20140821113028) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "account_id"
+    t.text     "code_cache"
   end
 
   create_table "events", force: true do |t|
@@ -112,6 +113,7 @@ ActiveRecord::Schema.define(version: 20140821113028) do
     t.datetime "updated_at"
     t.integer  "account_id"
     t.text     "data"
+    t.text     "code_cache"
   end
 
   create_table "notifications", force: true do |t|
@@ -127,6 +129,7 @@ ActiveRecord::Schema.define(version: 20140821113028) do
     t.text     "event_handlers"
     t.text     "bank_policy"
     t.text     "vector"
+    t.boolean  "single_response"
   end
 
   add_index "notifications", ["account_id"], name: "index_notifications_on_account_id", using: :btree
