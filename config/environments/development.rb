@@ -27,6 +27,6 @@ Ulixes::Application.configure do
   # number of complex assets.
   config.assets.debug = false
   
-  config.logger = Logger.new(Rails.root.join("log",Rails.env + ".log"),3,5*1024*1024)
+  #config.logger = Logger.new(Rails.root.join("log",Rails.env + ".log"),3,5*1024*1024)
   
 end

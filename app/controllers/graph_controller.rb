@@ -88,6 +88,15 @@ class GraphController < AdminController
     end
   end
   
+  def set_code
+    element = params[:node_id].present? ? @account.nodes.find(params[:node_id]) : @account.edges.find(params[:edge_id])
+    element.code_cache = params[:code]
+    element.expert_mode=true;
+    element.save
+    
+    render :json=> {:res=>element.save}
+  end
+  
   
   private # private # private # private # private # private # private # private # private # 
   
@@ -108,6 +117,7 @@ class GraphController < AdminController
   def require_statement
     operands = {"is"=>[],"not"=>[], "grater then"=>[],"lesser then"=>[]}
     regexp = {"starts with"=>[],"end_with"=>[], "contains"=>[],"equals"=>[],"expression"=>[]}
+    #regexp = {"starts with"=>{[]=>{1=>[],2=>[]}},"end_with"=>[], "contains"=>[],"equals"=>[],"expression"=>[]}
     
     scales = {}
     @account.scales.each{|s| scales[s.code]=operands}

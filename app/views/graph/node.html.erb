@@ -21,14 +21,25 @@
 				Rename
 			</button>
 		<%end%>
+		<button onclick="toggle_expert_mode()">Expert Mode</button>
 	</div>
 
 	<div class="panel-body" style="overflow: auto;height: 500px;">
-		<div id="ruleForm" ></div>
-		<div id="ruleList" class="list-group">
-			
-		</div>
 		
+		<div class="expert_mode">
+			<%= form_tag("",class:"form-inline", role:"form",id:"expert",onsubmit:"controller.saveCode($(this));return false;") do%>
+			<input type="hidden" name="node_id" value="<%=@node.id%>" />
+			<textarea name="code" style="width: 97%;position: absolute;height: 79%;"><%= @node.code_cache%></textarea>
+			<button  type="submit" style="position: absolute;bottom: 24px;right: 18px;">save</button>
+			<%end%>
+		</div>
+		<div class="non_expert_mode">
+			<div id="ruleForm" ></div>
+			<div id="ruleList" class="list-group">
+
+			</div>
+		</div>
+
 	</div>
 </div>
 <script>
@@ -54,5 +65,16 @@
 		});
 	
 	}
+	var toggle_expert_mode = function(){
+		expert = $(".expert_mode").css("display")=="block" && <%= @node.expert_mode!=true%>;
+		if (expert) {
+			$(".expert_mode").css("display", "none");
+			$(".non_expert_mode").css("display", "block");
+		} else {
+			$(".expert_mode").css("display", "block");
+			$(".non_expert_mode").css("display", "none");
+		}
+	}
+	toggle_expert_mode();
 	getRuleList();
 </script>

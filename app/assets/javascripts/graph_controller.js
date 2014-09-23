@@ -48,6 +48,13 @@ var GraphController = function(options) {
 		}, "html");
 	};
 	
+	this.saveCode = function(formDOMO){
+		formDOMO.attr('action',"/graph/set_code");
+		send(formDOMO,function(d){
+			console.log("this just happend", d);
+		}, "html");
+	};
+	
 	this.renameOrSubmitLabel = function(chxbDOMO, smDOMO){
 		if(chxbDOMO.is(':checked')){
 			smDOMO.removeClass("btn-default");

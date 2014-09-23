@@ -59,6 +59,8 @@ class Rule < ActiveRecord::Base
   IF_USER_HAS_BADGE = "if User has Badge"
   UNLESS_USER_HAS_BADGE = "unless User has Badge"
   
+  
+  
   OPERANDS = {"is"=>"==","not"=>"!=", "grater then"=>">","lesser then"=>"<"}
   REGEXP = {"starts with"=>".start_with?","end_with"=>".end_with?", "contains"=>".include?","equals"=>"==","expression"=>".match"}
   
