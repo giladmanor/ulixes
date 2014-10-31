@@ -27,7 +27,9 @@
 
 				<thead>
 					<tr>
+						<th>Date</th>
 						<th><i class="fa fa-user"></i> User</th>
+						
 						<%
 						@fields.each{|field|
 						%><th><%= field%></th><%
@@ -41,6 +43,7 @@
 					@events.each{|event|
 					%>
 					<tr>
+						<td><%= event.created_at%></td>
 						<td><%= event.user.uid%></td>
 						<%
 						@fields.each{|field|

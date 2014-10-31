@@ -30,6 +30,7 @@ class NotificationController < AdminController
     view = params[:id].present? ? :list : :show  
     logger.debug view
     entity = params[:id].present? ? Notification.find(params[:id]) : Notification.new 
+    entity.single_response = false
     entity.set(params.except(:id))
     if Notification.attribute_method?('account')
       entity.account = @user.account

@@ -13,7 +13,7 @@ class Importer
       source = source[1]
       if source["active"]
         puts "  Processing..."
-        res = get_result_set(source["driver"], source["connection"],source["query"])
+        res = get_result_set(source["driver"], source["connection"],source["schema"],source["query"])
         process(res,source["field_set"],source["uid"])  
       end
       
@@ -21,12 +21,18 @@ class Importer
   end
   
   
-  def get_result_set(driver, conn_data, query)
-    conn =  conn_data.inject({}){|memo,(k,v)| memo[k.to_sym] = v; memo}
+  def get_result_set(driver, conn_data, schema,query)
+    conn =  conn_data.inject({}){|memo,(k,v)| memo[k.to_sym] = v.to_s; memo}
+    
     client = TinyTds::Client.new(conn) if driver == "sqlserver" 
     client = TinyTds::Client.new(conn) if driver == "oci8" 
     
-    
+    unless schema.nil?
+      
+      r = client.execute("USE #{schema}") 
+      puts "  use #{schema} => #{r.fields}" 
+      r.do
+    end
     client.execute(query)
   end
   

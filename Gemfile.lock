@@ -42,14 +42,11 @@ GEM
       execjs
     coffee-script-source (1.6.3)
     daemons (1.1.9)
-    dbi (0.4.5)
-      deprecated (= 2.0.1)
     delayed_job (4.0.1)
       activesupport (>= 3.0, < 4.2)
     delayed_job_active_record (4.0.1)
       activerecord (>= 3.0, < 4.2)
       delayed_job (>= 3.0, < 4.1)
-    deprecated (2.0.1)
     erubis (2.7.0)
     excon (0.39.5)
     execjs (2.0.2)
@@ -96,8 +93,6 @@ GEM
     rake (10.3.2)
     rdoc (3.12.2)
       json (~> 1.4)
-    ruby-oci8 (2.1.7)
-    ruby-oci8 (2.1.7-x86-mingw32)
     sass (3.2.11)
     sass-rails (4.0.0)
       railties (>= 4.0.0.beta, < 5.0)
@@ -138,7 +133,6 @@ DEPENDENCIES
   acts_as_tree
   coffee-rails (~> 4.0.0)
   daemons
-  dbi (~> 0.4.5)
   delayed_job_active_record
   jbuilder (~> 1.2)
   jquery-rails
@@ -146,7 +140,6 @@ DEPENDENCIES
   pg
   quiet_assets
   rails (= 4.0.0)
-  ruby-oci8 (~> 2.1.7)
   sass-rails (~> 4.0.0)
   sdoc
   tiny_tds

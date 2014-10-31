@@ -61,5 +61,5 @@ gem "daemons"
 
 gem 'tiny_tds'
 gem 'mailchimp-api', require: 'mailchimp'
-gem 'dbi', '~> 0.4.5'
-gem 'ruby-oci8', '~> 2.1.7'
+#gem 'dbi', '~> 0.4.5'
+#gem 'ruby-oci8', '~> 2.1.7'
