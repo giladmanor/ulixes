@@ -86,7 +86,7 @@ var Script = function () {
 
 //    popovers
 
-    $('.popovers').popover();
+    //$('.popovers').popover();
 
 
 
