@@ -14,7 +14,7 @@ class ClusterController < AdminController
     @account.user_vectorization.delay if ["vectorize"].include?(params[:force])
     @account.gmm_clusters.delay if ["clusters"].include?(params[:force])
     @account.gmm_clusters_populate.delay if ["population"].include?(params[:force])
-    render :json => {:ok=>true}
+    redirect_to :action => "index"
   end
 
   def insight
