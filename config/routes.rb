@@ -4,6 +4,7 @@ Ulixes::Application.routes.draw do
   
   get 'api(/:action(/:id))' , :controller=>:api
   post 'api(/:action(/:id))' , :controller=>:api
+  post 'json(/:action(/:id))' , :controller=>:json
   
   get 'batch(/:action(/:id))' , :controller=>:batch
   
