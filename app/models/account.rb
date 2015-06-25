@@ -11,6 +11,7 @@ class Account < ActiveRecord::Base
   has_many :edges
   has_many :notifications
   has_many :languages
+  has_many :offers
   
   def find_user(uid)
     user = self.users.find_by_uid(uid)

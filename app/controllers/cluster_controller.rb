@@ -28,9 +28,11 @@ class ClusterController < AdminController
   end
 
 
+  def dashboard
+    
+  end
 
-
-
+  
 
 
 

@@ -18,6 +18,11 @@ class Node < ActiveRecord::Base
   end
   
   def evaluate(user,last_event)
+    compile if code_cache == ''
+    
+    logger.debug "+"*50
+    logger.debug "[#{code_cache }]"
+    logger.debug "+"*50
     eval code_cache || "false"
     self.edges.each{|e|
       return if e.evaluate(user,last_event)

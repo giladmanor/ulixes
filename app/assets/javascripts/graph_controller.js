@@ -41,9 +41,10 @@ var GraphController = function(options) {
 	};
 	
 	this.saveRule = function(formDOMO){
+		console.log("saveRule");
 		formDOMO.attr('action',"/graph/set_rule");
 		send(formDOMO,function(d){
-			console.log("this just happend", d);
+			console.log("saveRule this just happend", d);
 			openForm("node",d);
 		}, "html");
 	};

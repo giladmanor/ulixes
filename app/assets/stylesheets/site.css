@@ -1,0 +1,188 @@
+body {
+	font-family: "Open Sans" background-color : #ffffff;
+}
+
+a {
+    text-decoration: none;    
+  }
+
+h1 {
+	font-family: 'Open Sans';
+	font-size: 40px;
+	font-style: normal;
+	font-variant: normal;
+	font-weight: 500;
+	line-height: 26.3999996185303px;
+}
+h3 {
+	font-family: 'Open Sans';
+	font-size: 1.5em;
+	font-style: normal;
+	font-variant: normal;
+	font-weight: 500;
+	line-height: 15.3999996185303px;
+}
+p {
+	font-family: 'Open Sans';
+	font-size: 18px;
+	font-style: normal;
+	font-variant: normal;
+	font-weight: 400;
+	line-height: 2em;
+}
+.nav {
+	display: none;
+	position: fixed;
+	top: 0;
+	left: 0;
+	right: 0;
+	background-color: #FFF;
+	font-family: 'Open Sans';
+	font-size: 20px;
+	height: 2em;
+	padding: 0.7em;
+	box-shadow: 1px 1px 13px #efefef;
+}
+.nav ul {
+	list-style-type: none;
+}
+.nav li {
+	float: left;
+	padding-right: 1em;
+}
+
+.nav div.logo {
+	position: absolute;
+	left: 5em;
+	top: 0;
+}
+
+.nav div.logo img{
+	max-height: 2.3em;
+	margin-top: 0.6em;
+}
+.nav div.menu {
+	position: absolute;
+	right: 5em;
+	top: 0;
+}
+
+
+.page {
+	overflow: hide;
+}
+.sections {
+	overflow: auto;
+	position: absolute;
+	right: 0;
+	left: 0;
+	padding: 0;
+	top:0;
+}
+
+.section {
+	height: 10em;
+	padding: 1em;
+	padding-left: 7em;
+	padding-right: 7em;
+}
+.section div.button {
+	font-family: 'Open Sans';
+	border:solid 1px #fff;
+	padding:1em;
+	width:7em;
+	text-align:center;
+	border-radius:2em;
+	text-transform: uppercase;
+}
+
+.section_1 {
+	background-color: #FF4235;
+	background-image:url(/assets/header_background.png);
+	height: 29em;
+	color: #FFFFFF;
+	padding-top: 12em;
+	/*margin-top:4em;*/
+}
+
+.section_1 a{
+	color: white;
+}
+
+.section_1 p {
+	width: 40em;
+	;
+}
+
+.section_2{
+	font-family: 'Open Sans';
+	padding-top:4em;
+	height:3em;
+	text-align: center;
+	
+}
+.section_2 p{
+	width:55em;
+	margin-left: auto;
+	margin-right:auto;
+}
+
+.section_3{
+	background-image: url(../img/weatfield.png);
+	height: 28em;
+	color:white;
+}
+
+.section_7{
+	background-color: #FF4235;
+	color: white;
+	text-align: center;
+	height:27em;
+}
+
+.contact_form{
+	border: solid 1px white;
+	height:22em;
+	width:55em;
+	margin-left:auto;
+	margin-right:auto;
+}
+.contact_form ul{
+	list-style-type: none;
+	padding:0;
+	padding-top:1em;
+	margin-left:-3em;
+}
+
+.contact_form input,textarea{
+	background-color: #FF4235;
+	padding: 0.5em;
+	margin:0.5em;
+	margin-left:5em;
+	color:white;
+	border:solid 1px white;
+}
+
+.contact_form input{
+	width: 13em;
+}
+
+.contact_form textarea{
+	width:52.5em;
+	height: 12em;
+}
+
+.contact_form input::-webkit-input-placeholder {
+   color: white;
+}
+
+.contact_form textarea::-webkit-input-placeholder {
+   color: white;
+}
+
+.section_7 div.button {
+	margin-left:auto;
+	margin-right:auto;
+	margin-top:0.7em;
+	
+}

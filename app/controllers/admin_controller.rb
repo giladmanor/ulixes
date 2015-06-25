@@ -2,6 +2,8 @@ require "open-uri"
 
 class AdminController < ApplicationController
   before_filter :auth_filter, :except=>[:login]
+  after_filter :callback_wrapper #JSONP wrapper
+  
   def login
     if auth(params[:login], params[:password])
       redirect_to action:"index"
@@ -14,6 +16,10 @@ class AdminController < ApplicationController
   def logout
     session[:user_id] = nil
     render "login", :layout=>false
+  end
+  
+  def get_menu
+    render :json=> @user.role.lock
   end
 
   def index
@@ -58,7 +64,20 @@ class AdminController < ApplicationController
     
     send_data content ,:type => 'text; charset=iso-8859-1',:disposition => "attachment; filename=ulixes_tracker.js"
   end
+  
+  def get_account
+    render :json => @account
+  end
+  
+  def set_account
+    @account.name=params[:name]
+    @account.key=params[:key]
+    @account.client_key=params[:client_key]
 
+    @account.conf = params[:conf]
+    @account.save
+    render :json=>{:res=>:ok}
+  end
 
   def update_account
     @account.name=params[:name]
@@ -71,13 +90,19 @@ class AdminController < ApplicationController
   end
 
   private
+  
+  def callback_wrapper
+    response.body = "#{params[:callback]}(#{response.body});" unless params[:callback].nil?
+  end
 
   def auth(login, password)
     logger.info "logging in #{login}"
     user = User.find_by_login_and_password(login, password)
+    logger.debug user.inspect
     if user
-
+      
       session[:user_id] = user.id
+      logger.debug ">>>>#{session[:user_id]}"
     true
     else
     false
@@ -86,11 +111,13 @@ class AdminController < ApplicationController
 
   def auth_filter
     logger.debug "="*40
+    logger.debug ">>>>#{session[:user_id]}"
     @user = User.find(session[:user_id]) unless session[:user_id].nil?
+    logger.debug @user.inspect
     if @user.nil? || @user.role.nil?
       @error="Please Login"
       render "login", :layout=>false
-    return false
+      return false
     end
     @account = @user.account
   end

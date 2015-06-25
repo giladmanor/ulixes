@@ -12,7 +12,12 @@ class Notification < ActiveRecord::Base
     return true if self.frequency.nil? || user_notification.nil?
     return !user_notification.nil? if self.frequency=="once"
     f = eval self.frequency
-    !user_notification.read.nil? && !(self.single_response && user_notification.user.responded_to?(self)) && (Time.now - user_notification.read > f) 
+    if f.nil?
+      true
+    else
+      !user_notification.read.nil? && !(self.single_response && user_notification.user.responded_to?(self)) && (Time.now - user_notification.read > f)
+    end
+     
   end
   
   def format_types

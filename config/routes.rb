@@ -1,6 +1,7 @@
 Ulixes::Application.routes.draw do
   
-  root :to => 'admin#login'
+  root :to => 'site#index'
+  get 'login',:controller=>:admin,:action=>:login
   
   get 'api(/:action(/:id))' , :controller=>:api
   post 'api(/:action(/:id))' , :controller=>:api
@@ -11,6 +12,10 @@ Ulixes::Application.routes.draw do
   get 'admin(/:action(/:id))' , :controller=>:admin
   get 'config' , :controller=>:admin, :action=>:configuration
   get 'creator' , :controller=>:admin, :action=>:creator
+  
+  post 'gmm(/:action(/:id))' , :controller=>:gmm
+  get 'gmm(/:action(/:id))' , :controller=>:gmm
+  
   
   get 'list(/:entity(/:id))', :controller=>:lsd, :action=>:list
   get 'grid(/:entity)', :controller=>:lsd, :action=>:list
