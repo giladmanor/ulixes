@@ -1,6 +1,23 @@
+class DomainConstraint
+  def initialize(domain)
+    @domains = [domain].flatten
+  end
+
+  def matches?(request)
+    @domains.include? request.domain
+  end
+end
+
 Ulixes::Application.routes.draw do
   
+  constraints DomainConstraint.new('quizic.co') do
+    root :to => 'quizic#home', :as=>"quizic"
+    
+  end
   root :to => 'site#index'
+  
+    
+  
   get 'login',:controller=>:admin,:action=>:login
   
   get 'api(/:action(/:id))' , :controller=>:api
